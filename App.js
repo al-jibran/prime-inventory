@@ -1,5 +1,5 @@
 import React from 'react';
-import Main from './src/screens/Main';
+import Main from './src/Main';
 
 const App = () => {
   return (
