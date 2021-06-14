@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Constants from 'expo-constants'
+import Constants from 'expo-constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +13,7 @@ const App = () => {
     <View style={styles.container}>
       <Text>Hello World!</Text>
     </View>
-  )
+  );
 };
 
 export default App;
