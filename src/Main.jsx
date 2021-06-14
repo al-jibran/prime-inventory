@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Constants from 'expo-constants';
 import Inventory from './screens/Inventory';
 
-const Container = styled.SafeAreaView`
+const Container = styled.View`
     margin-top: ${Constants.statusBarHeight + 15}px;
     margin-left: 40px;
     margin-right: 40px;
