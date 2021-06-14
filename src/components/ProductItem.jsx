@@ -15,16 +15,17 @@ const ProductItemStyle = styled.View`
     background-color: #fff;
     flex-direction: row;
     align-items: center;
+    border-radius: 10px;
 `;
 
 const ProductItem = ({ item }) => {
     return (
         <ProductItemStyle>
-            <View style={{ flexGrow: 3 }}>
+            <View style={{flexGrow: 3, flexBasis: '20%'}}>
                 <Text>{item.product}</Text>
                 <Text>{item.brand}</Text>
             </View>
-            <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fbca1d', alignSelf: 'stretch', }}>
+            <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fbca1d', alignSelf: 'stretch', borderTopRightRadius: 10, borderBottomRightRadius: 10 }}>
                 <Text>{item.stock}</Text>
             </View>
         </ProductItemStyle>
