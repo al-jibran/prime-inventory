@@ -43,7 +43,7 @@ const ProductItem = ({ item }) => {
         <ProductItemStyle>
             <View style={{ flexGrow: 3, flexBasis: '20%' }}>
                 <Text>{item.product}</Text>
-                <SubText>{item.brand}</SubText>
+                <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
             </View>
             <Stock bgColor={color}>
                 <Text fontSize="40" color="white">{item.stock}</Text>
