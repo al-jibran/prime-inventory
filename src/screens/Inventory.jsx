@@ -1,17 +1,8 @@
 import React from 'react';
 import Toolbar from '../components/Toolbar';
-import { View, FlatList, Text } from 'react-native';
-import styled from 'styled-components';
+import { View, FlatList } from 'react-native';
 import ProductItem from '../components/ProductItem';
-
-const SearchStyle = styled.TextInput`
-    margin-top: 30px;
-    margin-bottom: 10px;
-    border: 1px solid black;
-    width: 100%;
-    border-radius: 30px;
-    padding: 5px;
-`;
+import Searchbar from '../components/Searchbar';
 
 const products = [{
     id: 1,
@@ -37,7 +28,7 @@ const Inventory = () => {
         <View>
             <Toolbar />
             <FlatList
-                ListHeaderComponent={() => <SearchStyle placeholder="Search" clearButtonMode='while-editing' />}
+                ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
                 data={products}
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem} />
