@@ -19,6 +19,26 @@ const products = [{
     product: 'Product 3',
     brand: 'Brand C',
     stock: 13,
+}, {
+    id: 4,
+    product: 'Product 5',
+    brand: 'Brand A',
+    stock: 2,
+}, {
+    id: 5,
+    product: 'Product 5',
+    brand: 'Brand B',
+    stock: 10,
+}, {
+    id: 6,
+    product: 'Product 6',
+    brand: 'Brand C',
+    stock: 20,
+}, {
+    id: 7,
+    product: 'Product 7',
+    brand: 'Brand C',
+    stock: 7,
 }];
 
 const renderItem = ({ item }) => <ProductItem item={item} />;

@@ -7,7 +7,7 @@ import Theme from '../theme';
 const ProductItemStyle = styled.View`
     width: 99%;
     height: 75px;
-    margin: 20px auto;
+    margin: 15px auto;
     padding-left: 20px;
     shadow-color: #ddd;
     shadow-offset: 1px 1px;
