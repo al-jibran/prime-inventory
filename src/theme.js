@@ -3,7 +3,7 @@ const Theme = {
         heading: 18,
         subheading: 16,
         body: 14,
-        subtex: 11
+        subtext: 11
     },
 
     fontWeight: {
