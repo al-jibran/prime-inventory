@@ -5,8 +5,8 @@ import Inventory from './screens/Inventory';
 
 const Container = styled.View`
     margin-top: ${Constants.statusBarHeight + 15}px;
-    margin-left: 40px;
-    margin-right: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
 `;
 
 const Main = () => {
