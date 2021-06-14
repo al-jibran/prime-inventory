@@ -18,7 +18,7 @@ const products = [{
     id: 3,
     product: 'Product 3',
     brand: 'Brand C',
-    stock: 10,
+    stock: 13,
 }];
 
 const renderItem = ({ item }) => <ProductItem item={item} />;

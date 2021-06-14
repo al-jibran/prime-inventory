@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components';
+import { Text, SubText } from './Text';
+import Theme from '../theme';
 
 const ProductItemStyle = styled.View`
     width: 99%;
@@ -18,16 +20,34 @@ const ProductItemStyle = styled.View`
     border-radius: 10px;
 `;
 
+const Stock = styled.View`
+    width: 75px;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.bgColor || Theme.color.primary};
+    align-self: stretch;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+`;
+
 const ProductItem = ({ item }) => {
+    let color = Theme.color.primary;
+
+    if (item.stock >= 5 && item.stock < 10) {
+        color = Theme.color.warning;
+    } else if (item.stock >= 10) {
+        color = Theme.color.success;
+    }
+
     return (
         <ProductItemStyle>
-            <View style={{flexGrow: 3, flexBasis: '20%'}}>
+            <View style={{ flexGrow: 3, flexBasis: '20%' }}>
                 <Text>{item.product}</Text>
-                <Text>{item.brand}</Text>
+                <SubText>{item.brand}</SubText>
             </View>
-            <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fbca1d', alignSelf: 'stretch', borderTopRightRadius: 10, borderBottomRightRadius: 10 }}>
-                <Text>{item.stock}</Text>
-            </View>
+            <Stock bgColor={color}>
+                <Text fontSize="40" color="white">{item.stock}</Text>
+            </Stock>
         </ProductItemStyle>
     );
 };
