@@ -1,15 +1,28 @@
 import React from 'react';
 import Toolbar from '../components/Toolbar';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
 import styled from 'styled-components';
 
 const SearchStyle = styled.TextInput`
-    margin-top: 20px;
+    margin: 20px auto;
     border: 1px solid black;
     width: 100%;
     border-radius: 30px;
     padding: 5px;
 `;
+
+const ProductItem = styled.View`
+    width: 99%;
+    margin: 20px auto;
+    padding-left: 10px;
+    shadow-color: #ddd;
+    shadow-offset: 1px 1px;
+    shadow-opacity: 1;
+    shadow-radius: 3px;
+    elevation: 5;
+    background-color: #fff;
+`;
+
 
 const products = [{
     id: 1,
@@ -30,11 +43,11 @@ const products = [{
 
 const renderItem = ({ item }) => {
     return (
-        <View>
+        <ProductItem>
             <Text>{item.product}</Text>
             <Text>{item.brand}</Text>
             <Text>{item.stock}</Text>
-        </View>
+        </ProductItem>
     );
 };
 
@@ -43,10 +56,10 @@ const Inventory = () => {
         <View>
             <Toolbar />
             <FlatList
-            ListHeaderComponent={() => <SearchStyle placeholder="Search" clearButtonMode='while-editing' />}
-            data={products} 
-            keyExtractor={item =>  item.id.toString()}
-            renderItem={renderItem} />
+                ListHeaderComponent={() => <SearchStyle placeholder="Search" clearButtonMode='while-editing' />}
+                data={products}
+                keyExtractor={item => item.id.toString()}
+                renderItem={renderItem} />
         </View>
     );
 };
