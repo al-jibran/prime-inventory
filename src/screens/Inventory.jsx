@@ -33,7 +33,7 @@ const renderItem = ({ item }) => {
         <View>
             <Text>{item.product}</Text>
             <Text>{item.brand}</Text>
-            <Text>{item.stock.toString()}</Text>
+            <Text>{item.stock}</Text>
         </View>
     );
 };
@@ -42,10 +42,10 @@ const Inventory = () => {
     return (
         <View>
             <Toolbar />
-            <SearchStyle placeholder="Search" clearButtonMode='while-editing' />
             <FlatList
+            ListHeaderComponent={() => <SearchStyle placeholder="Search" clearButtonMode='while-editing' />}
             data={products} 
-            keyExtractor={item =>  item.id}
+            keyExtractor={item =>  item.id.toString()}
             renderItem={renderItem} />
         </View>
     );
