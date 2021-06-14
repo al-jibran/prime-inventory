@@ -1,7 +1,7 @@
 import React from 'react';
-import Toolbar from './components/Toolbar';
 import styled from 'styled-components';
 import Constants from 'expo-constants';
+import Inventory from './screens/Inventory';
 
 const Container = styled.View`
     margin-top: ${Constants.statusBarHeight}px;
@@ -12,7 +12,7 @@ const Container = styled.View`
 const Main = () => {
     return (
         <Container>
-            <Toolbar />
+            <Inventory />
         </Container>
     );
 };
