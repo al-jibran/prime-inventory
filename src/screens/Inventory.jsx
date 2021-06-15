@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import Toolbar from '../components/Toolbar';
-import { View, FlatList, Modal, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, FlatList } from 'react-native';
 import ProductItem from '../components/ProductItem';
 import Searchbar from '../components/Searchbar';
 import AddProduct from '../components/AddProduct';
-
-const styles = StyleSheet.create({
-    overlay: {
-        backgroundColor: 'rgba(0,0,0,0.2)',
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-});
+import Modal from '../components/Modal';
 
 const products = [{
     id: 1,
@@ -55,11 +48,9 @@ const Inventory = () => {
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem}
                 extraData={refreshData}
-                 />
-            <Modal animated animationType={"fade"} transparent={true} visible={visible}>
-                <KeyboardAvoidingView behavior='position' style={styles.overlay}>
-                    <AddProduct setVisible={setVisible} refreshData={setRefreshData} data={products}/>
-                </KeyboardAvoidingView>
+            />
+            <Modal visible={visible}>
+                <AddProduct setVisible={setVisible} refreshData={setRefreshData} data={products} />
             </Modal>
         </View>
     );
