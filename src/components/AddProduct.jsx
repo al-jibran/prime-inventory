@@ -1,21 +1,30 @@
 import React from 'react';
-import { View, Alert, Pressable, StyleSheet } from 'react-native';
-import { Heading } from './Text';
+import { View, Alert, Pressable } from 'react-native';
+import { Heading, Text } from './Text';
 import { Formik } from 'formik';
 import InputField from './InputField';
 import Theme from '../theme';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    paddingTop: 12,
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderTopRightRadius: 12,
-    borderTopLeftRadius: 12,
-    
-  }
-});
+const FormContainer = styled.View`
+  background-color: white;
+  padding-top: 12px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;  
+  border-top-color: ${Theme.color.primary}; 
+  border: 2px solid;
+`;
+
+const FormActions = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: flex-end;
+  width: 30%;
+  margin-bottom: 40px;
+  margin-top: 10px;
+`;
 
 const initialValue = {
   name: '',
@@ -26,7 +35,7 @@ const initialValue = {
 
 const AddProduct = () => {
   return (
-    <View style={styles.container}>
+    <FormContainer>
       <Heading>Add an item</Heading>
       <Formik initialValues={initialValue} onSubmit={(values) => {
         Alert.alert("Hello", JSON.stringify(values));
@@ -53,12 +62,19 @@ const AddProduct = () => {
               onBlur={handleBlur('comment')}
               value={values.comment} />
 
-            <Pressable onPress={handleSubmit} title="Submit" />
+            <FormActions>
+              <Pressable onPress={handleSubmit}>
+                <Text>Cancel</Text>
+              </Pressable>
+              <Pressable onPress={handleSubmit}>
+                <Text color={Theme.color.primary}>Save</Text>
+              </Pressable>
+            </FormActions>
           </View>
 
         )}
       </Formik>
-    </View>
+    </FormContainer>
   );
 };
 
