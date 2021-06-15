@@ -55,7 +55,7 @@ const Inventory = () => {
                 renderItem={renderItem} />
             <Modal animated animationType={"fade"} transparent={true} visible={visible}>
                 <KeyboardAvoidingView behavior='position' style={styles.overlay}>
-                    <AddProduct />
+                    <AddProduct setVisible={setVisible} />
                 </KeyboardAvoidingView>
             </Modal>
         </View>

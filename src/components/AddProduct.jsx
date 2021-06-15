@@ -8,9 +8,9 @@ import styled from 'styled-components';
 
 const FormContainer = styled.View`
   background-color: white;
-  padding-top: 12px;
-  padding-left: 30px;
-  padding-right: 30px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 25px;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;  
   border-top-color: ${Theme.color.primary}; 
@@ -22,7 +22,6 @@ const FormActions = styled.View`
   justify-content: space-between;
   align-self: flex-end;
   width: 30%;
-  margin-bottom: 40px;
   margin-top: 10px;
 `;
 
@@ -33,14 +32,20 @@ const initialValue = {
   comment: 'Initial stock',
 };
 
-const AddProduct = () => {
+const AddProduct = ({ setVisible }) => {
   return (
     <FormContainer>
-      <Heading>Add an item</Heading>
-      <Formik initialValues={initialValue} onSubmit={(values) => {
-        Alert.alert("Hello", JSON.stringify(values));
-      }}>
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+      <Heading style={({marginBottom: 15})}>Add an item</Heading>
+      <Formik initialValues={initialValue}
+        onSubmit={(values) => {
+          Alert.alert("Hello", JSON.stringify(values));
+        }}
+
+        onReset={(value, formikBag) => {
+          setVisible(false);
+        }}>
+
+        {({ handleChange, handleBlur, handleSubmit, handleReset, values }) => (
           <View>
             <InputField type="text" label="Name"
               onChangeText={handleChange('name')}
@@ -63,7 +68,7 @@ const AddProduct = () => {
               value={values.comment} />
 
             <FormActions>
-              <Pressable onPress={handleSubmit}>
+              <Pressable onPress={handleReset}>
                 <Text>Cancel</Text>
               </Pressable>
               <Pressable onPress={handleSubmit}>

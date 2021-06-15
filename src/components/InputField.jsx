@@ -24,7 +24,8 @@ const InputField = ({ label, type, ...props }) => {
             <Text>{label}</Text>
             <TextInputStyle
                 {...props}
-                keyboardType={type === "number" ? "numeric" : "default"} />
+                keyboardType={type === "number" ? "numeric" : "default"}
+                clearTextOnFocus />
         </Field>
     );
 };
