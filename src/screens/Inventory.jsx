@@ -54,7 +54,7 @@ const Inventory = () => {
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem} />
             <Modal animated animationType={"fade"} transparent={true} visible={visible}>
-                <KeyboardAvoidingView style={styles.overlay}>
+                <KeyboardAvoidingView behavior='position' style={styles.overlay}>
                     <AddProduct />
                 </KeyboardAvoidingView>
             </Modal>
