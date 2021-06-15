@@ -72,14 +72,15 @@ const AddProduct = ({ setVisible, refreshData, data }) => {
           setVisible(false);
         }}>
 
-        {({ handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values }) => (
+        {({ handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values, }) => (
           <View>
             <InputField type="text" label="Name"
               onChangeText={handleChange('name')}
               onBlur={handleBlur('name')}
               value={values.name}
               error={errors.name}
-              touched={touched.name} />
+              touched={touched.name}
+              autoFocus />
 
             <InputField type="number" label="Stock"
               onChangeText={handleChange('stock')}

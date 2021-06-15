@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Pressable, Alert } from 'react-native';
+import { Pressable } from 'react-native';
 import { Text } from './Text';
 
 

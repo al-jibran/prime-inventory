@@ -30,7 +30,7 @@ const InputField = ({ label, type, touched, error, ...props }) => {
             <Field>
                 <Text>{label}</Text>
                 {type === 'text' ?
-                    <TextInputStyle {...props} /> :
+                    <TextInputStyle {...props}/> :
                     <NumberInputStyle {...props} keyboardType="numeric" clearTextOnFocus/>
                 }
             </Field>

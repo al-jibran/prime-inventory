@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Theme from '../theme';
 
 export const Text = styled.Text`
