@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, Pressable, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components';
 import { Text, SubText } from './Text';
 
