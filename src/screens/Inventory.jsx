@@ -44,6 +44,7 @@ const renderItem = ({ item }) => <ProductItem item={item} />;
 
 const Inventory = () => {
     const [visible, setVisible] = useState(false);
+    const [refreshData, setRefreshData] = useState(false);
 
     return (
         <View>
@@ -52,10 +53,12 @@ const Inventory = () => {
                 ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
                 data={products}
                 keyExtractor={item => item.id.toString()}
-                renderItem={renderItem} />
+                renderItem={renderItem}
+                extraData={refreshData}
+                 />
             <Modal animated animationType={"fade"} transparent={true} visible={visible}>
                 <KeyboardAvoidingView behavior='position' style={styles.overlay}>
-                    <AddProduct setVisible={setVisible} />
+                    <AddProduct setVisible={setVisible} refreshData={setRefreshData} data={products}/>
                 </KeyboardAvoidingView>
             </Modal>
         </View>

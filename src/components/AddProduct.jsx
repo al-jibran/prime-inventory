@@ -32,16 +32,18 @@ const initialValue = {
   comment: 'Initial stock',
 };
 
-const AddProduct = ({ setVisible }) => {
+const AddProduct = ({ setVisible, refreshData, data }) => {
   return (
     <FormContainer>
-      <Heading style={({marginBottom: 15})}>Add an item</Heading>
+      <Heading style={({ marginBottom: 15 })}>Add an item</Heading>
       <Formik initialValues={initialValue}
-        onSubmit={(values) => {
-          Alert.alert("Hello", JSON.stringify(values));
+        onSubmit={({ name, stock, brand }) => {
+          data.push({product: name, brand, stock, id: (data.length + 1)});
+          setVisible(false);
+          refreshData(true);
         }}
 
-        onReset={(value, formikBag) => {
+        onReset={() => {
           setVisible(false);
         }}>
 
