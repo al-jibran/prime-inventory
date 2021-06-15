@@ -21,14 +21,7 @@ const TextInputStyle = styled.TextInput`
 
 const NumberInputStyle = styled(TextInputStyle)`
   text-align: center;
-  width: 30%;
-  margin-left: 10px;
-  margin-right: 10px;
-`;
-
-const NumberInput = styled.View`
-    flex-direction: row;
-    justify-content: flex-end;
+  width: 10%;
 `;
 
 const InputField = ({ label, type, touched, error, ...props }) => {
@@ -38,11 +31,7 @@ const InputField = ({ label, type, touched, error, ...props }) => {
                 <Text>{label}</Text>
                 {type === 'text' ?
                     <TextInputStyle {...props} /> :
-                    <NumberInput>
-                        <Text>+</Text>
-                        <NumberInputStyle {...props} keyboardType="numeric" />
-                        <Text>-</Text>
-                    </NumberInput>
+                    <NumberInputStyle {...props} keyboardType="numeric" clearTextOnFocus/>
                 }
             </Field>
             {touched && error ? (<SubText color="red">{error}</SubText>) : null}
