@@ -6,12 +6,14 @@ import InputField from './InputField';
 import Theme from '../theme';
 
 const styles = StyleSheet.create({
-  overlay: {
-      backgroundColor: 'rgba(0,0,0,0.2)',
-      flex: 1,
-      justifyContent: 'flex-end',
-      paddingLeft: 30,
-      paddingRight: 30
+  container: {
+    backgroundColor: "white",
+    paddingTop: 12,
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderTopRightRadius: 12,
+    borderTopLeftRadius: 12,
+    
   }
 });
 
@@ -24,7 +26,7 @@ const initialValue = {
 
 const AddProduct = () => {
   return (
-    <View style={styles.overlay}>
+    <View style={styles.container}>
       <Heading>Add an item</Heading>
       <Formik initialValues={initialValue} onSubmit={(values) => {
         Alert.alert("Hello", JSON.stringify(values));
