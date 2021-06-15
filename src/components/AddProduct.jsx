@@ -31,7 +31,7 @@ const validationSchema = yup.object().shape({
   name: yup
     .string()
     .required("Name of the product is required")
-    .matches("^[a-zA-Z()0-9 ]+$", "Can only contain alpha numeric and parantheses"),
+    .matches("^[a-zA-Z()0-9 ]+$", "Can only contain alpha numeric characters and parantheses"),
 
   stock: yup
     .number()
@@ -42,7 +42,7 @@ const validationSchema = yup.object().shape({
   brand: yup
     .string()
     .required("Brand of the product is required")
-    .matches("^[a-zA-Z()0-9 ]+$", "Can only contain alpha numeric and parantheses"),
+    .matches("^[a-zA-Z()0-9 ]+$", "Can only contain alpha numeric characters and parantheses"),
 
   comment: yup
     .string()
@@ -53,7 +53,7 @@ const initialValue = {
   name: '',
   stock: '0',
   brand: '',
-  comment: 'Initial stock',
+  comment: '',
 };
 
 const AddProduct = ({ setVisible, refreshData, data }) => {
