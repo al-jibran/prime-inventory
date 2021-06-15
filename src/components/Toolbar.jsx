@@ -10,15 +10,19 @@ const ToolbarStyle = styled.View`
     justify-content: space-between;
 `;
 
-const Toolbar = () => {
+const Toolbar = ({visible, toggleModal}) => {
+    const onPressAdd = () => toggleModal(!visible);
+
+
     return (
         <ToolbarStyle>
             <Text>Filter</Text>
             <Text>Inventory</Text>
-            <Pressable onPress={() => { Alert.alert("Clicked On", "Add"); }}>
+            <Pressable onPress={onPressAdd}>
                 <Text>Add</Text>
             </Pressable>
         </ToolbarStyle>
+        
     );
 };
 

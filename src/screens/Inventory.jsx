@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Toolbar from '../components/Toolbar';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Modal, Alert } from 'react-native';
 import ProductItem from '../components/ProductItem';
 import Searchbar from '../components/Searchbar';
 import AddProduct from '../components/AddProduct';
@@ -35,15 +35,19 @@ const products = [{
 const renderItem = ({ item }) => <ProductItem item={item} />;
 
 const Inventory = () => {
+    const [visible, setVisible] = useState(false);
+
     return (
         <View>
-            <Toolbar />
+            <Toolbar visible={visible} toggleModal={setVisible}/>
             <FlatList
                 ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
                 data={products}
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem} />
-            <AddProduct />
+            <Modal animated animationType={"fade"} transparent={true} visible={false}>
+                <AddProduct />
+            </Modal>
         </View>
     );
 };

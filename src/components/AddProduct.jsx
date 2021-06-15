@@ -1,17 +1,19 @@
 import React from 'react';
-import { View, Alert, Pressable } from 'react-native';
+import { View, Alert, Pressable, StyleSheet } from 'react-native';
 import { Heading } from './Text';
 import { Formik } from 'formik';
 import InputField from './InputField';
-import styled from 'styled-components';
 import Theme from '../theme';
 
-const AddForm = styled.View`
-  border-width: 2px;
-  border-color: ${Theme.color.primary};
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
-`;
+const styles = StyleSheet.create({
+  overlay: {
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      flex: 1,
+      justifyContent: 'flex-end',
+      paddingLeft: 30,
+      paddingRight: 30
+  }
+});
 
 const initialValue = {
   name: '',
@@ -22,7 +24,7 @@ const initialValue = {
 
 const AddProduct = () => {
   return (
-    <AddForm>
+    <View style={styles.overlay}>
       <Heading>Add an item</Heading>
       <Formik initialValues={initialValue} onSubmit={(values) => {
         Alert.alert("Hello", JSON.stringify(values));
@@ -54,7 +56,7 @@ const AddProduct = () => {
 
         )}
       </Formik>
-    </AddForm>
+    </View>
   );
 };
 
