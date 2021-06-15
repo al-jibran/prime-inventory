@@ -12,7 +12,7 @@ export const SubText = styled(Text)`
 
 export const Heading = styled(Text)`
     font-size: ${props => props.fontSize  || Theme.fontSize.heading}px;
-    font-weight: ${props => props.fontWeight  || Theme.fontWeight.bold}px;
+    font-weight: ${props => props.fontWeight  || Theme.fontWeight.bold};
 `;
 
 export const SubHeading = styled(Heading)`
