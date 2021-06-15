@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Text } from 'react-native';
+import { Pressable, Alert } from 'react-native';
+import { Text } from './Text';
 
 
 const ToolbarStyle = styled.View`
@@ -14,7 +15,9 @@ const Toolbar = () => {
         <ToolbarStyle>
             <Text>Filter</Text>
             <Text>Inventory</Text>
-            <Text>Add</Text>
+            <Pressable onPress={() => { Alert.alert("Clicked On", "Add"); }}>
+                <Text>Add</Text>
+            </Pressable>
         </ToolbarStyle>
     );
 };
