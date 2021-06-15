@@ -57,27 +57,29 @@ const initialValue = {
 };
 
 const AddProduct = ({ setVisible, refreshData, data }) => {
+  const onSubmit = ({ name, stock, brand }) => {
+    data.push({ product: name, brand, stock, id: (data.length + 1) });
+    setVisible(false);
+    refreshData(true);
+  };
+
   return (
     <FormContainer>
       <Heading style={({ marginBottom: 10 })}>Add an item</Heading>
-      <Formik initialValues={initialValue}
+      <Formik
+        initialValues={initialValue}
         validationSchema={validationSchema}
-        onSubmit={({ name, stock, brand }) => {
-          data.push({ product: name, brand, stock, id: (data.length + 1) });
-          setVisible(false);
-          refreshData(true);
-        }}
-
+        onSubmit={onSubmit}
         onReset={() => {
           setVisible(false);
         }}>
 
         {({ handleSubmit, handleReset }) => (
           <View>
-            <InputField label="Name" type="text" name="name"/>
-            <InputField label="Stock" type="number" name="stock"/>
+            <InputField label="Name" type="text" name="name" />
+            <InputField label="Stock" type="number" name="stock" />
             <InputField label="Brand" type="text" name="brand" />
-            <InputField label="Comment" type="text" name="comment"/>
+            <InputField label="Comment" type="text" name="comment" />
 
             <FormActions>
               <Pressable onPress={handleReset}>
