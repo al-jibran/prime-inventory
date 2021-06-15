@@ -1,4 +1,5 @@
 import React from 'react';
+import { useField } from 'formik';
 import { View } from 'react-native';
 import styled from 'styled-components';
 import { Text, SubText } from './Text';
@@ -24,17 +25,22 @@ const NumberInputStyle = styled(TextInputStyle)`
   width: 10%;
 `;
 
-const InputField = ({ label, type, touched, error, ...props }) => {
+const InputField = ({ label, name, type, ...props }) => {
+    const [field, fieldMeta, fieldHelpers] = useField(name);
+    const showError = fieldMeta.touched && fieldMeta.error;
     return (
         <View>
             <Field>
                 <Text>{label}</Text>
-                {type === 'text' ?
-                    <TextInputStyle {...props}/> :
-                    <NumberInputStyle {...props} keyboardType="numeric" clearTextOnFocus/>
-                }
+                    <TextInputStyle 
+                    value={field.value} 
+                    onChangeText={text => fieldHelpers.setValue(text)} 
+                    onBlur={() => fieldHelpers.setTouched(true)} 
+                    keyboardType={type === "number" ? "numeric": "default"}
+                    {...props} />
+
             </Field>
-            {touched && error ? (<SubText color="red">{error}</SubText>) : null}
+            {showError && <SubText color="red">{fieldMeta.error}</SubText>}
         </View>
     );
 };

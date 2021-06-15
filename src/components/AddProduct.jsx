@@ -72,36 +72,12 @@ const AddProduct = ({ setVisible, refreshData, data }) => {
           setVisible(false);
         }}>
 
-        {({ handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values, }) => (
+        {({ handleSubmit, handleReset }) => (
           <View>
-            <InputField type="text" label="Name"
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
-              value={values.name}
-              error={errors.name}
-              touched={touched.name}
-              autoFocus />
-
-            <InputField type="number" label="Stock"
-              onChangeText={handleChange('stock')}
-              onBlur={handleBlur('stock')}
-              value={values.stock}
-              error={errors.stock}
-              touched={touched.stock} />
-
-            <InputField type="text" label="Brand"
-              onChangeText={handleChange('brand')}
-              onBlur={handleBlur('brand')}
-              value={values.brand}
-              error={errors.brand}
-              touched={touched.brand} />
-
-            <InputField type="text" label="Comment"
-              onChangeText={handleChange('comment')}
-              onBlur={handleBlur('comment')}
-              value={values.comment}
-              error={errors.comment}
-              touched={touched.comment} />
+            <InputField label="Name" type="text" name="name"/>
+            <InputField label="Stock" type="number" name="stock"/>
+            <InputField label="Brand" type="text" name="brand" />
+            <InputField label="Comment" type="text" name="comment"/>
 
             <FormActions>
               <Pressable onPress={handleReset}>
