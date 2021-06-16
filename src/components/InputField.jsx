@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useField } from 'formik';
-import { View, Pressable } from 'react-native';
+import { View, Pressable, Keyboard } from 'react-native';
 import styled from 'styled-components';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -106,17 +106,19 @@ export const DropDownInput = ({ name, items, setItems }) => {
   };
 
   return (
-    <DropDownPicker
-      open={open}
-      value={value}
-      items={items}
-      setOpen={setOpen}
-      setValue={setValue}
-      setItems={setItems}
-      onChangeValue={handleValueChange}
-      style={({ height: 20 })}
-      containerStyle={({ width: 80 })}
-      textStyle={({ fontSize: 11 })}
-    />
+      <DropDownPicker
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+        onChangeValue={handleValueChange}
+        dropDownDirection={"TOP"}
+        onPress={Keyboard.dismiss}
+        style={({ height: 25 })}
+        containerStyle={({ width: 80 })}
+        textStyle={({ fontSize: 11 })}
+      />
   );
 };
