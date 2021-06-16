@@ -39,9 +39,7 @@ export const TextInput = ({ name, ...props }) => {
         value={field.value}
         onChangeText={text => fieldHelpers.setValue(text)}
         onBlur={() => fieldHelpers.setTouched(true)}
-        keyboardType="numeric"
         {...props} />
-
       {showError && <SubText color="red" style={({ flexDirection: 'column' })}>{fieldMeta.error}</SubText>}
     </TextInputStyle>
   );

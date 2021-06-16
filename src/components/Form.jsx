@@ -101,7 +101,7 @@ const Form = ({ handleReset, handleSubmit }) => {
     <View>
       <FieldStyle>
         <Text>Name</Text>
-        <TextInput name="name" />
+        <TextInput name="name" autoCapitalize="words"/>
       </FieldStyle>
 
       <FieldStyle>
@@ -114,7 +114,7 @@ const Form = ({ handleReset, handleSubmit }) => {
 
       <FieldStyle>
         <Text>Brand</Text>
-        <TextInput name="brand" />
+        <TextInput name="brand" autoCapitalize="words" />
       </FieldStyle>
 
       <FieldStyle>
