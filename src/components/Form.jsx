@@ -7,7 +7,8 @@ import * as yup from 'yup';
 import { Heading, Text } from './Text';
 import { TextInput, NumberInput, DropDownInput } from './InputField';
 import Theme from '../theme';
-import UnitStorageContext from '../contexts/UnitStorageContext'
+import UnitStorageContext from '../contexts/UnitStorageContext';
+import { capitalize } from 'lodash';
 
 
 const FormContainer = styled.View`
@@ -84,10 +85,12 @@ const Form = ({ handleReset, handleSubmit }) => {
 
   useEffect(() => {
     unitStorage.getAllKeys().then(keys => {
-      const unitItems = keys.map((key, i) => {
+
+      const unitItems = keys.map((key) => {
         const unit = key.split(':')[1];
-        return ({id: i, label: unit.charAt(0).toUpperCase() + unit.slice(1), value: unit});
+        return ({label: capitalize(unit), value: unit});
       });
+      
       setItems(unitItems);
     }).catch(error => {
       console.log(error);
