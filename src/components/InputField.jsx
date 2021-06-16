@@ -5,19 +5,16 @@ import styled from 'styled-components';
 import { Text, SubText } from './Text';
 
 // Check styled documentation
-const FieldStyle = styled.View`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-bottom: 10px;
+
+const TextInputStyle = styled.View`
+  width: 50%; 
+
 `;
 
 const TextFieldStyle = styled.TextInput`
   border-bottom-color: black;
   border-bottom-width: 1px;
   margin-left: 5px;
-  width: 50%;
 `;
 
 const NumberFieldStyle = styled(TextFieldStyle)`
@@ -31,28 +28,26 @@ const NumberInputStyle = styled.View`
   justify-content: flex-end;
 `;
 
-export const TextInput = ({ label, name, ...props }) => {
+export const TextInput = ({ name, ...props }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
   const showError = fieldMeta.touched && fieldMeta.error;
-  return (
-    <View>
-      <FieldStyle>
-        <Text>{label}</Text>
-        <TextFieldStyle
-          value={field.value}
-          onChangeText={text => fieldHelpers.setValue(text)}
-          onBlur={() => fieldHelpers.setTouched(true)}
-          keyboardType="numeric"
-          {...props} />
 
-      </FieldStyle>
-      {showError && <SubText color="red">{fieldMeta.error}</SubText>}
-    </View>
+  return (
+    <TextInputStyle>
+      <TextFieldStyle
+        value={field.value}
+        onChangeText={text => fieldHelpers.setValue(text)}
+        onBlur={() => fieldHelpers.setTouched(true)}
+        keyboardType="numeric"
+        {...props} />
+
+      {showError && <SubText color="red" style={({ flexDirection: 'column' })}>{fieldMeta.error}</SubText>}
+    </TextInputStyle>
   );
 };
 
 
-export const NumberInput = ({ label, name, ...props }) => {
+export const NumberInput = ({ name, ...props }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
   const showError = fieldMeta.touched && fieldMeta.error;
 
@@ -61,25 +56,26 @@ export const NumberInput = ({ label, name, ...props }) => {
 
   return (
     <View>
-      <FieldStyle>
-        <Text>{label}</Text>
-        <NumberInputStyle>
-          <Pressable onPress={increment}>
-            <Text>+</Text>
-          </Pressable>
-          <NumberFieldStyle
-            value={field.value}
-            onChangeText={text => fieldHelpers.setValue(text)}
-            onBlur={() => fieldHelpers.setTouched(true)}
-            keyboardType="numeric"
-            clearTextOnFocus
-            {...props} />
-            <Pressable onPress={decrement}>
-              <Text>-</Text>
-            </Pressable>
-        </NumberInputStyle>
+      <NumberInputStyle>
 
-      </FieldStyle>
+        <Pressable onPress={increment}>
+          <Text>+</Text>
+        </Pressable>
+
+        <NumberFieldStyle
+          value={field.value}
+          onChangeText={text => fieldHelpers.setValue(text)}
+          onBlur={() => fieldHelpers.setTouched(true)}
+          keyboardType="numeric"
+          clearTextOnFocus
+          {...props} />
+
+        <Pressable onPress={decrement}>
+          <Text>-</Text>
+        </Pressable>
+
+      </NumberInputStyle>
+
       {showError && <SubText color="red">{fieldMeta.error}</SubText>}
     </View>
   );

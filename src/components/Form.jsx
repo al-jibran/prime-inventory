@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import { Heading, Text } from './Text';
-import {TextInput, NumberInput} from './InputField';
+import { TextInput, NumberInput } from './InputField';
 import Theme from '../theme';
 
 
@@ -26,6 +26,14 @@ const FormActions = styled.View`
   align-self: flex-end;
   width: 30%;
   margin-top: 10px;
+`;
+
+const FieldStyle = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
 `;
 
 const validationSchema = yup.object().shape({
@@ -50,7 +58,7 @@ const validationSchema = yup.object().shape({
     .required("Comment is required"),
 });
 
-const Form = ({ initialValue, onSubmit, onReset, heading }) => {
+const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
   return (
     <FormContainer>
       <Heading style={({ marginBottom: 10 })}>{heading}</Heading>
@@ -60,27 +68,50 @@ const Form = ({ initialValue, onSubmit, onReset, heading }) => {
         onSubmit={onSubmit}
         onReset={onReset}>
 
-        {({ handleSubmit, handleReset }) => (
-          <View>
-            <TextInput label="Name" name="name" />
-            <NumberInput label="Stock" name="stock" />
-            <TextInput label="Brand" name="brand" />
-            <TextInput label="Comment" name="comment" />
+        {({ handleSubmit, handleReset }) =>
+          <Form
+            handleReset={handleReset}
+            handleSubmit={handleSubmit} />}
 
-            <FormActions>
-              <Pressable onPress={handleReset}>
-                <Text>Cancel</Text>
-              </Pressable>
-              <Pressable onPress={handleSubmit}>
-                <Text color={Theme.color.primary}>Save</Text>
-              </Pressable>
-            </FormActions>
-          </View>
-
-        )}
       </Formik>
     </FormContainer>
   );
 };
 
-export default Form;
+const Form = ({ handleReset, handleSubmit }) => {
+  return (
+    <View>
+      <FieldStyle>
+        <Text>Name</Text>
+        <TextInput name="name" />
+      </FieldStyle>
+
+      <FieldStyle>
+        <Text>Stock</Text>
+        <NumberInput name="stock" />
+      </FieldStyle>
+
+      <FieldStyle>
+        <Text>Brand</Text>
+        <TextInput name="brand" />
+      </FieldStyle>
+
+      <FieldStyle>
+        <Text>Comment</Text>
+        <TextInput name="comment" />
+      </FieldStyle>
+
+      <FormActions>
+        <Pressable onPress={handleReset}>
+          <Text>Cancel</Text>
+        </Pressable>
+        <Pressable onPress={handleSubmit}>
+          <Text color={Theme.color.primary}>Save</Text>
+        </Pressable>
+      </FormActions>
+
+    </View>
+  );
+};
+
+export default FormHandler;

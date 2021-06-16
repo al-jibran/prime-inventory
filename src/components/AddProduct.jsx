@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from './Form';
+import FormHandler from './Form';
 
 const initialValue = {
   name: '',
@@ -20,7 +20,7 @@ const AddProduct = ({ setVisible, refreshData, data }) => {
   };
 
   return (
-    <Form 
+    <FormHandler 
     initialValue={initialValue} 
     onSubmit={onSubmit} 
     onReset={onReset}
