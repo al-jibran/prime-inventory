@@ -84,15 +84,12 @@ export const NumberInput = ({ name, ...props }) => {
 };
 
 
-export const DropDownInput = ({ name }) => {
+export const DropDownInput = ({ name, items, setItems }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(field.value);
-  const [items, setItems] = useState([
-    { label: "Pcs", value: "pcs" },
-    { label: "Box", value: "box" }
-  ]);
+
 
   const handleValueChange = (value) => {
     fieldHelpers.setValue(value);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { View, Pressable } from 'react-native';
 import { Formik } from 'formik';
@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { Heading, Text } from './Text';
 import { TextInput, NumberInput, DropDownInput } from './InputField';
 import Theme from '../theme';
+import UnitStorageContext from '../contexts/UnitStorageContext'
 
 
 const FormContainer = styled.View`
@@ -78,6 +79,21 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const Form = ({ handleReset, handleSubmit }) => {
+  const [items, setItems] = useState([]);
+  const unitStorage = useContext(UnitStorageContext);
+
+  useEffect(() => {
+    unitStorage.getAllKeys().then(keys => {
+      const unitItems = keys.map((key, i) => {
+        const unit = key.split(':')[1];
+        return ({id: i, label: unit.charAt(0).toUpperCase() + unit.slice(1), value: unit});
+      });
+      setItems(unitItems);
+    }).catch(error => {
+      console.log(error);
+    });
+  }, []);
+
   return (
     <View>
       <FieldStyle>
@@ -87,9 +103,9 @@ const Form = ({ handleReset, handleSubmit }) => {
 
       <FieldStyle>
         <Text>Stock</Text>
-        <View style={({flexDirection: 'row', justifyContent: 'space-between'})}>
+        <View style={({ flexDirection: 'row', justifyContent: 'space-between' })}>
           <NumberInput name="stock" />
-          <DropDownInput name="unit" />
+          <DropDownInput name="unit" items={items} setItems={setItems}/>
         </View>
       </FieldStyle>
 
