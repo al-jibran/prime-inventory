@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 import { View } from 'react-native';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import { Text, SubText } from './Text';
 
 // Check styled documentation
@@ -18,30 +18,50 @@ const TextInputStyle = styled.TextInput`
   border-bottom-width: 1px;
   margin-left: 5px;
   width: 50%;
-  ${({type}) =>
-      (type === "number") && css`text-align: center; width: 10%;`
-  }
 `;
 
-const InputField = ({ label, name, type, ...props }) => {
-    const [field, fieldMeta, fieldHelpers] = useField(name);
-    const showError = fieldMeta.touched && fieldMeta.error;
-    return (
-        <View>
-            <Field>
-                <Text>{label}</Text>
-                    <TextInputStyle 
-                    value={field.value} 
-                    onChangeText={text => fieldHelpers.setValue(text)} 
-                    onBlur={() => fieldHelpers.setTouched(true)} 
-                    type={type}
-                    keyboardType={type === "number" ? "numeric": "default"}
-                    {...props} />
+const NumberInputStyle = styled(TextInputStyle)`
+  text-align: center; 
+  width: 10%;
+`;
 
-            </Field>
-            {showError && <SubText color="red">{fieldMeta.error}</SubText>}
-        </View>
-    );
+export const TextInput = ({ label, name, ...props }) => {
+  const [field, fieldMeta, fieldHelpers] = useField(name);
+  const showError = fieldMeta.touched && fieldMeta.error;
+  return (
+    <View>
+      <Field>
+        <Text>{label}</Text>
+        <TextInputStyle
+          value={field.value}
+          onChangeText={text => fieldHelpers.setValue(text)}
+          onBlur={() => fieldHelpers.setTouched(true)}
+          keyboardType="numeric"
+          {...props} />
+
+      </Field>
+      {showError && <SubText color="red">{fieldMeta.error}</SubText>}
+    </View>
+  );
 };
 
-export default InputField;
+export const NumberInput = ({ label, name, ...props }) => {
+  const [field, fieldMeta, fieldHelpers] = useField(name);
+  const showError = fieldMeta.touched && fieldMeta.error;
+  return (
+    <View>
+      <Field>
+        <Text>{label}</Text>
+        <NumberInputStyle
+          value={field.value}
+          onChangeText={text => fieldHelpers.setValue(text)}
+          onBlur={() => fieldHelpers.setTouched(true)}
+          keyboardType="numeric"
+          clearTextOnFocus
+          {...props} />
+
+      </Field>
+      {showError && <SubText color="red">{fieldMeta.error}</SubText>}
+    </View>
+  );
+};

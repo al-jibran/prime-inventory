@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import { Heading, Text } from './Text';
-import InputField from './InputField';
+import {TextInput, NumberInput} from './InputField';
 import Theme from '../theme';
 
 
@@ -50,37 +50,37 @@ const validationSchema = yup.object().shape({
     .required("Comment is required"),
 });
 
-const Form = ({initialValue, onSubmit, onReset, heading}) => {
-    return (
-        <FormContainer>
-          <Heading style={({ marginBottom: 10 })}>{heading}</Heading>
-          <Formik
-            initialValues={initialValue}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-            onReset={onReset}>
-    
-            {({ handleSubmit, handleReset }) => (
-              <View>
-                <InputField label="Name" type="text" name="name" />
-                <InputField label="Stock" type="number" name="stock" />
-                <InputField label="Brand" type="text" name="brand" />
-                <InputField label="Comment" type="text" name="comment" />
-    
-                <FormActions>
-                  <Pressable onPress={handleReset}>
-                    <Text>Cancel</Text>
-                  </Pressable>
-                  <Pressable onPress={handleSubmit}>
-                    <Text color={Theme.color.primary}>Save</Text>
-                  </Pressable>
-                </FormActions>
-              </View>
-    
-            )}
-          </Formik>
-        </FormContainer>
-      );
+const Form = ({ initialValue, onSubmit, onReset, heading }) => {
+  return (
+    <FormContainer>
+      <Heading style={({ marginBottom: 10 })}>{heading}</Heading>
+      <Formik
+        initialValues={initialValue}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+        onReset={onReset}>
+
+        {({ handleSubmit, handleReset }) => (
+          <View>
+            <TextInput label="Name" name="name" />
+            <NumberInput label="Stock" name="stock" />
+            <TextInput label="Brand" name="brand" />
+            <TextInput label="Comment" name="comment" />
+
+            <FormActions>
+              <Pressable onPress={handleReset}>
+                <Text>Cancel</Text>
+              </Pressable>
+              <Pressable onPress={handleSubmit}>
+                <Text color={Theme.color.primary}>Save</Text>
+              </Pressable>
+            </FormActions>
+          </View>
+
+        )}
+      </Formik>
+    </FormContainer>
+  );
 };
 
 export default Form;
