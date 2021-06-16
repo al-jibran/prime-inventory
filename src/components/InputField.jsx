@@ -46,12 +46,25 @@ export const TextInput = ({ name, ...props }) => {
 };
 
 
-export const NumberInput = ({ name, ...props }) => {
+export const NumberInput = ({ name, min, max, ...props }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
   const showError = fieldMeta.touched && fieldMeta.error;
 
-  const increment = () => fieldHelpers.setValue((parseInt(field.value) + 1).toString());
-  const decrement = () => fieldHelpers.setValue((parseInt(field.value) - 1).toString());
+  const increment = () => {
+    let value = parseInt(field.value) + 1;
+    if (value > max) {
+      value = max;
+    }
+    !isNaN(value) && fieldHelpers.setValue(value.toString());
+  };
+
+  const decrement = () => {
+    let value = parseInt(field.value) - 1;
+    if (value < min || (value < 1 && value > 0)) {
+      value = min;
+    }
+    !isNaN(value) && fieldHelpers.setValue(value.toString());
+  };
 
   return (
     <View>
@@ -65,7 +78,7 @@ export const NumberInput = ({ name, ...props }) => {
           value={field.value}
           onChangeText={text => fieldHelpers.setValue(text)}
           onBlur={() => fieldHelpers.setTouched(true)}
-          keyboardType="numeric"
+          keyboardType="number-pad"
           clearTextOnFocus
           {...props} />
 
@@ -101,7 +114,7 @@ export const DropDownInput = ({ name, items, setItems }) => {
       setValue={setValue}
       setItems={setItems}
       onChangeValue={handleValueChange}
-      style={({ height: 20})}
+      style={({ height: 20 })}
       containerStyle={({ width: 80 })}
       textStyle={({ fontSize: 11 })}
     />
