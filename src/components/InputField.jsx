@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useField } from 'formik';
 import { View, Pressable } from 'react-native';
 import styled from 'styled-components';
-import { Text, SubText } from './Text';
 import DropDownPicker from 'react-native-dropdown-picker';
 
+import { Text, SubText } from './Text';
 
 // Check styled documentation
 
@@ -90,7 +90,7 @@ export const DropDownInput = ({ name }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(field.value);
   const [items, setItems] = useState([
-    { label: "Pcs", value: "pc" },
+    { label: "Pcs", value: "pcs" },
     { label: "Box", value: "box" }
   ]);
 

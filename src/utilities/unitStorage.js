@@ -32,7 +32,7 @@ class UnitStorage {
 
     async getAllKeys() {
         let keys = await AsyncStorage.getAllKeys();
-        console.log(keys);
+        return keys;
     }
 }
 
