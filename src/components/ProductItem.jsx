@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Alert, View, Pressable } from 'react-native';
 import styled from 'styled-components';
 import { Text, SubText } from './Text';
 import Theme from '../theme';
@@ -20,7 +20,7 @@ const ProductItemStyle = styled.View`
     border-radius: 10px;
 `;
 
-const Stock = styled.View`
+const Stock = styled.Pressable`
     width: 75px;
     justify-content: center;
     align-items: center;
@@ -45,7 +45,7 @@ const ProductItem = ({ item }) => {
                 <Text>{item.product}</Text>
                 <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
             </View>
-            <Stock bgColor={color}>
+            <Stock bgColor={color} onPress={() => Alert.alert("Todo", "Implement Form")}>
                 <Text fontSize="40" color="white">{item.stock}</Text>
             </Stock>
         </ProductItemStyle>

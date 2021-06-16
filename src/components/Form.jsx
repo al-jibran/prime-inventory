@@ -41,18 +41,17 @@ const validationSchema = yup.object().shape({
   name: yup
     .string()
     .required("Name of the product is required")
-    .matches("^[a-zA-Z()0-9 ]+$", "Can only contain alpha numeric characters and parantheses"),
+    .matches("^[a-zA-Z()0-9\\- ]+$", "Can only contain alpha numeric characters and parantheses"),
 
   stock: yup
     .number()
     .required("Stock value is required")
-    .min(0, "Stock value must be greater than 0")
     .integer(),
 
   brand: yup
     .string()
     .required("Brand of the product is required")
-    .matches("^[a-zA-Z()0-9 ]+$", "Can only contain alpha numeric characters and parantheses"),
+    .matches("^[a-zA-Z()0-9\\- ]+$", "Can only contain alpha numeric characters and parantheses"),
 
   comment: yup
     .string()
