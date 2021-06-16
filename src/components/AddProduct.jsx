@@ -10,7 +10,15 @@ const initialValue = {
 };
 
 const AddProduct = ({ setVisible, refreshData, data }) => {
-  const onSubmit = ({ name, stock, brand }) => {
+  const onSubmit = ({ name, stock, brand, unit }) => {
+    let factor = 1;
+    if (unit === 'box') {
+      factor = 20;
+    }
+
+    stock = stock * factor;
+
+    console.log(stock);
     data.push({ product: name, brand, stock, id: (data.length + 1) });
     setVisible(false);
     refreshData(true);

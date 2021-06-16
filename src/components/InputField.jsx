@@ -88,19 +88,25 @@ export const DropDownInput = ({ name }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
 
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(field.value);
   const [items, setItems] = useState([
     { label: "Pcs", value: "pc" },
     { label: "Box", value: "box" }
   ]);
 
+  const handleValueChange = (value) => {
+    fieldHelpers.setValue(value);
+  };
+
   return (
     <DropDownPicker
       open={open}
-      value={field.value}
+      value={value}
       items={items}
       setOpen={setOpen}
-      setValue={fieldHelpers.setValue}
+      setValue={setValue}
       setItems={setItems}
+      onChangeValue={handleValueChange}
       style={({ height: 20})}
       containerStyle={({ width: 80 })}
       textStyle={({ fontSize: 11 })}
