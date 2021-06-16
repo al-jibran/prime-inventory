@@ -24,8 +24,7 @@ const NumberFieldStyle = styled(TextFieldStyle)`
 
 const NumberInputStyle = styled.View`
   flex-direction: row;
-  align-self: flex-end;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-left: 10px;
   margin-right: 10px;
 `;

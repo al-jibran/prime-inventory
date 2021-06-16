@@ -106,7 +106,7 @@ const Form = ({ handleReset, handleSubmit }) => {
 
       <FieldStyle>
         <Text>Stock</Text>
-        <View style={({ flexDirection: 'row', justifyContent: 'space-between' })}>
+        <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
           <NumberInput name="stock" />
           <DropDownInput name="unit" items={items} setItems={setItems}/>
         </View>
