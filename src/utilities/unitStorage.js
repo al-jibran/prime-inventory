@@ -29,6 +29,11 @@ class UnitStorage {
             console.log("Failed to remove value:", error.message);
         }
     }
+
+    async getAllKeys() {
+        let keys = await AsyncStorage.getAllKeys();
+        console.log(keys);
+    }
 }
 
 export default UnitStorage;
