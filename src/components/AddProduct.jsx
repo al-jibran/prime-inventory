@@ -6,6 +6,7 @@ const initialValue = {
   stock: '0',
   brand: '',
   comment: '',
+  unit: 'pc'
 };
 
 const AddProduct = ({ setVisible, refreshData, data }) => {

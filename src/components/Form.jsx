@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import { Heading, Text } from './Text';
-import { TextInput, NumberInput } from './InputField';
+import { TextInput, NumberInput, DropDownInput } from './InputField';
 import Theme from '../theme';
 
 
@@ -29,7 +29,6 @@ const FormActions = styled.View`
 `;
 
 const FieldStyle = styled.View`
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
@@ -88,7 +87,10 @@ const Form = ({ handleReset, handleSubmit }) => {
 
       <FieldStyle>
         <Text>Stock</Text>
-        <NumberInput name="stock" />
+        <View style={({flexDirection: 'row', justifyContent: 'space-between'})}>
+          <NumberInput name="stock" />
+          <DropDownInput name="unit" style={({alignSelf: 'flex-end'})}/>
+        </View>
       </FieldStyle>
 
       <FieldStyle>
