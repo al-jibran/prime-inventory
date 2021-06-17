@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
-import UnitStorageContext from '../contexts/UnitStorageContext';
+import UnitStorageContext from '../../contexts/UnitStorageContext';
 import FormHandler from './Form';
-import { useStore } from '../contexts/StoreContext';
-import { addProduct } from '../productReducer';
+import { useStore } from '../../contexts/StoreContext';
+import { addProduct } from '../../productReducer';
 
 const initialValue = {
   name: '',

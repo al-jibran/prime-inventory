@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import UnitStorageContext from '../contexts/UnitStorageContext';
+import UnitStorageContext from '../../contexts/UnitStorageContext';
 import FormHandler from './Form';
-import { useStore } from '../contexts/StoreContext';
-import { editProduct } from '../productReducer';
+import { useStore } from '../../contexts/StoreContext';
+import { editProduct } from '../../productReducer';
 
 const EditProduct = ({ setVisible, data }) => {
   const [, dispatch] = useStore();

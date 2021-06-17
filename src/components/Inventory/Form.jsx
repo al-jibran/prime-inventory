@@ -6,10 +6,10 @@ import * as yup from 'yup';
 import { capitalize } from 'lodash';
 
 
-import { Heading, Text } from './Text';
-import { TextInput, NumberInput, DropDownInput } from './InputField';
-import Theme from '../theme';
-import UnitStorageContext from '../contexts/UnitStorageContext';
+import { Heading, Text } from '../Text';
+import { TextInput, NumberInput, DropDownInput } from '../InputField';
+import Theme from '../../theme';
+import UnitStorageContext from '../../contexts/UnitStorageContext';
 
 
 const FormContainer = styled.View`

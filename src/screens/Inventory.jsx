@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import Toolbar from '../components/Toolbar';
 import { FlatList, Text, Pressable, Alert } from 'react-native';
-import ProductItem from '../components/ProductItem';
+import styled from 'styled-components';
+import Constants from 'expo-constants';
+
+import ProductItem from '../components/Inventory/ProductItem';
 import Searchbar from '../components/Searchbar';
-import AddProduct from '../components/AddProduct';
+import AddProduct from '../components/Inventory/AddProduct';
 import Modal from '../components/Modal';
 import { useStore } from '../contexts/StoreContext';
 import { deleteProduct } from '../productReducer';
-import styled from 'styled-components';
-import Constants from 'expo-constants';
+
 
 
 const Container = styled.View`

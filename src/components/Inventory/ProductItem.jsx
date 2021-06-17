@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import Modal from './Modal';
+import Modal from '../Modal';
 import EditProduct from './EditProduct';
-import { Text, SubText } from './Text';
-import Theme from '../theme';
+import { Text, SubText } from '../Text';
+import Theme from '../../theme';
 
 const ProductItemStyle = styled.View`
     width: 99%;

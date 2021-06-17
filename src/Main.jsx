@@ -2,7 +2,7 @@ import React from 'react';
 import Inventory from './screens/Inventory';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AddProduct from './components/AddProduct';
+import AddProduct from './components/Inventory/AddProduct';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
