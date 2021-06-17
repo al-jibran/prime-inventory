@@ -11,10 +11,7 @@ const renderItem = (item, products) => <ProductItem item={item} products={produc
 
 const Inventory = () => {
     const [visible, setVisible] = useState(false);
-    const [refreshData, setRefreshData] = useState(false);
     const [products] = useStore();
-
-    console.log(products);
 
     return (
         <View>
@@ -24,10 +21,9 @@ const Inventory = () => {
                 data={products}
                 keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => renderItem(item, products)}
-                extraData={refreshData}
             />
             <Modal visible={visible}>
-                <AddProduct setVisible={setVisible} refreshData={setRefreshData} data={products} />
+                <AddProduct setVisible={setVisible} />
             </Modal>
         </View>
     );

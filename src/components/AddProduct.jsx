@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import UnitStorageContext from '../contexts/UnitStorageContext';
 import FormHandler from './Form';
+import { useStore } from '../contexts/StoreContext';
+import { addProduct } from '../productReducer';
 
 const initialValue = {
   name: '',
@@ -10,17 +12,17 @@ const initialValue = {
   unit: 'pcs'
 };
 
-const AddProduct = ({ setVisible, refreshData, data }) => {
+const AddProduct = ({ setVisible }) => {
   const unitStorage = useContext(UnitStorageContext);
+  const [products, dispatch] = useStore();
 
   const onSubmit = async ({ name, stock, brand, unit }) => {
     const unitValueString = await unitStorage.getUnitValue(unit);
     const unitValue = parseInt(unitValueString);
     stock *= unitValue;
 
-    data.push({ product: name, brand, stock, id: (data.length + 1) });
+    dispatch(addProduct({ product: name, brand, stock, id: (products.length + 1) }));
     setVisible(false);
-    refreshData(true);
   };
 
   const onReset = () => {
