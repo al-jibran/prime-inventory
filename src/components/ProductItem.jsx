@@ -33,7 +33,7 @@ const Stock = styled.Pressable`
     border-bottom-right-radius: 10px;
 `;
 
-const ProductItem = ({ item }) => {
+const ProductItem = ({ item, products }) => {
     const [visible, setVisible] = useState(false);
 
     let color = Theme.color.primary;
@@ -58,7 +58,7 @@ const ProductItem = ({ item }) => {
                 <Text fontSize="40" color="white">{item.stock}</Text>
             </Stock>
             <Modal visible={visible}>
-                <EditProduct setVisible={setVisible} refreshData={null} data={item} />
+                <EditProduct setVisible={setVisible} refreshData={null} data={item} products={products} />
             </Modal>
         </ProductItemStyle>
     );

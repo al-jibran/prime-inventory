@@ -33,7 +33,7 @@ const products = [{
     stock: 10,
 }];
 
-const renderItem = ({ item }) => <ProductItem item={item} />;
+const renderItem = ({ item }) => <ProductItem item={item} products={products}/>;
 
 const Inventory = () => {
     const [visible, setVisible] = useState(false);
