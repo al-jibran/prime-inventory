@@ -10,6 +10,7 @@ import { Heading, Text } from '../Text';
 import { TextInput, NumberInput, DropDownInput } from '../InputField';
 import Theme from '../../theme';
 import UnitStorageContext from '../../contexts/UnitStorageContext';
+import { FieldStyle } from '../../styles/common';
 
 
 const FormContainer = styled.View`
@@ -28,13 +29,6 @@ const FormActions = styled.View`
   align-self: flex-end;
   width: 30%;
   margin-top: 10px;
-`;
-
-const FieldStyle = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-bottom: 10px;
 `;
 
 const validationSchema = yup.object().shape({
@@ -99,12 +93,12 @@ const FormView = ({ handleReset, handleSubmit }) => {
 
   return (
     <View>
-      <FieldStyle>
+      <FieldStyle layout="horizontal">
         <Text>Name</Text>
         <TextInput name="name" autoCapitalize="words" width="50%"/>
       </FieldStyle>
 
-      <FieldStyle>
+      <FieldStyle layout="horizontal">
         <Text>Stock</Text>
         <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
           <NumberInput name="stock"/>
@@ -112,12 +106,12 @@ const FormView = ({ handleReset, handleSubmit }) => {
         </View>
       </FieldStyle>
 
-      <FieldStyle>
+      <FieldStyle layout="horizontal">
         <Text>Brand</Text>
         <TextInput name="brand" autoCapitalize="words" width="50%"/>
       </FieldStyle>
 
-      <FieldStyle>
+      <FieldStyle layout="horizontal">
         <Text>Comment</Text>
         <TextInput name="comment" width="50%"/>
       </FieldStyle>
