@@ -43,6 +43,8 @@ const Inventory = () => {
         data={products}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => renderItem(item, products, dispatch)}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
       />
       <Modal visible={visible}>
         <AddProduct setVisible={setVisiblity} />
