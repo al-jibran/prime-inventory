@@ -71,7 +71,7 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
         onReset={onReset}>
 
         {({ handleSubmit, handleReset }) =>
-          <Form
+          <FormView
             handleReset={handleReset}
             handleSubmit={handleSubmit} />}
 
@@ -80,7 +80,7 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
   );
 };
 
-const Form = ({ handleReset, handleSubmit }) => {
+const FormView = ({ handleReset, handleSubmit }) => {
   const [items, setItems] = useState([]);
   const unitStorage = useContext(UnitStorageContext);
 
