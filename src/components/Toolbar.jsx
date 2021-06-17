@@ -8,10 +8,10 @@ const ToolbarStyle = styled.View`
 `;
 
 
-const Toolbar = ({ component }) => {
+const Toolbar = ({ items }) => {
     return (
         <ToolbarStyle>
-            {component()}
+            {items()}
         </ToolbarStyle>
 
     );

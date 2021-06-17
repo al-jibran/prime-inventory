@@ -15,7 +15,7 @@ const Inventory = () => {
 
     return (
         <View>
-            <Toolbar component={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
+            <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
             <FlatList
                 ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
                 data={products}
