@@ -30,7 +30,7 @@ const Inventory = () => {
   const [products, dispatch] = useStore();
 
   return (
-    <Container padLeft={25} padRight={25}>
+    <Container padLeft={20} padRight={20}>
       <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
       <FlatList
         ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}

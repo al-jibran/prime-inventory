@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Searchbar = styled.TextInput`
-    margin-top: 30px;
+    margin-top: 25px;
     margin-bottom: 10px;
     border: 1px solid black;
     width: 100%;

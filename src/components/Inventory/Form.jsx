@@ -15,7 +15,6 @@ import { FieldStyle } from '../../styles/common';
 
 const FormContainer = styled.View`
   background-color: white;
-  justify-content: space-between;
   padding: 25px;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;  
