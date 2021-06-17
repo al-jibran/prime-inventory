@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Pressable } from 'react-native';
-import { Text } from './Text';
-
 
 const ToolbarStyle = styled.View`
     display: flex;
@@ -10,19 +7,11 @@ const ToolbarStyle = styled.View`
     justify-content: space-between;
 `;
 
-const Toolbar = ({ visible, toggleModal }) => {
-    const onPressAdd = () => {
-        toggleModal(!visible);
-    };
 
-
+const Toolbar = ({ component }) => {
     return (
         <ToolbarStyle>
-            <Text>Filter</Text>
-            <Text>Inventory</Text>
-            <Pressable onPress={onPressAdd}>
-                <Text>Add</Text>
-            </Pressable>
+            {component()}
         </ToolbarStyle>
 
     );

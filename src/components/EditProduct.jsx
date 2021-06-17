@@ -6,6 +6,8 @@ import { editProduct } from '../productReducer';
 
 const EditProduct = ({ setVisible, data }) => {
   const [, dispatch] = useStore();
+  const unitStorage = useContext(UnitStorageContext);
+
 
   const initialValue = {
     name: data.product,
@@ -14,8 +16,6 @@ const EditProduct = ({ setVisible, data }) => {
     comment: '',
     unit: 'pcs',
   };
-
-  const unitStorage = useContext(UnitStorageContext);
 
   const onSubmit = async ({ name, stock, brand, unit }) => {
     const unitValueString = await unitStorage.getUnitValue(unit);

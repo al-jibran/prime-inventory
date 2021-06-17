@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Toolbar from '../components/Toolbar';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Text, Pressable } from 'react-native';
 import ProductItem from '../components/ProductItem';
 import Searchbar from '../components/Searchbar';
 import AddProduct from '../components/AddProduct';
@@ -10,12 +10,12 @@ import { useStore } from '../contexts/StoreContext';
 const renderItem = (item, products) => <ProductItem item={item} products={products} />;
 
 const Inventory = () => {
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisiblity] = useState(false);
     const [products] = useStore();
 
     return (
         <View>
-            <Toolbar visible={visible} toggleModal={setVisible} />
+            <Toolbar component={() => ToolbarItems(visible, setVisiblity)} />
             <FlatList
                 ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
                 data={products}
@@ -23,9 +23,25 @@ const Inventory = () => {
                 renderItem={({ item }) => renderItem(item, products)}
             />
             <Modal visible={visible}>
-                <AddProduct setVisible={setVisible} />
+                <AddProduct setVisible={setVisiblity} />
             </Modal>
         </View>
+    );
+};
+
+const ToolbarItems = ({ visible, toggleModal }) => {
+    const onPressAdd = () => {
+        toggleModal(!visible);
+    };
+
+    return (
+        <>
+            <Text>Filter</Text>
+            <Text>Inventory</Text>
+            <Pressable onPress={onPressAdd}>
+                <Text>Add</Text>
+            </Pressable>
+        </>
     );
 };
 
