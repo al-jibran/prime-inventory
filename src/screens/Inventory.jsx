@@ -5,39 +5,16 @@ import ProductItem from '../components/ProductItem';
 import Searchbar from '../components/Searchbar';
 import AddProduct from '../components/AddProduct';
 import Modal from '../components/Modal';
+import { useStore } from '../contexts/StoreContext';
 
-const products = [{
-    id: 1,
-    product: 'Product 1',
-    brand: 'Brand A',
-    stock: 5,
-}, {
-    id: 2,
-    product: 'Product 2',
-    brand: 'Brand B',
-    stock: 1,
-}, {
-    id: 3,
-    product: 'Product 3',
-    brand: 'Brand C',
-    stock: 13,
-}, {
-    id: 4,
-    product: 'Product 4',
-    brand: 'Brand A',
-    stock: 2,
-}, {
-    id: 5,
-    product: 'Product 5',
-    brand: 'Brand B',
-    stock: 10,
-}];
-
-const renderItem = ({ item }) => <ProductItem item={item} products={products}/>;
+const renderItem = (item, products) => <ProductItem item={item} products={products} />;
 
 const Inventory = () => {
     const [visible, setVisible] = useState(false);
     const [refreshData, setRefreshData] = useState(false);
+    const [products] = useStore();
+
+    console.log(products);
 
     return (
         <View>
@@ -46,7 +23,7 @@ const Inventory = () => {
                 ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
                 data={products}
                 keyExtractor={item => item.id.toString()}
-                renderItem={renderItem}
+                renderItem={({ item }) => renderItem(item, products)}
                 extraData={refreshData}
             />
             <Modal visible={visible}>
