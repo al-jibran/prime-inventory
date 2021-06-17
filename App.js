@@ -3,6 +3,8 @@ import Main from './src/Main';
 
 import UnitStorageContext from './src/contexts/UnitStorageContext';
 import UnitStorage from './src/utilities/unitStorage';
+import { StoreProvider } from './src/contexts/StoreContext';
+import { initialState, productReducer } from './src/productReducer';
 
 const unitStorage = new UnitStorage();
 
@@ -34,7 +36,9 @@ const App = () => {
 
   return (
     <UnitStorageContext.Provider value={unitStorage}>
-      <Main />
+      <StoreProvider initialState={initialState} productReducer={productReducer}>
+        <Main />
+      </StoreProvider>
     </UnitStorageContext.Provider>
   );
 };
