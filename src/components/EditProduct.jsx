@@ -1,17 +1,19 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import UnitStorageContext from '../contexts/UnitStorageContext';
 import FormHandler from './Form';
+import { useStore } from '../contexts/StoreContext';
+import { editProduct } from '../productReducer';
 
-const EditProduct = ({ setVisible, refreshData, data, products }) => {
-    const initialValue = {
-        name: data.product,
-        stock: "0",
-        brand: data.brand,
-        comment: '',
-        unit: 'pcs',
-      };
+const EditProduct = ({ setVisible, data }) => {
+  const [, dispatch] = useStore();
 
-
+  const initialValue = {
+    name: data.product,
+    stock: "0",
+    brand: data.brand,
+    comment: '',
+    unit: 'pcs',
+  };
 
   const unitStorage = useContext(UnitStorageContext);
 
@@ -20,11 +22,9 @@ const EditProduct = ({ setVisible, refreshData, data, products }) => {
     const unitValue = parseInt(unitValueString);
     stock *= unitValue;
 
-    const product = products.find(p => p.id === data.id);
-    console.log(product);
+    dispatch(editProduct({ product: name, brand, stock, id: data.id }));
 
     setVisible(false);
-    // refreshData(true);
   };
 
   const onReset = () => {
@@ -32,11 +32,11 @@ const EditProduct = ({ setVisible, refreshData, data, products }) => {
   };
 
   return (
-    <FormHandler 
-    initialValue={initialValue} 
-    onSubmit={onSubmit} 
-    onReset={onReset}
-    heading="Edit product" />
+    <FormHandler
+      initialValue={initialValue}
+      onSubmit={onSubmit}
+      onReset={onReset}
+      heading="Edit product" />
   );
 };
 
