@@ -14,3 +14,10 @@ export const FieldStyle = styled.View`
     margin-top: 10px;
     margin-bottom: 10px;
 `;
+
+export const SearchInput = styled.TextInput`
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 30px;
+  padding: 6px;
+`;

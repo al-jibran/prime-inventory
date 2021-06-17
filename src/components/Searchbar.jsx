@@ -1,12 +1,9 @@
 import styled from 'styled-components';
+import { SearchInput } from '../styles/common';
 
-const Searchbar = styled.TextInput`
-    margin-top: 25px;
-    margin-bottom: 10px;
-    border: 1px solid black;
-    width: 100%;
-    border-radius: 30px;
-    padding: 5px;
+const Searchbar = styled(SearchInput)`
+  margin-top: 25px;
+  margin-bottom: 10px;
 `;
 
 export default Searchbar;
