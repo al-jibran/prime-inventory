@@ -9,7 +9,7 @@ import { Text, SubText } from './Text';
 // Check styled documentation
 
 const TextInputStyle = styled.View`
-  width: 50%; 
+  width: ${props => props.width || '100%'}; 
 `;
 
 const TextFieldStyle = styled.TextInput`
@@ -29,12 +29,12 @@ const NumberInputStyle = styled.View`
   margin-right: 10px;
 `;
 
-export const TextInput = ({ name, ...props }) => {
+export const TextInput = ({ name, width, ...props }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
   const showError = fieldMeta.touched && fieldMeta.error;
 
   return (
-    <TextInputStyle>
+    <TextInputStyle width={width}>
       <TextFieldStyle
         value={field.value}
         onChangeText={text => fieldHelpers.setValue(text)}

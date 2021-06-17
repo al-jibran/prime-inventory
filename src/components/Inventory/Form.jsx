@@ -14,7 +14,6 @@ import UnitStorageContext from '../../contexts/UnitStorageContext';
 
 const FormContainer = styled.View`
   background-color: white;
-  flex-direction: column;
   justify-content: space-between;
   padding: 25px;
   border-top-right-radius: 12px;
@@ -102,7 +101,7 @@ const FormView = ({ handleReset, handleSubmit }) => {
     <View>
       <FieldStyle>
         <Text>Name</Text>
-        <TextInput name="name" autoCapitalize="words"/>
+        <TextInput name="name" autoCapitalize="words" width="50%"/>
       </FieldStyle>
 
       <FieldStyle>
@@ -115,12 +114,12 @@ const FormView = ({ handleReset, handleSubmit }) => {
 
       <FieldStyle>
         <Text>Brand</Text>
-        <TextInput name="brand" autoCapitalize="words" />
+        <TextInput name="brand" autoCapitalize="words" width="50%"/>
       </FieldStyle>
 
       <FieldStyle>
         <Text>Comment</Text>
-        <TextInput name="comment" />
+        <TextInput name="comment" width="50%"/>
       </FieldStyle>
 
       <FormActions>
