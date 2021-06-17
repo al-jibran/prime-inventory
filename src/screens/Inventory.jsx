@@ -12,7 +12,7 @@ import { deleteProduct } from '../productReducer';
 import Toolbar from '../components/Toolbar';
 
 //Styles
-import { Container } from '../components/styles/common';
+import { Container } from '../styles/common';
 
 const renderItem = (item, products, dispatch) => {
   const deleteTitle = `Delete ${item.product}?`;
