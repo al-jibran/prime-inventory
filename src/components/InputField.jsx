@@ -78,7 +78,6 @@ export const NumberInput = ({ name, min, max, ...props }) => {
           value={field.value}
           onChangeText={text => fieldHelpers.setValue(text)}
           onBlur={() => fieldHelpers.setTouched(true)}
-          keyboardType="number-pad"
           clearTextOnFocus
           {...props} />
 

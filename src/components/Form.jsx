@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { View, Pressable } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { capitalize } from 'lodash';
+
 
 import { Heading, Text } from './Text';
 import { TextInput, NumberInput, DropDownInput } from './InputField';
 import Theme from '../theme';
 import UnitStorageContext from '../contexts/UnitStorageContext';
-import { capitalize } from 'lodash';
 
 
 const FormContainer = styled.View`
@@ -44,9 +45,10 @@ const validationSchema = yup.object().shape({
     .matches("^[a-zA-Z()0-9\\- ]+$", "Can only contain alpha numeric characters and parantheses"),
 
   stock: yup
-    .number()
+    .string()
     .required("Stock value is required")
-    .integer(),
+    .matches("^[0-9\\-]+$", "Enter valid numbers")
+    .default(0),
 
   brand: yup
     .string()
@@ -106,7 +108,7 @@ const Form = ({ handleReset, handleSubmit }) => {
       <FieldStyle>
         <Text>Stock</Text>
         <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
-          <NumberInput name="stock" min={0}/>
+          <NumberInput name="stock"/>
           <DropDownInput name="unit" items={items} setItems={setItems} z-index={29999}/>
         </View>
       </FieldStyle>
