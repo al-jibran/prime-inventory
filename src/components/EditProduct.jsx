@@ -20,7 +20,8 @@ const EditProduct = ({ setVisible, data }) => {
   const onSubmit = async ({ name, stock, brand, unit }) => {
     const unitValueString = await unitStorage.getUnitValue(unit);
     const unitValue = parseInt(unitValueString);
-    stock *= unitValue;
+    const changeBy = parseInt(stock);
+    stock = data.stock + (changeBy * unitValue);
 
     dispatch(editProduct({ product: name, brand, stock, id: data.id }));
 

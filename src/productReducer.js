@@ -31,8 +31,7 @@ export const reducer = (state, action) => {
         case 'ADD_PRODUCT': return state.concat(action.payload);
         case 'EDIT_PRODUCT': {
             const product = action.payload;
-            const newState = state.map(p => p.id !== product.id ? p : product);
-            return newState;
+            return state.map(p => p.id !== product.id ? p : product);
         }
         default: return state;
     }
