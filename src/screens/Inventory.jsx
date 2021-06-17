@@ -6,12 +6,13 @@ import Searchbar from '../components/Searchbar';
 import AddProduct from '../components/AddProduct';
 import Modal from '../components/Modal';
 import { useStore } from '../contexts/StoreContext';
+import { deleteProduct } from '../productReducer';
 
-const renderItem = (item, products) => {
+const renderItem = (item, products, dispatch) => {
     const deleteTitle = `Delete ${item.product}?`;
     const deleteMessage = `The product ${item.product} from ${item.brand} will be deleted permanently.\n\nDo you want to continue?`;
     const buttons = [{ text: "Cancel", onPress: null, style: "cancel" },
-    { text: "Yes", onPress: () => Alert.alert("Deleted") }];
+    { text: "Yes", onPress: () => dispatch(deleteProduct(item.id)) }];
 
 return (<Pressable onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}>
     <ProductItem item={item} products={products} />
@@ -29,7 +30,7 @@ const Inventory = () => {
                 ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
                 data={products}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => renderItem(item, products)}
+                renderItem={({ item }) => renderItem(item, products, dispatch)}
             />
             <Modal visible={visible}>
                 <AddProduct setVisible={setVisiblity} />

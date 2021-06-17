@@ -33,6 +33,9 @@ export const reducer = (state, action) => {
             const product = action.payload;
             return state.map(p => p.id !== product.id ? p : product);
         }
+        case 'DELETE_PRODUCT': {
+            return state.filter(product => product.id !== action.payload.id);
+        }
         default: return state;
     }
 };
@@ -56,3 +59,12 @@ export const editProduct = (product) => {
         payload: product,
     };
 } ;
+
+export const deleteProduct = (id) => {
+    return {
+        type: 'DELETE_PRODUCT',
+        payload: {
+            id
+        }
+    };
+};
