@@ -10,23 +10,25 @@ const Tab = createBottomTabNavigator();
 const Main = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={({ route }) => ({
-        // eslint-disable-next-line react/display-name
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+      <Tab.Navigator
+        sceneContainerStyle={({ backgroundColor: 'white' })}
+        screenOptions={({ route }) => ({
+          // eslint-disable-next-line react/display-name
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
 
-          if (route.name === 'Inventory') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
-          } else if (route.name === 'Bills') {
-            iconName = `ios-list`;
-          }
+            if (route.name === 'Inventory') {
+              iconName = focused
+                ? 'ios-information-circle'
+                : 'ios-information-circle-outline';
+            } else if (route.name === 'Bills') {
+              iconName = `ios-list`;
+            }
 
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
 
-      })} initialRouteName="Bills">
+        })} initialRouteName="Bills">
         <Tab.Screen name="Bills" component={AddProduct} />
         <Tab.Screen name="Inventory" component={Inventory} />
       </Tab.Navigator>
