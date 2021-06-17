@@ -1,24 +1,18 @@
+// Native Imports
 import React, { useState } from 'react';
-import Toolbar from '../components/Toolbar';
 import { FlatList, Text, Pressable, Alert } from 'react-native';
-import styled from 'styled-components';
-import Constants from 'expo-constants';
 
+// Custom Imports
 import ProductItem from '../components/Inventory/ProductItem';
 import Searchbar from '../components/Searchbar';
 import AddProduct from '../components/Inventory/AddProduct';
 import Modal from '../components/Modal';
 import { useStore } from '../contexts/StoreContext';
 import { deleteProduct } from '../productReducer';
+import Toolbar from '../components/Toolbar';
 
-
-
-const Container = styled.View`
-    margin-top: ${Constants.statusBarHeight + 15}px;
-    padding-left: 30px;
-    padding-right: 30px;
-`;
-
+//Styles
+import { Container } from '../components/styles/common';
 
 const renderItem = (item, products, dispatch) => {
   const deleteTitle = `Delete ${item.product}?`;
@@ -36,7 +30,7 @@ const Inventory = () => {
   const [products, dispatch] = useStore();
 
   return (
-    <Container>
+    <Container padLeft={25} padRight={25}>
       <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
       <FlatList
         ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
