@@ -2,7 +2,7 @@ import React from 'react';
 import Inventory from './screens/Inventory';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AddProduct from './components/Inventory/AddProduct';
+import Bills from './screens/Bills';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
@@ -29,7 +29,7 @@ const Main = () => {
           },
 
         })} initialRouteName="Bills">
-        <Tab.Screen name="Bills" component={AddProduct} />
+        <Tab.Screen name="Bills" component={Bills} />
         <Tab.Screen name="Inventory" component={Inventory} />
       </Tab.Navigator>
     </NavigationContainer>
