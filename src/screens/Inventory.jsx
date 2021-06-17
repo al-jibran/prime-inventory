@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import Toolbar from '../components/Toolbar';
-import { View, FlatList, Text, Pressable } from 'react-native';
+import { View, FlatList, Text, Pressable, Alert } from 'react-native';
 import ProductItem from '../components/ProductItem';
 import Searchbar from '../components/Searchbar';
 import AddProduct from '../components/AddProduct';
 import Modal from '../components/Modal';
 import { useStore } from '../contexts/StoreContext';
 
-const renderItem = (item, products) => <ProductItem item={item} products={products} />;
+const renderItem = (item, products) => {
+    const deleteTitle = `Delete ${item.product}?`;
+    const deleteMessage = `The product ${item.product} from ${item.brand} will be deleted permanently.\n\nDo you want to continue?`;
+    const buttons = [{ text: "Cancel", onPress: null, style: "cancel" },
+    { text: "Yes", onPress: () => Alert.alert("Deleted") }];
+
+return (<Pressable onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}>
+    <ProductItem item={item} products={products} />
+</Pressable>);
+};
 
 const Inventory = () => {
     const [visible, setVisiblity] = useState(false);
-    const [products] = useStore();
+    const [products, dispatch] = useStore();
 
     return (
         <View>
