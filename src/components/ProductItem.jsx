@@ -1,6 +1,9 @@
-import React from 'react';
-import { Alert, View, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components';
+
+import Modal from './Modal';
+import EditProduct from './EditProduct';
 import { Text, SubText } from './Text';
 import Theme from '../theme';
 
@@ -31,6 +34,8 @@ const Stock = styled.Pressable`
 `;
 
 const ProductItem = ({ item }) => {
+    const [visible, setVisible] = useState(false);
+
     let color = Theme.color.primary;
 
     if (item.stock >= 5 && item.stock < 10) {
@@ -39,15 +44,22 @@ const ProductItem = ({ item }) => {
         color = Theme.color.success;
     }
 
+    const handleStockPress = () => {
+        setVisible(true);
+    };
+
     return (
         <ProductItemStyle>
             <View style={{ flexGrow: 3, flexBasis: '20%' }}>
                 <Text>{item.product}</Text>
                 <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
             </View>
-            <Stock bgColor={color} onPress={() => Alert.alert("Todo", "Implement Form")}>
+            <Stock bgColor={color} onPress={handleStockPress}>
                 <Text fontSize="40" color="white">{item.stock}</Text>
             </Stock>
+            <Modal visible={visible}>
+                <EditProduct setVisible={setVisible} refreshData={null} data={item} />
+            </Modal>
         </ProductItemStyle>
     );
 };

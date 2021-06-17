@@ -4,11 +4,11 @@ import FormHandler from './Form';
 
 const EditProduct = ({ setVisible, refreshData, data, items }) => {
     const initialValue = {
-        name: data.name,
-        stock: data.stock,
+        name: data.product,
+        stock: (data.stock).toString(),
         brand: data.brand,
         comment: '',
-        unit: data.stock,
+        unit: 'pcs',
       };
 
   const unitStorage = useContext(UnitStorageContext);
@@ -16,11 +16,12 @@ const EditProduct = ({ setVisible, refreshData, data, items }) => {
   const onSubmit = async ({ name, stock, brand, unit }) => {
     const unitValueString = await unitStorage.getUnitValue(unit);
     const unitValue = parseInt(unitValueString);
+    console.log(unitValue);
     stock *= unitValue;
 
-    items.push({ product: name, brand, stock, id: (data.length + 1) });
+    console.log(name, stock, brand, unit);
     setVisible(false);
-    refreshData(true);
+    // refreshData(true);
   };
 
   const onReset = () => {
