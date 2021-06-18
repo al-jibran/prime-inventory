@@ -12,7 +12,8 @@ import { useStore } from '../../contexts/StoreContext';
 const initialValues = {
   stock: "0",
   name: '',
-  id: ''
+  id: '',
+  query: ''
 };
 
 // android will have problems with autocomplete overlapping other elements
@@ -37,9 +38,13 @@ const renderItem = (item, onPress) => {
 const Form = ({ onSubmit }) => {
   const [disabled, setDisabled] = useState(true);
 
+  const onReset = () => {
+    setDisabled(true);
+  };
+
   return (
     <View>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={onSubmit} onReset={onReset}>
         {({ handleSubmit, handleReset }) =>
           <View style={({ marginTop: 10 })}>
             <FieldStyle>
@@ -68,18 +73,18 @@ const AutoCompleteField = ({setDisabled}) => {
   const [products,] = useStore();
   const [, , idFieldHelpers] = useField('id');
   const [, , nameFieldHelpers] = useField('name');
-  const [query, setQuery] = useState('');
+  const [query, , queryHelpers] = useField('query');
   const [hide, setHide] = useState(true);
 
   const filterProducts = () => {
-    return products.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
+    return products.filter(item => item.name.toLowerCase().includes(query.value.toLowerCase()));
   };
 
   const hideResults = () => setHide(true);
   const showResults = () => setHide(false);
 
   const handleOnPress = (item) => {
-    setQuery(item.name);
+    queryHelpers.setValue(item.name);
     idFieldHelpers.setValue(item.id);
     nameFieldHelpers.setValue(item.name);
     setDisabled(false);
@@ -92,18 +97,19 @@ const AutoCompleteField = ({setDisabled}) => {
       <Autocomplete
         data={filterProducts()}
         hideResults={hide}
-        value={query}
+        value={query.value}
         placeholder="Enter product name"
         onTextInput={showResults}
         onSubmitEditing={hideResults}
-        name="name"
+        name="query"
         flatListProps={{
           keyExtractor: (_, idx) => idx.toString(),
           renderItem: ({ item }) => renderItem(item, handleOnPress),
         }}
+        clearButtonMode
         onChangeText={(text) => {
           text.length === 0 && hideResults();
-          setQuery(text);
+          queryHelpers.setValue(text);
           setDisabled(true);
         }}
       />
