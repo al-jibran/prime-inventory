@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { View, Pressable } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';

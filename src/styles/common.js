@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import Constants from 'expo-constants';
 
 // change paddings to 20 if there's no need for custom padding

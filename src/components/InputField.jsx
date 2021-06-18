@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useField } from 'formik';
 import { View, Pressable, Keyboard } from 'react-native';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import { Text, SubText } from './Text';
