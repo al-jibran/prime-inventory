@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import { Formik } from 'formik';
-import { View, Text, FlatList } from 'react-native';
+import { View } from 'react-native';
 
 import { TextInput, NumberInput } from '../InputField';
 import { FieldStyle, SearchInput, FormActions } from '../../styles/common';
 import Button from '../Button';
+import { ProductsList } from '../../screens/Inventory';
+import { Text } from '../Text';
 
 const initialValues = {
   comment: "",
@@ -15,6 +17,8 @@ const initialValues = {
     brand: "Brand A",
   },
 };
+
+const renderItem = (item) => <Text>{item.product}</Text>;
 
 const Form = ({ onSubmit }) => {
   return (
@@ -32,7 +36,7 @@ const Form = ({ onSubmit }) => {
             </FieldStyle>
             <FieldStyle>
               {/* SearchInput should return a product object */}
-              <SearchInput name="product" placeholder="Enter Product" />
+              <ProductsList renderItem={renderItem}/>
             </FieldStyle>
             <FormActions>
               <Button bgColor="white" text={"Clear"} onPress={handleReset} rounded />

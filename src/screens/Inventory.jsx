@@ -32,7 +32,7 @@ const Inventory = () => {
   return (
     <Container padLeft={20} padRight={20}>
       <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
-      <ProductsList />
+      <ProductsList renderItem={renderItem}/>
       <Modal visible={visible}>
         <AddProduct setVisible={setVisiblity} />
       </Modal>
@@ -40,7 +40,7 @@ const Inventory = () => {
   );
 };
 
-export const ProductsList = () => {
+export const ProductsList = ({renderItem}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, dispatch] = useStore();
 
