@@ -15,6 +15,7 @@ import Toolbar from '../components/Toolbar';
 import { Container } from '../styles/common';
 
 const renderItem = (item, products, dispatch) => {
+  // Opens a delete alert with Alert.alert() and displays a title, message and buttons for the action.
   const deleteTitle = `Delete ${item.product}?`;
   const deleteMessage = `The product ${item.product} from ${item.brand} will be deleted permanently.\n\nDo you want to continue?`;
   const buttons = [{ text: "Cancel", onPress: null, style: "cancel" },
@@ -30,6 +31,7 @@ const Inventory = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, dispatch] = useStore();
 
+  // Filters the products based on search query. "" search query displays all products. 
   const filterProducts = () =>
     products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
 
@@ -37,11 +39,11 @@ const Inventory = () => {
     <Container padLeft={20} padRight={20}>
 
       <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
-
+      { /* Searchbar component has to be directly in ListHeaderComponent. Otherwise, the Searchbar loses focus. */}
       <FlatList
         ListHeaderComponent={
           <Searchbar placeholder="Search"
-            onChangeText={query => { setSearchQuery(query); }}
+            onChangeText={query => setSearchQuery(query)}
             value={searchQuery}
             clearButtonMode='while-editing' />
         }
