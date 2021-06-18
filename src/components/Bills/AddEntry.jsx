@@ -13,10 +13,6 @@ const initialValues = {
   query: "",
 };
 
-const LocalContainer = styled.View`
-  margin-top: 20px;
-`;
-
 const entries = [{
   name: "Wheat",
   change: "15",
@@ -42,31 +38,29 @@ const renderItem = (item, index) => {
 
 const AddEntry = () => {
   return (
-    <View>
-      <LocalContainer>
-        <Heading>Add an entry</Heading>
-        <Formik initialValues={initialValues}>
-          <View style={({ marginTop: 10 })}>
-            <FieldStyle>
-              <Text>Comment</Text>
-              <TextInput name="comment" multiline={true} />
-            </FieldStyle>
-            <FieldStyle layout="horizontal">
-              <Text>Quantity</Text>
-              <NumberInput name="stock" />
-            </FieldStyle>
-            <FieldStyle>
-              <SearchInput name="query" placeholder="Enter Product" />
-            </FieldStyle>
-          </View>
-        </Formik>
-      </LocalContainer>
-        <FlatList
-          ListHeaderComponent={() => <Heading>Entries</Heading>}
-          keyExtractor={(item, index) => index}
-          renderItem={({ item, index }) => renderItem(item, index)}
-          data={entries}
-          style={({marginTop: 15})} />
+    <View style={({marginTop: 10})}>
+      <Heading>Add an entry</Heading>
+      <Formik initialValues={initialValues}>
+        <View style={({ marginTop: 10 })}>
+          <FieldStyle>
+            <Text>Comment</Text>
+            <TextInput name="comment" multiline={true} />
+          </FieldStyle>
+          <FieldStyle layout="horizontal">
+            <Text>Quantity</Text>
+            <NumberInput name="stock" />
+          </FieldStyle>
+          <FieldStyle>
+            <SearchInput name="query" placeholder="Enter Product" />
+          </FieldStyle>
+        </View>
+      </Formik>
+      <FlatList
+        ListHeaderComponent={() => <Heading>Entries</Heading>}
+        keyExtractor={(item, index) => index}
+        renderItem={({ item, index }) => renderItem(item, index)}
+        data={entries}
+        style={({ marginTop: 15 })} />
     </View>
   );
 };
