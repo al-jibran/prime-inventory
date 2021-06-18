@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Formik } from 'formik';
+import { Formik, useField } from 'formik';
 import { View, Pressable, Alert, StyleSheet, Platform } from 'react-native';
 
 import { TextInput, NumberInput } from '../InputField';
@@ -12,10 +12,10 @@ import { useStore } from '../../contexts/StoreContext';
 const initialValues = {
   comment: "",
   stock: "0",
-  product: null,
+  product: '',
 };
 
-
+// android will have problems with autocomplete overlapping other elements
 const styles = Platform.OS === 'android' && StyleSheet.create({
   autocompleteContainer: {
     flex: 1,
@@ -35,22 +35,6 @@ const renderItem = (item, onPress) => {
 };
 
 const Form = ({ onSubmit }) => {
-  const [products,] = useStore();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [hide, setHide] = useState(true);
-
-  const filterProducts = () =>
-    products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
-
-  const hideResults = () => setHide(true);
-  const showResults = () => setHide(false);
-
-  const handleOnPress = (item) => {
-    Alert.alert(item.product);
-
-    hideResults();
-
-  };
 
   return (
     <View>
@@ -67,24 +51,7 @@ const Form = ({ onSubmit }) => {
             </FieldStyle>
             <FieldStyle>
               {/* SearchInput should return a product object */}
-              <FieldStyle style={styles.autocompleteContainer, { zIndex: 1343 }}>
-                <Autocomplete
-                  data={filterProducts()}
-                  hideResults={hide}
-                  value={searchQuery}
-                  onChangeText={(text) => {
-                    text.length === 0 && hideResults();
-                    setSearchQuery(text);
-                  }}
-                  onTextInput={showResults}
-                  onSubmitEditing={hideResults}
-                  name="product"
-                  flatListProps={{
-                    keyExtractor: (_, idx) => idx,
-                    renderItem: ({ item }) => renderItem(item, handleOnPress),
-                  }}
-                />
-              </FieldStyle>
+              <AutoCompleteField />
             </FieldStyle>
             <FormActions>
               <Button bgColor="white" text={"Clear"} onPress={handleReset} rounded />
@@ -94,6 +61,44 @@ const Form = ({ onSubmit }) => {
         }
       </Formik>
     </View>
+  );
+};
+
+const AutoCompleteField = () => {
+  const [products,] = useStore();
+  const [field, , fieldHelpers] = useField('product');
+  const [hide, setHide] = useState(true);
+
+  const filterProducts = () =>
+    products.filter(item => item.product.toLowerCase().includes(field.value.toLowerCase()));
+
+  const hideResults = () => setHide(true);
+  const showResults = () => setHide(false);
+
+  const handleOnPress = (item) => {
+    fieldHelpers.setValue(item.product);
+    hideResults();
+  };
+
+  return (
+    <FieldStyle style={styles.autocompleteContainer, { zIndex: 1343 }}>
+      <Autocomplete
+        data={filterProducts()}
+        hideResults={hide}
+        value={field.value}
+        onChangeText={(text) => {
+          text.length === 0 && hideResults();
+          fieldHelpers.setValue(text);
+        }}
+        onTextInput={showResults}
+        onSubmitEditing={hideResults}
+        name="product"
+        flatListProps={{
+          keyExtractor: (_, idx) => idx,
+          renderItem: ({ item }) => renderItem(item, handleOnPress),
+        }}
+      />
+    </FieldStyle>
   );
 };
 
