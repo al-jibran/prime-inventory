@@ -9,7 +9,6 @@ import { Text } from '../Text';
 import Autocomplete from 'react-native-autocomplete-input';
 import { useStore } from '../../contexts/StoreContext';
 
-var times = 0;
 const initialValues = {
   stock: "0",
   product: '',
@@ -67,7 +66,6 @@ const Form = ({ onSubmit }) => {
 };
 
 const AutoCompleteField = ({setDisabled}) => {
-  console.log(`called ${times++}`);
   const [products,] = useStore();
   const [, , idFieldHelpers] = useField('id');
   const [, , productFieldHelpers] = useField('product');
@@ -100,7 +98,7 @@ const AutoCompleteField = ({setDisabled}) => {
         onSubmitEditing={hideResults}
         name="product"
         flatListProps={{
-          keyExtractor: (_, idx) => idx,
+          keyExtractor: (_, idx) => idx.toString(),
           renderItem: ({ item }) => renderItem(item, handleOnPress),
         }}
         onChangeText={(text) => {

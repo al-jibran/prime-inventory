@@ -31,7 +31,7 @@ const AddEntry = () => {
       <Form onSubmit={onSaveEntry}/>
       <FlatList
         ListHeaderComponent={() => <Heading>Entries</Heading>}
-        keyExtractor={(item, index) => index}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => renderItem(item, index)}
         data={entries}
         style={({ marginTop: 15, zIndex: -10000 })} />
