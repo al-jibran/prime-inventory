@@ -30,7 +30,7 @@ const AddEntry = () => {
   }]);
 
   const onSaveEntry = ({comment, stock, product}, {resetForm}) => {
-     setEntries(entries.concat({name: product.name, change: stock}));
+     setEntries(entries.concat({name: product, change: stock}));
      resetForm();
   };
 

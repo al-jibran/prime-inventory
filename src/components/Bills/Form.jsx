@@ -35,7 +35,6 @@ const renderItem = (item, onPress) => {
 };
 
 const Form = ({ onSubmit }) => {
-
   return (
     <View>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -69,8 +68,9 @@ const AutoCompleteField = () => {
   const [field, , fieldHelpers] = useField('product');
   const [hide, setHide] = useState(true);
 
-  const filterProducts = () =>
-    products.filter(item => item.product.toLowerCase().includes(field.value.toLowerCase()));
+  const filterProducts = () => {
+    return products.filter(item => item.product.toLowerCase().includes(field.value.toLowerCase()));
+  };
 
   const hideResults = () => setHide(true);
   const showResults = () => setHide(false);
@@ -81,21 +81,22 @@ const AutoCompleteField = () => {
   };
 
   return (
-    <FieldStyle style={styles.autocompleteContainer, { zIndex: 1343 }}>
+    <FieldStyle style={styles.autocompleteContainer, { zIndex: 999 }}>
       <Autocomplete
         data={filterProducts()}
         hideResults={hide}
         value={field.value}
-        onChangeText={(text) => {
-          text.length === 0 && hideResults();
-          fieldHelpers.setValue(text);
-        }}
+        placeholder="Enter product name"
         onTextInput={showResults}
         onSubmitEditing={hideResults}
         name="product"
         flatListProps={{
           keyExtractor: (_, idx) => idx,
           renderItem: ({ item }) => renderItem(item, handleOnPress),
+        }}
+        onChangeText={(text) => {
+          text.length === 0 && hideResults();
+          fieldHelpers.setValue(text);
         }}
       />
     </FieldStyle>
