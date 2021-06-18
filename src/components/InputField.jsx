@@ -69,10 +69,10 @@ export const NumberInput = ({ name, min, max, ...props }) => {
   return (
     <View>
       <NumberInputStyle>
-
-        <Pressable onPress={increment}>
-          <Text>+</Text>
+        <Pressable onPress={decrement}>
+          <Text>-</Text>
         </Pressable>
+
 
         <NumberFieldStyle
           value={field.value}
@@ -81,9 +81,10 @@ export const NumberInput = ({ name, min, max, ...props }) => {
           clearTextOnFocus
           {...props} />
 
-        <Pressable onPress={decrement}>
-          <Text>-</Text>
+        <Pressable onPress={increment}>
+          <Text>+</Text>
         </Pressable>
+
       </NumberInputStyle>
 
       {showError && <SubText color="red">{fieldMeta.error}</SubText>}
@@ -105,19 +106,19 @@ export const DropDownInput = ({ name, items, setItems }) => {
   };
 
   return (
-      <DropDownPicker
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
-        onChangeValue={handleValueChange}
-        dropDownDirection={"TOP"}
-        onPress={Keyboard.dismiss}
-        style={({ height: 25 })}
-        containerStyle={({ width: 80 })}
-        textStyle={({ fontSize: 11 })}
-      />
+    <DropDownPicker
+      open={open}
+      value={value}
+      items={items}
+      setOpen={setOpen}
+      setValue={setValue}
+      setItems={setItems}
+      onChangeValue={handleValueChange}
+      dropDownDirection={"TOP"}
+      onPress={Keyboard.dismiss}
+      style={({ height: 25 })}
+      containerStyle={({ width: 80 })}
+      textStyle={({ fontSize: 11 })}
+    />
   );
 };
