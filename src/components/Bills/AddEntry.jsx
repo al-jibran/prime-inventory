@@ -16,21 +16,12 @@ const renderItem = (product, index) => {
 };
 
 const AddEntry = () => {
-  const [entries, setEntries] = useState([{
-    name: "Wheat",
-    change: "15",
-  },
-  {
-    name: "Rice",
-    change: "-5",
-  },
-  {
-    name: "Pickle",
-    change: "25",
-  }]);
+  const [entries, setEntries] = useState([]);
 
-  const onSaveEntry = ({comment, stock, product}, {resetForm}) => {
-     setEntries(entries.concat({name: product, change: stock}));
+  console.log(entries);
+
+  const onSaveEntry = ({stock, product,id}, { resetForm}) => {
+     setEntries(entries.concat({productId: id, name: product, change: stock}));
      resetForm();
   };
 

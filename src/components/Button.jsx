@@ -25,6 +25,7 @@ const ButtonContainer = styled.Pressable`
   width: ${props => props.width || '100'}px
   
   ${({ rounded }) => rounded && css`border-radius: 10px`};
+  ${({ disabled }) => disabled && css`opacity: 0.5`};
 `;
 
 

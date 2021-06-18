@@ -9,10 +9,11 @@ import { Text } from '../Text';
 import Autocomplete from 'react-native-autocomplete-input';
 import { useStore } from '../../contexts/StoreContext';
 
+var times = 0;
 const initialValues = {
-  comment: "",
   stock: "0",
   product: '',
+  id: ''
 };
 
 // android will have problems with autocomplete overlapping other elements
@@ -35,6 +36,8 @@ const renderItem = (item, onPress) => {
 };
 
 const Form = ({ onSubmit }) => {
+  const [disabled, setDisabled] = useState(true);
+
   return (
     <View>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -50,11 +53,11 @@ const Form = ({ onSubmit }) => {
             </FieldStyle>
             <FieldStyle>
               {/* SearchInput should return a product object */}
-              <AutoCompleteField />
+              <AutoCompleteField setDisabled={setDisabled}/>
             </FieldStyle>
             <FormActions>
               <Button bgColor="white" text={"Clear"} onPress={handleReset} rounded />
-              <Button bgColor="success" text={"Save"} onPress={(item) => handleSubmit(item, handleReset)} rounded />
+              <Button bgColor="success" disabled={disabled} text={"Save"} onPress={(item) => handleSubmit(item, handleReset)} rounded />
             </FormActions>
           </View>
         }
@@ -63,20 +66,26 @@ const Form = ({ onSubmit }) => {
   );
 };
 
-const AutoCompleteField = () => {
+const AutoCompleteField = ({setDisabled}) => {
+  console.log(`called ${times++}`);
   const [products,] = useStore();
-  const [field, , fieldHelpers] = useField('product');
+  const [, , idFieldHelpers] = useField('id');
+  const [, , productFieldHelpers] = useField('product');
+  const [query, setQuery] = useState('');
   const [hide, setHide] = useState(true);
 
   const filterProducts = () => {
-    return products.filter(item => item.product.toLowerCase().includes(field.value.toLowerCase()));
+    return products.filter(item => item.product.toLowerCase().includes(query.toLowerCase()));
   };
 
   const hideResults = () => setHide(true);
   const showResults = () => setHide(false);
 
   const handleOnPress = (item) => {
-    fieldHelpers.setValue(item.product);
+    setQuery(item.product);
+    idFieldHelpers.setValue(item.id);
+    productFieldHelpers.setValue(item.product);
+    setDisabled(false);
     hideResults();
   };
 
@@ -85,7 +94,7 @@ const AutoCompleteField = () => {
       <Autocomplete
         data={filterProducts()}
         hideResults={hide}
-        value={field.value}
+        value={query}
         placeholder="Enter product name"
         onTextInput={showResults}
         onSubmitEditing={hideResults}
@@ -96,7 +105,8 @@ const AutoCompleteField = () => {
         }}
         onChangeText={(text) => {
           text.length === 0 && hideResults();
-          fieldHelpers.setValue(text);
+          setQuery(text);
+          setDisabled(true);
         }}
       />
     </FieldStyle>
