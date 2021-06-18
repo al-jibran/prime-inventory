@@ -19,8 +19,8 @@ const AddEntry = () => {
   const [entries, setEntries] = useState([]);
   const hideList = entries.length ? {display: ''} : { display: 'none' };
 
-  const onSaveEntry = ({ stock, product, id }, { resetForm }) => {
-    setEntries(entries.concat({ productId: id, name: product, change: stock }));
+  const onSaveEntry = ({ stock, name, id }, { resetForm }) => {
+    setEntries(entries.concat({ id, name, change: stock }));
     resetForm();
   };
 
