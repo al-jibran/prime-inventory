@@ -18,8 +18,8 @@ const ButtonContainer = styled.Pressable`
 
   ${({bgColor}) => bgColor === 'white' && css `border: 1px solid black;`}
 
-  padding-top: ${props => props.padTop || 5}px;
-  padding-bottom: ${props => props.padBottom || 5}px;
+  padding-top: ${props => props.padTop || 8}px;
+  padding-bottom: ${props => props.padBottom || 8}px;
   padding-left: ${props => props.padLeft || 5}px;
   padding-right: ${props => props.padLeft || 5}px;
   width: ${props => props.width || '33'}%

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Formik } from 'formik';
-import styled from 'styled-components/native';
 import { View, FlatList } from 'react-native';
 
 import { Text, Heading } from '../Text';
 import { TextInput, NumberInput } from '../InputField';
 import { FieldStyle, SearchInput } from '../../styles/common';
+import Button from '../Button';
 
 const initialValues = {
   comment: "",
@@ -38,7 +38,7 @@ const renderItem = (item, index) => {
 
 const AddEntry = () => {
   return (
-    <View style={({marginTop: 10})}>
+    <View style={({ marginTop: 10 })}>
       <Heading>Add an entry</Heading>
       <Formik initialValues={initialValues}>
         <View style={({ marginTop: 10 })}>
@@ -52,6 +52,10 @@ const AddEntry = () => {
           </FieldStyle>
           <FieldStyle>
             <SearchInput name="query" placeholder="Enter Product" />
+          </FieldStyle>
+          <FieldStyle>
+            <Button bgColor="white" text={"Cancel"} onPress={null} rounded />
+            <Button bgColor="primary" text={"Save"} onPress={null} rounded />
           </FieldStyle>
         </View>
       </Formik>
