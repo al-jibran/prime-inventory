@@ -1,38 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 
 import { Text, Heading } from '../Text';
 import { FieldStyle } from '../../styles/common';
 import Form from './Form';
 
-const entries = [{
-  name: "Wheat",
-  change: "15",
-},
-{
-  name: "Rice",
-  change: "-5",
-},
-{
-  name: "Pickle",
-  change: "25",
-}];
-
-const renderItem = (item, index) => {
+const renderItem = (product, index) => {
   return (
     <FieldStyle layout="horizontal">
       <Text>{index + 1}</Text>
-      <Text>{item.name}</Text>
-      <Text>{item.change}</Text>
+      <Text>{product.name}</Text>
+      <Text>{product.change > 0 && '+'}{product.change}</Text>
     </FieldStyle>
   );
 };
 
 const AddEntry = () => {
+  const [entries, setEntries] = useState([{
+    name: "Wheat",
+    change: "15",
+  },
+  {
+    name: "Rice",
+    change: "-5",
+  },
+  {
+    name: "Pickle",
+    change: "25",
+  }]);
+
+  const onSaveEntry = ({comment, stock, product}, {resetForm}) => {
+     setEntries(entries.concat({name: product.name, change: stock}));
+     resetForm();
+  };
+
   return (
     <View style={({ marginTop: 10 })}>
       <Heading>Add an entry</Heading>
-      <Form />
+      <Form onSubmit={onSaveEntry}/>
       <FlatList
         ListHeaderComponent={() => <Heading>Entries</Heading>}
         keyExtractor={(item, index) => index}
