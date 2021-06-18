@@ -28,6 +28,19 @@ const renderItem = (item, products, dispatch) => {
 
 const Inventory = () => {
   const [visible, setVisiblity] = useState(false);
+
+  return (
+    <Container padLeft={20} padRight={20}>
+      <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
+      <ProductsList />
+      <Modal visible={visible}>
+        <AddProduct setVisible={setVisiblity} />
+      </Modal>
+    </Container>
+  );
+};
+
+export const ProductsList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, dispatch] = useStore();
 
@@ -35,29 +48,21 @@ const Inventory = () => {
   const filterProducts = () =>
     products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
 
+  { /* Searchbar component has to be directly in ListHeaderComponent. Otherwise, the Searchbar loses focus. */ }
   return (
-    <Container padLeft={20} padRight={20}>
-
-      <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
-      { /* Searchbar component has to be directly in ListHeaderComponent. Otherwise, the Searchbar loses focus. */}
-      <FlatList
-        ListHeaderComponent={
-          <Searchbar placeholder="Search"
-            onChangeText={query => setSearchQuery(query)}
-            value={searchQuery}
-            clearButtonMode='while-editing' />
-        }
-        data={filterProducts()}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => renderItem(item, products, dispatch)}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      />
-
-      <Modal visible={visible}>
-        <AddProduct setVisible={setVisiblity} />
-      </Modal>
-    </Container>
+    <FlatList
+      ListHeaderComponent={
+        <Searchbar placeholder="Search"
+          onChangeText={query => setSearchQuery(query)}
+          value={searchQuery}
+          clearButtonMode='while-editing' />
+      }
+      data={filterProducts()}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => renderItem(item, products, dispatch)}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 

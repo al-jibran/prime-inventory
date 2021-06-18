@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Formik } from 'formik';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 
 import { TextInput, NumberInput } from '../InputField';
 import { FieldStyle, SearchInput, FormActions } from '../../styles/common';
