@@ -1,31 +1,79 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { View } from 'react-native';
+import { View, Pressable, Alert, StyleSheet, Platform } from 'react-native';
 
 import { TextInput, NumberInput } from '../InputField';
-import { FieldStyle, SearchInput, FormActions } from '../../styles/common';
+import { FieldStyle, FormActions } from '../../styles/common';
 import Button from '../Button';
-import { ProductsList } from '../../screens/Inventory';
 import { Text } from '../Text';
+import Autocomplete from 'react-native-autocomplete-input';
+import { useStore } from '../../contexts/StoreContext';
 
 const initialValues = {
   comment: "",
   stock: "0",
-  product: {
-    name: "Product 1",
-    stock: "5",
-    brand: "Brand A",
-  },
+  product: null,
 };
 
-const renderItem = (item) => <Text>{item.product}</Text>;
+
+const styles = Platform.OS === 'android' && StyleSheet.create({
+  autocompleteContainer: {
+    flex: 1,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  }
+});
+
+const renderItem = (item, onPress) => {
+  return (
+    <Pressable onPress={() => onPress(item)}>
+      <Text>{item.product}</Text>
+    </Pressable>
+  );
+};
 
 const Form = ({ onSubmit }) => {
+  const [products,] = useStore();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hide, setHide] = useState(true);
+
+  const filterProducts = () =>
+    products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const hideResults = () => setHide(true);
+  const showResults = () => setHide(false);
+
+  const handleOnPress = (item) => {
+    Alert.alert(item.product);
+
+    hideResults();
+
+  };
+
   return (
     <View>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ handleSubmit, handleReset }) =>
           <View style={({ marginTop: 10 })}>
+            <View style={styles.autocompleteContainer, { zIndex: 1343}}>
+              <Autocomplete
+                data={filterProducts()}
+                hideResults={hide}
+                value={searchQuery}
+                onChangeText={(text) => {
+                  text.length === 0 && hideResults();
+                  setSearchQuery(text);
+                }}
+                onTextInput={showResults}
+                onSubmitEditing={hideResults}
+                name="product"
+                flatListProps={{
+                  keyExtractor: (_, idx) => idx,
+                  renderItem: ({ item }) => renderItem(item, handleOnPress)
+                }} />
+            </View>
             <FieldStyle>
               <Text>Comment</Text>
               <TextInput name="comment" multiline={true} />
@@ -36,7 +84,6 @@ const Form = ({ onSubmit }) => {
             </FieldStyle>
             <FieldStyle>
               {/* SearchInput should return a product object */}
-              <ProductsList renderItem={renderItem}/>
             </FieldStyle>
             <FormActions>
               <Button bgColor="white" text={"Clear"} onPress={handleReset} rounded />
