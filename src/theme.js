@@ -15,7 +15,7 @@ const Theme = {
         textPrimary: "#000000",
         textSecondary: "#ABABAB",
         primary: "#FB1D1D",
-        success: "#1DFB83",
+        success: "#2EDF66",
         warning: "#FBCA1D"
     },
 };

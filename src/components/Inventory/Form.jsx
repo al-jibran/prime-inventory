@@ -10,7 +10,7 @@ import { Heading, Text } from '../Text';
 import { TextInput, NumberInput, DropDownInput } from '../InputField';
 import Theme from '../../theme';
 import UnitStorageContext from '../../contexts/UnitStorageContext';
-import { FieldStyle } from '../../styles/common';
+import { FieldStyle, FormActions } from '../../styles/common';
 
 
 const FormContainer = styled.View`
@@ -20,14 +20,6 @@ const FormContainer = styled.View`
   border-top-left-radius: 12px;  
   border-top-color: ${Theme.color.primary}; 
   border: 2px solid;
-`;
-
-const FormActions = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-self: flex-end;
-  width: 30%;
-  margin-top: 10px;
 `;
 
 const validationSchema = yup.object().shape({
@@ -115,7 +107,7 @@ const FormView = ({ handleReset, handleSubmit }) => {
         <TextInput name="comment" width="50%"/>
       </FieldStyle>
 
-      <FormActions>
+      <FormActions width="30">
         <Pressable onPress={handleReset}>
           <Text>Cancel</Text>
         </Pressable>

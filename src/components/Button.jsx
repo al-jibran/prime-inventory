@@ -22,7 +22,7 @@ const ButtonContainer = styled.Pressable`
   padding-bottom: ${props => props.padBottom || 8}px;
   padding-left: ${props => props.padLeft || 5}px;
   padding-right: ${props => props.padLeft || 5}px;
-  width: ${props => props.width || '33'}%
+  width: ${props => props.width || '100'}px
   
   ${({ rounded }) => rounded && css`border-radius: 10px`};
 `;

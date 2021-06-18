@@ -21,3 +21,11 @@ export const SearchInput = styled.TextInput`
   border-radius: 30px;
   padding: 6px;
 `;
+
+export const FormActions = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: flex-end;
+  width: ${({width}) => width || 100}%;
+  margin-top: 10px;
+`;

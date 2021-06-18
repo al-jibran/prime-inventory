@@ -4,7 +4,7 @@ import { View, FlatList } from 'react-native';
 
 import { Text, Heading } from '../Text';
 import { TextInput, NumberInput } from '../InputField';
-import { FieldStyle, SearchInput } from '../../styles/common';
+import { FieldStyle, SearchInput, FormActions } from '../../styles/common';
 import Button from '../Button';
 
 const initialValues = {
@@ -53,10 +53,10 @@ const AddEntry = () => {
           <FieldStyle>
             <SearchInput name="query" placeholder="Enter Product" />
           </FieldStyle>
-          <FieldStyle>
-            <Button bgColor="white" text={"Cancel"} onPress={null} rounded />
-            <Button bgColor="primary" text={"Save"} onPress={null} rounded />
-          </FieldStyle>
+          <FormActions>
+            <Button bgColor="white" text={"Clear"} onPress={null} rounded />
+            <Button bgColor="success" text={"Save"} onPress={null} rounded />
+          </FormActions>
         </View>
       </Formik>
       <FlatList
