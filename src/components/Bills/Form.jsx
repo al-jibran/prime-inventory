@@ -28,7 +28,7 @@ const styles = Platform.OS === 'android' && StyleSheet.create({
 
 const renderItem = (item, onPress) => {
   return (
-    <Pressable onPress={() => onPress(item)}>
+    <Pressable onPress={() => onPress(item)} style={({ padding: 20 })}>
       <Text>{item.product}</Text>
     </Pressable>
   );
@@ -57,23 +57,6 @@ const Form = ({ onSubmit }) => {
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ handleSubmit, handleReset }) =>
           <View style={({ marginTop: 10 })}>
-            <View style={styles.autocompleteContainer, { zIndex: 1343}}>
-              <Autocomplete
-                data={filterProducts()}
-                hideResults={hide}
-                value={searchQuery}
-                onChangeText={(text) => {
-                  text.length === 0 && hideResults();
-                  setSearchQuery(text);
-                }}
-                onTextInput={showResults}
-                onSubmitEditing={hideResults}
-                name="product"
-                flatListProps={{
-                  keyExtractor: (_, idx) => idx,
-                  renderItem: ({ item }) => renderItem(item, handleOnPress)
-                }} />
-            </View>
             <FieldStyle>
               <Text>Comment</Text>
               <TextInput name="comment" multiline={true} />
@@ -84,6 +67,24 @@ const Form = ({ onSubmit }) => {
             </FieldStyle>
             <FieldStyle>
               {/* SearchInput should return a product object */}
+              <FieldStyle style={styles.autocompleteContainer, { zIndex: 1343 }}>
+                <Autocomplete
+                  data={filterProducts()}
+                  hideResults={hide}
+                  value={searchQuery}
+                  onChangeText={(text) => {
+                    text.length === 0 && hideResults();
+                    setSearchQuery(text);
+                  }}
+                  onTextInput={showResults}
+                  onSubmitEditing={hideResults}
+                  name="product"
+                  flatListProps={{
+                    keyExtractor: (_, idx) => idx,
+                    renderItem: ({ item }) => renderItem(item, handleOnPress),
+                  }}
+                />
+              </FieldStyle>
             </FieldStyle>
             <FormActions>
               <Button bgColor="white" text={"Clear"} onPress={handleReset} rounded />

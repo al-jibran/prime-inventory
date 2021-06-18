@@ -28,4 +28,5 @@ export const FormActions = styled.View`
   align-self: flex-end;
   width: ${({width}) => width || "100"}%;
   margin-top: 10px;
+  z-index: -10000;
 `;

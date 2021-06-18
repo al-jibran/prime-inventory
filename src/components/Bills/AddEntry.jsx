@@ -43,7 +43,7 @@ const AddEntry = () => {
         keyExtractor={(item, index) => index}
         renderItem={({ item, index }) => renderItem(item, index)}
         data={entries}
-        style={({ marginTop: 15 })} />
+        style={({ marginTop: 15, zIndex: -10000 })} />
     </View>
   );
 };
