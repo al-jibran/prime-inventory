@@ -30,15 +30,14 @@ const Inventory = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, dispatch] = useStore();
 
-  const filterProducts = () => {
-    return products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
-  };
+  const filterProducts = () =>
+    products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <Container padLeft={20} padRight={20}>
 
       <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
-      
+
       <FlatList
         ListHeaderComponent={
           <Searchbar placeholder="Search"
