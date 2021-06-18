@@ -17,24 +17,23 @@ const renderItem = (product, index) => {
 
 const AddEntry = () => {
   const [entries, setEntries] = useState([]);
+  const hideList = !entries.length && { display: 'none' };
 
-  console.log(entries);
-
-  const onSaveEntry = ({stock, product,id}, { resetForm}) => {
-     setEntries(entries.concat({productId: id, name: product, change: stock}));
-     resetForm();
+  const onSaveEntry = ({ stock, product, id }, { resetForm }) => {
+    setEntries(entries.concat({ productId: id, name: product, change: stock }));
+    resetForm();
   };
 
   return (
     <View style={({ marginTop: 10 })}>
       <Heading>Add an entry</Heading>
-      <Form onSubmit={onSaveEntry}/>
+      <Form onSubmit={onSaveEntry} />
       <FlatList
         ListHeaderComponent={() => <Heading>Entries</Heading>}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => renderItem(item, index)}
         data={entries}
-        style={({ marginTop: 15, zIndex: -10000 })} />
+        style={({ marginTop: 15, zIndex: -10000, hideList })} />
     </View>
   );
 };
