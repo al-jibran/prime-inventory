@@ -27,19 +27,32 @@ const renderItem = (item, products, dispatch) => {
 
 const Inventory = () => {
   const [visible, setVisiblity] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [products, dispatch] = useStore();
+
+  const filterProducts = () => {
+    return products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
+  };
 
   return (
     <Container padLeft={20} padRight={20}>
+
       <Toolbar items={() => <ToolbarItems visible={visible} toggleModal={setVisiblity} />} />
+      
       <FlatList
-        ListHeaderComponent={() => <Searchbar placeholder="Search" clearButtonMode='while-editing' />}
-        data={products}
+        ListHeaderComponent={
+          <Searchbar placeholder="Search"
+            onChangeText={query => { setSearchQuery(query); }}
+            value={searchQuery}
+            clearButtonMode='while-editing' />
+        }
+        data={filterProducts()}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => renderItem(item, products, dispatch)}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       />
+
       <Modal visible={visible}>
         <AddProduct setVisible={setVisiblity} />
       </Modal>
