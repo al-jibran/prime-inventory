@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, useField } from 'formik';
-import { View, Pressable, Alert, StyleSheet, Platform } from 'react-native';
+import { View, Pressable, StyleSheet, Platform } from 'react-native';
 
 import { TextInput, NumberInput } from '../InputField';
 import { FieldStyle, FormActions } from '../../styles/common';
@@ -11,7 +11,7 @@ import { useStore } from '../../contexts/StoreContext';
 
 const initialValues = {
   stock: "0",
-  product: '',
+  name: '',
   id: ''
 };
 
@@ -29,7 +29,7 @@ const styles = Platform.OS === 'android' && StyleSheet.create({
 const renderItem = (item, onPress) => {
   return (
     <Pressable onPress={() => onPress(item)} style={({ padding: 20 })}>
-      <Text>{item.product}</Text>
+      <Text>{item.name}</Text>
     </Pressable>
   );
 };
@@ -51,12 +51,11 @@ const Form = ({ onSubmit }) => {
               <NumberInput name="stock" />
             </FieldStyle>
             <FieldStyle>
-              {/* SearchInput should return a product object */}
               <AutoCompleteField setDisabled={setDisabled}/>
             </FieldStyle>
             <FormActions>
-              <Button bgColor="white" text={"Clear"} onPress={handleReset} rounded />
-              <Button bgColor="success" disabled={disabled} text={"Save"} onPress={(item) => handleSubmit(item, handleReset)} rounded />
+              <Button bgColor="white" text="Clear" onPress={handleReset} rounded />
+              <Button bgColor="success" disabled={disabled} text="Save" onPress={(item) => handleSubmit(item, handleReset)} rounded />
             </FormActions>
           </View>
         }
@@ -68,21 +67,21 @@ const Form = ({ onSubmit }) => {
 const AutoCompleteField = ({setDisabled}) => {
   const [products,] = useStore();
   const [, , idFieldHelpers] = useField('id');
-  const [, , productFieldHelpers] = useField('product');
+  const [, , nameFieldHelpers] = useField('name');
   const [query, setQuery] = useState('');
   const [hide, setHide] = useState(true);
 
   const filterProducts = () => {
-    return products.filter(item => item.product.toLowerCase().includes(query.toLowerCase()));
+    return products.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
   };
 
   const hideResults = () => setHide(true);
   const showResults = () => setHide(false);
 
   const handleOnPress = (item) => {
-    setQuery(item.product);
+    setQuery(item.name);
     idFieldHelpers.setValue(item.id);
-    productFieldHelpers.setValue(item.product);
+    nameFieldHelpers.setValue(item.name);
     setDisabled(false);
     hideResults();
   };
@@ -96,7 +95,7 @@ const AutoCompleteField = ({setDisabled}) => {
         placeholder="Enter product name"
         onTextInput={showResults}
         onSubmitEditing={hideResults}
-        name="product"
+        name="name"
         flatListProps={{
           keyExtractor: (_, idx) => idx.toString(),
           renderItem: ({ item }) => renderItem(item, handleOnPress),

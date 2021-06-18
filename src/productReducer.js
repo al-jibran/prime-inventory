@@ -1,26 +1,26 @@
 export const initialState = [{
     id: 1,
-    product: 'Product 1',
+    name: 'Product 1',
     brand: 'Brand A',
     stock: 5,
 }, {
     id: 2,
-    product: 'Product 2',
+    name: 'Product 2',
     brand: 'Brand B',
     stock: 1,
 }, {
     id: 3,
-    product: 'Product 3',
+    name: 'Product 3',
     brand: 'Brand C',
     stock: 13,
 }, {
     id: 4,
-    product: 'Product 4',
+    name: 'Product 4',
     brand: 'Brand A',
     stock: 2,
 }, {
     id: 5,
-    product: 'Product 5',
+    name: 'Product 5',
     brand: 'Brand B',
     stock: 10,
 }];

@@ -17,8 +17,8 @@ import { Container } from '../styles/common';
 
 const renderItem = (item, products, dispatch) => {
   // Opens a delete alert with Alert.alert() and displays a title, message and buttons for the action.
-  const deleteTitle = `Delete ${item.product}?`;
-  const deleteMessage = `The product ${item.product} from ${item.brand} will be deleted permanently.\n\nDo you want to continue?`;
+  const deleteTitle = `Delete ${item.name}?`;
+  const deleteMessage = `The product ${item.name} from ${item.brand} will be deleted permanently.\n\nDo you want to continue?`;
   const buttons = [{ text: "Cancel", onPress: null, style: "cancel" },
   { text: "Yes", onPress: () => dispatch(deleteProduct(item.id)) }];
 
@@ -47,7 +47,7 @@ const ProductsList = () => {
 
   // Filters the products based on search query. "" search query displays all products. 
   const filterProducts = () =>
-    products.filter(item => item.product.toLowerCase().includes(searchQuery.toLowerCase()));
+    products.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   { /* Searchbar component has to be directly in ListHeaderComponent. Otherwise, the Searchbar loses focus. */ }
   return (

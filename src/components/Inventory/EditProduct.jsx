@@ -10,7 +10,7 @@ const EditProduct = ({ setVisible, data }) => {
 
 
   const initialValue = {
-    name: data.product,
+    name: data.name,
     stock: "0",
     brand: data.brand,
     comment: '',
@@ -23,7 +23,7 @@ const EditProduct = ({ setVisible, data }) => {
     const changeBy = parseInt(stock);
     stock = data.stock + (changeBy * unitValue);
 
-    dispatch(editProduct({ product: name, brand, stock, id: data.id }));
+    dispatch(editProduct({ name, brand, stock, id: data.id }));
 
     setVisible(false);
   };

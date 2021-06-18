@@ -21,7 +21,7 @@ const AddProduct = ({ setVisible }) => {
     const unitValue = parseInt(unitValueString);
     stock *= unitValue;
 
-    dispatch(addProduct({ product: name, brand, stock, id: (products.length + 1) }));
+    dispatch(addProduct({ name: name, brand, stock, id: (products.length + 1) }));
     setVisible(false);
   };
 
