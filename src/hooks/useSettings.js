@@ -1,33 +1,56 @@
 import { useState, useContext, useEffect } from "react";
 import DeviceStorageContext from "../contexts/DeviceStorageContext";
-import { capitalize } from "lodash";
 
-// name will be used to get settings with a particular key
-// while creating context, use settings:key for settings
-
-// UnitStorageContext.js should be retitled to DeviceStorageContext.js
-// utilities/unitStorage.js should be retitled to deviceStorage.js
-// In App.jsx, change unitStorage to settingStorage with DeviceStorage(setting)
-
-
-export const useSettings = ({ name }) => {
-  const [items, setItems] = useState([]);
-  const unitStorage = useContext(DeviceStorageContext);
+export const useSettings = (key) => {
+  const [setting, setSetting] = useState("");
+  const deviceStorage = useContext(DeviceStorageContext);
 
   useEffect(() => {
-    unitStorage.getAllKeys()
-      .then(keys => {
-        const unitItems = keys.map((key) => {
-          const unit = key.split(':')[1];
-          return ({ label: capitalize(unit), value: unit });
-        });
-        setItems(unitItems);
-      }).catch(error => {
-        console.log(error);
-      });
+    getValue().then(value => { setSetting(value); });
   }, []);
 
-  return {
-    items
+  const getValue = async () => {
+    try {
+      const value = await deviceStorage.getValueStored(key);
+      return value;
+    } catch (error) {
+      throw `Error in getValue: error.message`;
+    }
   };
+
+  const setValue = async (value) => {
+    try {
+      const updatedValue = await deviceStorage.setValueStored(key, value);
+      getValue().then(value => setSetting(value));
+      console.log(updatedValue);
+    } catch (error) {
+      console.log("Error in setValue:", error.message);
+    }
+  };
+
+  const removeValue = async () => {
+    try {
+      await deviceStorage.removeValueStored(key);
+    } catch (error) {
+      console.log("Error in removeValue:", error.message);
+    }
+  };
+
+  const getAllSettings = async () => {
+    try {
+      const keys = await deviceStorage.getAllKeys();
+      return keys;
+    } catch (error) {
+      console.log("Error in getAllSettings:", error.message);
+    }
+  };
+
+  return [
+    setting,
+    {
+      setValue,
+      removeValue,
+      getAllSettings
+    }
+  ];
 };

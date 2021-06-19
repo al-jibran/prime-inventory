@@ -111,7 +111,6 @@ export const DropDownInput = ({ name, items, setItems }) => {
       items={items}
       setOpen={setOpen}
       setValue={setValue}
-      setItems={setItems}
       onChangeValue={handleValueChange}
       dropDownDirection={"TOP"}
       onPress={Keyboard.dismiss}

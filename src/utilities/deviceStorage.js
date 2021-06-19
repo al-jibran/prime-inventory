@@ -3,39 +3,31 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Can be generalized for settings in general in the future.
 
 class DeviceStorage {
-    constructor(namespace) {
-        this.namespace = namespace;
-    }
+  constructor(namespace) {
+    this.namespace = namespace;
+  }
 
-    async getValueStored(key) {
-        try {
-            const valueStored = await AsyncStorage.getItem(`${this.namespace}:${key}`);
-            return valueStored ? valueStored : null;
-        } catch (error) {
-            console.log("Failed to retreive value:", error.message);
-        }
+  async getValueStored(key) {
+    try {
+    const valueStored = await AsyncStorage.getItem(`${this.namespace}:${key}`);
+    return valueStored ? valueStored : "";
+    } catch (error) {
+      console.log("Error in getValueStored", error.message);
     }
+  }
 
-    async setValueStored(key, value) {
-        try {
-            await AsyncStorage.setItem(`${this.namespace}:${key}`, value);
-        } catch (error) {
-            console.log("Failed to set value:", error.message);
-        }
-    }
+  async setValueStored(key, value) {
+    await AsyncStorage.setItem(`${this.namespace}:${key}`, JSON.stringify(value));
+  }
 
-    async removeValueStored(key) {
-        try {
-        await AsyncStorage.removeItem(`${this.namespace}:${key}`);
-        } catch (error) {
-            console.log("Failed to remove value:", error.message);
-        }
-    }
+  async removeValueStored(key) {
+    await AsyncStorage.removeItem(`${this.namespace}:${key}`);
+  }
 
-    async getAllKeys() {
-        let keys = await AsyncStorage.getAllKeys();
-        return keys;
-    }
+  async getAllKeys() {
+    let keys = await AsyncStorage.getAllKeys();
+    return keys;
+  }
 }
 
 export default DeviceStorage;
