@@ -12,7 +12,11 @@ const App = () => {
 
   useEffect(() => {
     const initValue = async () => {
-
+      const units = await deviceStorage.getValueStored('units');
+      if (!units) {
+        console.log(`setting unit values...`);
+        await deviceStorage.setValueStored('units', JSON.stringify({ pcs: 1, box: 20, peti: 10}));
+      }
     };
 
     initValue();
