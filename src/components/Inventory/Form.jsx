@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { View, Pressable } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { capitalize } from 'lodash';
 
 
 import { Heading, Text } from '../Text';
 import { TextInput, NumberInput, DropDownInput } from '../InputField';
 import Theme from '../../theme';
-import UnitStorageContext from '../../contexts/UnitStorageContext';
 import { FieldStyle, FormActions } from '../../styles/common';
 
 
@@ -65,22 +63,7 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
-  const [items, setItems] = useState([]);
-  const unitStorage = useContext(UnitStorageContext);
-
-  useEffect(() => {
-    unitStorage.getAllKeys().then(keys => {
-
-      const unitItems = keys.map((key) => {
-        const unit = key.split(':')[1];
-        return ({label: capitalize(unit), value: unit});
-      });
-      
-      setItems(unitItems);
-    }).catch(error => {
-      console.log(error);
-    });
-  }, []);
+  const [items] = useState([]);
 
   return (
     <View>
@@ -93,7 +76,7 @@ const FormView = ({ handleReset, handleSubmit }) => {
         <Text>Stock</Text>
         <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
           <NumberInput name="stock"/>
-          <DropDownInput name="unit" items={items} setItems={setItems} z-index={29999}/>
+          <DropDownInput name="unit" items={items} z-index={29999}/>
         </View>
       </FieldStyle>
 
