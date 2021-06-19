@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Can be generalized for settings in general in the future.
+
 class UnitStorage {
     constructor(namespace = 'unit') {
         this.namespace = namespace;
