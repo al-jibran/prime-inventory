@@ -10,15 +10,19 @@ import { useEffect } from 'react';
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
-  const [units, operations] = useSettings('units');
+  const [, operations, allSettings] = useSettings('units');
+
   useEffect(() => {
     const initSettings = async () => {
-      if (units) {
-        console.log("Should not be in production. Removing values if there are before any, only for testing.");
+      if ((await allSettings()).length) {
+        console.log("Should not be in production. Removing values if there are any before, only for testing.");
         await operations.removeValue();
       }
       console.log("Adding values to the application...");
       await operations.setValue({pcs: 1, box: 20, peti: 10});
+
+      const keys = await allSettings();
+      console.log("Keys:", keys);
     };
     initSettings();
   }, []);

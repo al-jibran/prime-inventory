@@ -51,7 +51,7 @@ export const useSettings = (key) => {
       getValue,
       setValue,
       removeValue,
-      getAllSettings
-    }
+    },
+    getAllSettings
   ];
 };
