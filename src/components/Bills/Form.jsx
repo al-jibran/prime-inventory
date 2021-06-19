@@ -106,7 +106,7 @@ const AutoCompleteField = ({setDisabled}) => {
           keyExtractor: (_, idx) => idx.toString(),
           renderItem: ({ item }) => renderItem(item, handleOnPress),
         }}
-        clearButtonMode
+        clearButtonMode={'always'}
         onChangeText={(text) => {
           text.length === 0 && hideResults();
           queryHelpers.setValue(text);
