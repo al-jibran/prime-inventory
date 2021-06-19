@@ -55,7 +55,6 @@ const Form = ({ onSubmit }) => {
             <FieldStyle layout="horizontal">
               <Text>Quantity</Text>
               <NumberInput name="stock" />
-              <DropDownInput name="unit"/>
             </FieldStyle>
             <FieldStyle>
               <AutoCompleteField setDisabled={setDisabled}/>

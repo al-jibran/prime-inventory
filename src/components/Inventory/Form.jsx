@@ -63,7 +63,7 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
-  const [items] = useState([]);
+  const { items }= useState([]);
 
   return (
     <View>
