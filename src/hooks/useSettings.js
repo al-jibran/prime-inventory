@@ -7,7 +7,7 @@ export const useSettings = (key) => {
 
   useEffect(() => {
     getValue().then(value => { setSetting(value); });
-  }, []);
+  }, [key]);
 
   const getValue = async () => {
     try {
@@ -20,9 +20,8 @@ export const useSettings = (key) => {
 
   const setValue = async (value) => {
     try {
-      const updatedValue = await deviceStorage.setValueStored(key, value);
+      await deviceStorage.setValueStored(key, value);
       getValue().then(value => setSetting(value));
-      console.log(updatedValue);
     } catch (error) {
       console.log("Error in setValue:", error.message);
     }
@@ -31,6 +30,7 @@ export const useSettings = (key) => {
   const removeValue = async () => {
     try {
       await deviceStorage.removeValueStored(key);
+      getValue().then(value => setSetting(value));
     } catch (error) {
       console.log("Error in removeValue:", error.message);
     }
@@ -48,6 +48,7 @@ export const useSettings = (key) => {
   return [
     setting,
     {
+      getValue,
       setValue,
       removeValue,
       getAllSettings

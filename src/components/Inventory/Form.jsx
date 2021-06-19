@@ -64,8 +64,6 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
-  const [units, operations] = useSettings('units');
-
   return (
     <View>
       <FieldStyle layout="horizontal">
