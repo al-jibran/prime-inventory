@@ -2,31 +2,31 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Can be generalized for settings in general in the future.
 
-class UnitStorage {
-    constructor(namespace = 'unit') {
+class DeviceStorage {
+    constructor(namespace = 'setting') {
         this.namespace = namespace;
     }
 
-    async getUnitValue(unit) {
+    async getValueStored(key) {
         try {
-            const unitValue = await AsyncStorage.getItem(`${this.namespace}:${unit}`);
-            return unitValue ? unitValue : null;
+            const valueStored = await AsyncStorage.getItem(`${this.namespace}:${key}`);
+            return valueStored ? valueStored : null;
         } catch (error) {
             console.log("Failed to retreive value:", error.message);
         }
     }
 
-    async setUnitValue(unit, value) {
+    async setUnitValue(key, value) {
         try {
-            await AsyncStorage.setItem(`${this.namespace}:${unit}`, value);
+            await AsyncStorage.setItem(`${this.namespace}:${key}`, value);
         } catch (error) {
             console.log("Failed to set value:", error.message);
         }
     }
 
-    async removeUnitValue(unit) {
+    async removeUnitValue(key) {
         try {
-        await AsyncStorage.removeItem(`${this.namespace}:${unit}`);
+        await AsyncStorage.removeItem(`${this.namespace}:${key}`);
         } catch (error) {
             console.log("Failed to remove value:", error.message);
         }
@@ -38,4 +38,4 @@ class UnitStorage {
     }
 }
 
-export default UnitStorage;
+export default DeviceStorage;
