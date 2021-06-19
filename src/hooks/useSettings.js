@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import UnitStorageContext from "../contexts/UnitStorageContext";
+import DeviceStorageContext from "../contexts/DeviceStorageContext";
 import { capitalize } from "lodash";
 
 // name will be used to get settings with a particular key
@@ -12,7 +12,7 @@ import { capitalize } from "lodash";
 
 export const useSettings = ({ name }) => {
   const [items, setItems] = useState([]);
-  const unitStorage = useContext(UnitStorageContext);
+  const unitStorage = useContext(DeviceStorageContext);
 
   useEffect(() => {
     unitStorage.getAllKeys()

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import UnitStorageContext from '../../contexts/UnitStorageContext';
+import DeviceStorageContext from '../../contexts/DeviceStorageContext';
 import FormHandler from './Form';
 import { useStore } from '../../contexts/StoreContext';
 import { addProduct } from '../../productReducer';
@@ -13,7 +13,7 @@ const initialValue = {
 };
 
 const AddProduct = ({ setVisible }) => {
-  const unitStorage = useContext(UnitStorageContext);
+  const unitStorage = useContext(DeviceStorageContext);
   const [products, dispatch] = useStore();
 
   const onSubmit = async ({ name, stock, brand, unit }) => {

@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Can be generalized for settings in general in the future.
 
 class DeviceStorage {
-    constructor(namespace = 'setting') {
+    constructor(namespace) {
         this.namespace = namespace;
     }
 
@@ -16,7 +16,7 @@ class DeviceStorage {
         }
     }
 
-    async setUnitValue(key, value) {
+    async setValueStored(key, value) {
         try {
             await AsyncStorage.setItem(`${this.namespace}:${key}`, value);
         } catch (error) {
@@ -24,7 +24,7 @@ class DeviceStorage {
         }
     }
 
-    async removeUnitValue(key) {
+    async removeValueStored(key) {
         try {
         await AsyncStorage.removeItem(`${this.namespace}:${key}`);
         } catch (error) {

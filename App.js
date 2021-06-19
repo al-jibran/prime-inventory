@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import Main from './src/Main';
 
-import UnitStorageContext from './src/contexts/UnitStorageContext';
-import UnitStorage from './src/utilities/unitStorage';
+import DeviceStorageContext from './src/contexts/DeviceStorageContext';
+import DeviceStorage from './src/utilities/deviceStorage';
 import { StoreProvider } from './src/contexts/StoreContext';
 import { initialState, reducer } from './src/productReducer';
 
-const unitStorage = new UnitStorage();
+const deviceStorage = new DeviceStorage('setting');
 
 const App = () => {
 
@@ -19,11 +19,11 @@ const App = () => {
   }, []);
 
   return (
-    <UnitStorageContext.Provider value={unitStorage}>
+    <DeviceStorageContext.Provider value={deviceStorage}>
       <StoreProvider initialState={initialState} reducer={reducer}>
         <Main />
       </StoreProvider>
-    </UnitStorageContext.Provider>
+    </DeviceStorageContext.Provider>
   );
 };
 

@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import UnitStorageContext from '../../contexts/UnitStorageContext';
+import DeviceStorageContext from '../../contexts/DeviceStorageContext';
 import FormHandler from './Form';
 import { useStore } from '../../contexts/StoreContext';
 import { editProduct } from '../../productReducer';
 
 const EditProduct = ({ setVisible, data }) => {
   const [, dispatch] = useStore();
-  const unitStorage = useContext(UnitStorageContext);
+  const unitStorage = useContext(DeviceStorageContext);
 
 
   const initialValue = {
