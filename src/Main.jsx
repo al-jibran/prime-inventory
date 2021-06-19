@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Inventory from './screens/Inventory';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Bills from './screens/Bills';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSettings } from './hooks/useSettings';
-import { useEffect } from 'react';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +14,7 @@ const Main = () => {
   useEffect(() => {
     const initSettings = async () => {
       if ((await allSettings()).length) {
-        console.log("Should not be in production. Removing values if there are any before, only for testing.");
+        console.log("Should not be in production. Removing values if there are any before, only for development.");
         await operations.removeValue();
       }
       console.log("Adding values to the application...");
