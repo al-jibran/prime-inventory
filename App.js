@@ -12,23 +12,7 @@ const App = () => {
 
   useEffect(() => {
     const initValue = async () => {
-      const pcsValue = await unitStorage.getUnitValue("pcs");
-      const boxValue = await unitStorage.getUnitValue("box");
-      const petiValue = await unitStorage.getUnitValue("peti");
 
-      if (!pcsValue) {
-        console.log("Setting pc value");
-        await unitStorage.setUnitValue("pcs", "1");
-      }
-      if (!boxValue) {
-        console.log("Setting box value");
-        await unitStorage.setUnitValue("box", "20");
-      }
-
-      if (!petiValue) {
-        console.log("Setting peti value");
-        await unitStorage.setUnitValue("peti", "10");
-      }
     };
 
     initValue();
