@@ -9,6 +9,7 @@ import { Heading, Text } from '../Text';
 import { TextInput, NumberInput, DropDownInput } from '../InputField';
 import Theme from '../../theme';
 import { FieldStyle, FormActions } from '../../styles/common';
+import { useSettings } from '../../hooks/useSettings';
 
 
 const FormContainer = styled.View`
@@ -63,7 +64,7 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
-  const { items }= useState([]);
+  const { items }= useSettings('unit');
 
   return (
     <View>

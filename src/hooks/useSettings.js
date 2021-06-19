@@ -21,7 +21,7 @@ export const useSettings = ({ name }) => {
           const unit = key.split(':')[1];
           return ({ label: capitalize(unit), value: unit });
         });
-
+        console.log(unitItems);
         setItems(unitItems);
       }).catch(error => {
         console.log(error);
