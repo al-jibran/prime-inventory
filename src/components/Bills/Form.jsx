@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, useField } from 'formik';
 import { View, Pressable, StyleSheet, Platform } from 'react-native';
 
-import { TextInput, NumberInput } from '../InputField';
+import { TextInput, NumberInput, DropDownInput } from '../InputField';
 import { FieldStyle, FormActions } from '../../styles/common';
 import Button from '../Button';
 import { Text } from '../Text';
@@ -13,7 +13,8 @@ const initialValues = {
   stock: "0",
   name: '',
   id: '',
-  query: ''
+  query: '',
+  unit: "pcs"
 };
 
 // android will have problems with autocomplete overlapping other elements
@@ -54,6 +55,7 @@ const Form = ({ onSubmit }) => {
             <FieldStyle layout="horizontal">
               <Text>Quantity</Text>
               <NumberInput name="stock" />
+              <DropDownInput name="unit"/>
             </FieldStyle>
             <FieldStyle>
               <AutoCompleteField setDisabled={setDisabled}/>
