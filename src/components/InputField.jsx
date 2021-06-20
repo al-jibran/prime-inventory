@@ -94,7 +94,7 @@ export const NumberInput = ({ name, min, max, ...props }) => {
 };
 
 
-export const DropDownInput = ({ name, items, setItems }) => {
+export const DropDownInput = ({ name, items, setItems, direction }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(field.value);
@@ -113,7 +113,7 @@ export const DropDownInput = ({ name, items, setItems }) => {
       setOpen={setOpen}
       setValue={setValue}
       onChangeValue={handleValueChange}
-      dropDownDirection={"BOTTOM"}
+      dropDownDirection={direction}
       onPress={Keyboard.dismiss}
       style={({ height: 25 })}
       containerStyle={({ width: 80 })}

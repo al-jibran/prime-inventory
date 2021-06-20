@@ -69,7 +69,6 @@ const FormView = ({ handleReset, handleSubmit }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    console.log('Calling this effect');
     const units = setting && JSON.parse(setting);
     const keys = Object.keys(units);
 
@@ -88,7 +87,7 @@ const FormView = ({ handleReset, handleSubmit }) => {
         <Text>Stock</Text>
         <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
           <NumberInput name="stock" />
-          <DropDownInput name="unit" items={items} setItems={setItems} />
+          <DropDownInput name="unit" items={items} setItems={setItems} direction="TOP" />
         </View>
       </FieldStyle>
 

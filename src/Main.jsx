@@ -14,7 +14,7 @@ const Main = () => {
   useEffect(() => {
     const initSettings = async () => {
 
-      if ((await allKeys()).length > 0) {
+      if ((await allKeys()).length) {
         console.log("Removing ", units);
         await operations.removeValue();
       }
