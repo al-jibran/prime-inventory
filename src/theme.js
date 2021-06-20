@@ -14,7 +14,8 @@ const Theme = {
     color: {
         textPrimary: "#000000",
         textSecondary: "#ABABAB",
-        primary: "#FB1D1D",
+        primary: "#1EB8E1",
+        danger: "#FB1D1D",
         success: "#2EDF66",
         warning: "#FBCA1D"
     },

@@ -60,7 +60,7 @@ const Form = ({ onSubmit }) => {
             </FieldStyle>
             <FormActions>
               <Button bgColor="white" text="Clear" onPress={handleReset} rounded />
-              <Button bgColor="success" disabled={disabled} text="Save" onPress={(item) => handleSubmit(item, handleReset)} rounded />
+              <Button bgColor="primary" disabled={disabled} text="Add" onPress={(item) => handleSubmit(item, handleReset)} rounded />
             </FormActions>
           </View>
         }

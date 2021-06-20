@@ -7,6 +7,7 @@ const ButtonContainer = styled.Pressable`
     if (bgColor) {
       switch (bgColor) {
         case 'primary': return Theme.color.primary;
+        case 'danger': return Theme.color.danger;
         case 'success': return Theme.color.success;
         case 'warning': return Theme.color.warning;
         default: return bgColor;
@@ -16,7 +17,7 @@ const ButtonContainer = styled.Pressable`
     }
   }};
 
-  ${({bgColor}) => bgColor === 'white' && css `border: 1px solid black;`}
+  ${({bgColor}) => bgColor === 'white' && css `border: 1px solid #ccc;`}
 
   padding-top: ${props => props.padTop || 8}px;
   padding-bottom: ${props => props.padBottom || 8}px;

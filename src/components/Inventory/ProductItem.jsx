@@ -27,7 +27,7 @@ const Stock = styled.Pressable`
     width: 75px;
     justify-content: center;
     align-items: center;
-    background-color: ${props => props.bgColor || Theme.color.primary};
+    background-color: ${props => props.bgColor || Theme.color.danger};
     align-self: stretch;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -36,7 +36,7 @@ const Stock = styled.Pressable`
 const ProductItem = ({ item, products }) => {
     const [visible, setVisible] = useState(false);
 
-    let color = Theme.color.primary;
+    let color = Theme.color.danger;
 
     if (item.stock >= 5 && item.stock < 10) {
         color = Theme.color.warning;

@@ -17,7 +17,7 @@ const FormContainer = styled.View`
   padding: 25px;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;  
-  border-top-color: ${Theme.color.primary}; 
+  border-top-color: ${Theme.color.danger}; 
   border: 2px solid;
 `;
 
@@ -96,7 +96,7 @@ const FormView = ({ handleReset, handleSubmit }) => {
           <Text>Cancel</Text>
         </Pressable>
         <Pressable onPress={handleSubmit}>
-          <Text color={Theme.color.primary}>Save</Text>
+          <Text color={Theme.color.danger}>Save</Text>
         </Pressable>
       </FormActions>
 
