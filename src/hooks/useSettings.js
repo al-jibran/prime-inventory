@@ -6,8 +6,9 @@ export const useSettings = (key) => {
   const deviceStorage = useContext(DeviceStorageContext);
 
   useEffect(() => {
-    getValue().then(value => { setSetting(value); });
-  }, [key]);
+    getValue().then(value => { setSetting(value); })
+    .catch(error => console.log('error', error.message));
+  }, []);
 
   const getValue = async () => {
     try {

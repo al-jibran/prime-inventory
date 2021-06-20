@@ -9,22 +9,23 @@ import { useSettings } from './hooks/useSettings';
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
-  const [, operations, allSettings] = useSettings('units');
+  const [units, operations, allKeys] = useSettings('units');
 
   useEffect(() => {
     const initSettings = async () => {
-      if ((await allSettings()).length) {
-        console.log("Should not be in production. Removing values if there are any before, only for development.");
+
+      if ((await allKeys()).length > 0) {
+        console.log("Removing ", units);
         await operations.removeValue();
       }
-      console.log("Adding values to the application...");
-      await operations.setValue({pcs: 1, box: 20, peti: 10});
 
-      const keys = await allSettings();
-      console.log("Keys:", keys);
+      await operations.setValue({ pcs: 1, box: 20 });
+      const key = await allKeys();
+      console.log(key);
     };
     initSettings();
   }, []);
+
 
   return (
     <NavigationContainer>

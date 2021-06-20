@@ -64,6 +64,9 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
+  const [setting, ] = useSettings('units');
+  const [items, setItems] = useState([{ label: 'pcs', value: 'pcs'}]);
+  
   return (
     <View>
       <FieldStyle layout="horizontal">
@@ -75,7 +78,7 @@ const FormView = ({ handleReset, handleSubmit }) => {
         <Text>Stock</Text>
         <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
           <NumberInput name="stock"/>
-          <DropDownInput name="unit" items={[{ label: 'pcs', value: 'pcs'}]} z-index={29999}/>
+          <DropDownInput name="unit" items={items} setItems={setItems}/>
         </View>
       </FieldStyle>
 
