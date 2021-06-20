@@ -54,10 +54,10 @@ const Form = ({ onSubmit }) => {
               <Text>Comment</Text>
               <TextInput name="comment" multiline={true} />
             </FieldStyle>
-            <FieldStyle layout="horizontal">
+            <FieldStyle layout="horizontal" style={({zIndex: 202020})}>
               <Text>Quantity</Text>
               <NumberInput name="stock" />
-              <DropDownInput name="unit" items={items} setItems={setItems} direction="TOP"/>
+              <DropDownInput name="unit" items={items} setItems={setItems} direction="BOTTOM"/>
             </FieldStyle>
             <FieldStyle>
               <AutoCompleteField setDisabled={setDisabled}/>
@@ -97,7 +97,7 @@ const AutoCompleteField = ({setDisabled}) => {
   };
 
   return (
-    <FieldStyle style={styles.autocompleteContainer, { zIndex: 999 }}>
+    <FieldStyle style={styles.autocompleteContainer, {zIndex: 999}}>
       <Autocomplete
         data={filterProducts()}
         hideResults={hide}
