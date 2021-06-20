@@ -4,23 +4,29 @@ import { View, FlatList } from 'react-native';
 import { Text, Heading } from '../Text';
 import { FieldStyle } from '../../styles/common';
 import Form from './Form';
+import { useDropDown } from '../../hooks/useDropDown';
 
 const renderItem = (product, index) => {
   return (
     <FieldStyle layout="horizontal">
       <Text>{index + 1}</Text>
       <Text>{product.name}</Text>
-      <Text>{product.change > 0 && '+'}{product.change}</Text>
+      <Text>{product.stock > 0 && '+'}{product.stock}</Text>
     </FieldStyle>
   );
 };
 
 const AddEntry = () => {
   const [entries, setEntries] = useState([]);
+  const { getValueForItem } = useDropDown('units');
+
   const hideList = entries.length ? {display: ''} : { display: 'none' };
 
-  const onSaveEntry = ({ stock, name, id }, { resetForm }) => {
-    setEntries(entries.concat({ id, name, change: stock }));
+  const onSaveEntry = ({ stock, name, id, unit }, { resetForm }) => {
+    const changeBy = getValueForItem(unit);
+    stock *= changeBy;
+
+    setEntries(entries.concat({ id, name, stock }));
     resetForm();
   };
 
