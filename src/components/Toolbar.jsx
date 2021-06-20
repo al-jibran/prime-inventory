@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 const ToolbarStyle = styled.View`
     flex-direction: row;
     justify-content: ${props => props.justifyItems || 'space-between'};
+    flex-shrink: 1;
 `;
 
 

@@ -6,6 +6,7 @@ export const Container = styled.View`
 margin-top: ${Constants.statusBarHeight + 15}px; 
 padding-left: ${props => props.padLeft || 0}px;
 padding-right: ${props => props.padRight || 0}px;
+flex: 1;
 `;
 
 export const FieldStyle = styled.View`

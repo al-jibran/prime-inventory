@@ -1,9 +1,14 @@
 import React from 'react';
-import { View } from 'react-native';
 
 import Form from './Form';
 import { useDropDown } from '../../hooks/useDropDown';
 import { Heading } from '../Text';
+import styled from 'styled-components/native';
+
+const AddEntryContainer = styled.View`
+  margin-top: 10px;
+  flex-shrink 1;
+`;
 
 const AddEntry = ({ entries, setEntries }) => {
   const { getValueForItem } = useDropDown('units');
@@ -17,10 +22,10 @@ const AddEntry = ({ entries, setEntries }) => {
   };
 
   return (
-    <View style={({ marginTop: 10 })}>
+    <AddEntryContainer>
       <Heading>Add an entry</Heading>
       <Form onSubmit={onSaveEntry} />
-    </View>
+    </AddEntryContainer>
   );
 };
 
