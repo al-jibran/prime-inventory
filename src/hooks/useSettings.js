@@ -22,7 +22,8 @@ export const useSettings = (key) => {
   const setValue = async (value) => {
     try {
       await deviceStorage.setValueStored(key, value);
-      getValue().then(value => setSetting(value));
+      const result = await getValue();
+      setSetting(result);
     } catch (error) {
       console.log("Error in setValue:", error.message);
     }
