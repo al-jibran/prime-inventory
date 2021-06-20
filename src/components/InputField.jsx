@@ -29,7 +29,7 @@ const NumberInputStyle = styled.View`
   margin-right: 10px;
 `;
 
-export const TextInput = ({ name, width, ...props }) => {
+export const TextInput = ({ width, ...props }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
   const showError = fieldMeta.touched && fieldMeta.error;
 

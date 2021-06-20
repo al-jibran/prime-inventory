@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, useField } from 'formik';
 import { View, Pressable, StyleSheet, Platform } from 'react-native';
 
-import { TextInput, NumberInput, DropDownInput } from '../InputField';
+import {  NumberInput, DropDownInput } from '../InputField';
 import { FieldStyle, FormActions } from '../../styles/common';
 import Button from '../Button';
 import { Text } from '../Text';
@@ -50,10 +50,6 @@ const Form = ({ onSubmit }) => {
       <Formik initialValues={initialValues} onSubmit={onSubmit} onReset={onReset}>
         {({ handleSubmit, handleReset }) =>
           <View style={({ marginTop: 10 })}>
-            <FieldStyle>
-              <Text>Comment</Text>
-              <TextInput name="comment" multiline={true} />
-            </FieldStyle>
             <FieldStyle layout="horizontal" style={({zIndex: 202020})}>
               <Text>Quantity</Text>
               <NumberInput name="stock" />
