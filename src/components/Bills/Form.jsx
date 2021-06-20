@@ -8,6 +8,7 @@ import Button from '../Button';
 import { Text } from '../Text';
 import Autocomplete from 'react-native-autocomplete-input';
 import { useStore } from '../../contexts/StoreContext';
+import { useDropDown } from '../../hooks/useDropDown';
 
 const initialValues = {
   stock: "0",
@@ -38,6 +39,7 @@ const renderItem = (item, onPress) => {
 
 const Form = ({ onSubmit }) => {
   const [disabled, setDisabled] = useState(true);
+  const { items, setItems } = useDropDown('units');
 
   const onReset = () => {
     setDisabled(true);
@@ -55,6 +57,7 @@ const Form = ({ onSubmit }) => {
             <FieldStyle layout="horizontal">
               <Text>Quantity</Text>
               <NumberInput name="stock" />
+              <DropDownInput name="unit" items={items} setItems={setItems} direction="TOP"/>
             </FieldStyle>
             <FieldStyle>
               <AutoCompleteField setDisabled={setDisabled}/>
