@@ -64,7 +64,7 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
-  const [items, setItems] = useDropDown();
+  const { items, setItems } = useDropDown('units');
 
   return (
     <View>

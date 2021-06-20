@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
-import DeviceStorageContext from '../../contexts/DeviceStorageContext';
+import React from 'react';
 import FormHandler from './Form';
 import { useStore } from '../../contexts/StoreContext';
 import { editProduct } from '../../productReducer';
+import { useDropDown } from '../../hooks/useDropDown';
 
 const EditProduct = ({ setVisible, data }) => {
   const [, dispatch] = useStore();
-  const unitStorage = useContext(DeviceStorageContext);
-
+  const { getValueForItem } = useDropDown('units');
 
   const initialValue = {
     name: data.name,
@@ -18,8 +17,7 @@ const EditProduct = ({ setVisible, data }) => {
   };
 
   const onSubmit = async ({ name, stock, brand, unit }) => {
-    const unitValueString = await unitStorage.getUnitValue(unit);
-    const unitValue = parseInt(unitValueString);
+    const unitValue = getValueForItem(unit);
     const changeBy = parseInt(stock);
     stock = data.stock + (changeBy * unitValue);
 

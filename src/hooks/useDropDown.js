@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useSettings } from "./useSettings";
 import { capitalize } from 'lodash';
 
-export const useDropDown = () => {
-  const [setting,] = useSettings('units');
+export const useDropDown = (name) => {
+  const [setting,] = useSettings(name);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -14,13 +14,14 @@ export const useDropDown = () => {
     setItems(items);
   }, [setting]);
 
-  const handleDropDownSubmit = () => {
-
+  const getValueForItem = (key) => {
+    const units = setting && JSON.parse(setting);
+    return Object.prototype.hasOwnProperty.call(units, key) ? units[key] : 1;
   };
 
-  return [
+  return {
     items,
     setItems,
-    handleDropDownSubmit
-  ];
+    getValueForItem
+  };
 };

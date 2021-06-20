@@ -95,7 +95,7 @@ export const NumberInput = ({ name, min, max, ...props }) => {
 
 
 export const DropDownInput = ({ name, items, setItems, direction }) => {
-  const [field, fieldMeta, fieldHelpers] = useField(name);
+  const [field, , fieldHelpers] = useField(name);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(field.value);
 
