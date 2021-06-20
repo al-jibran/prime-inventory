@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import { View, Pressable } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { capitalize } from 'lodash';
 
 
 import { Heading, Text } from '../Text';
 import { TextInput, NumberInput, DropDownInput } from '../InputField';
 import Theme from '../../theme';
 import { FieldStyle, FormActions } from '../../styles/common';
-import { useSettings } from '../../hooks/useSettings';
+import { useDropDown } from '../../hooks/useDropDown';
 
 
 const FormContainer = styled.View`
@@ -65,16 +64,7 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
-  const [setting,] = useSettings('units');
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const units = setting && JSON.parse(setting);
-    const keys = Object.keys(units);
-
-    const items = keys.map(key => ({ label: capitalize(key), value: key }));
-    setItems(items);
-  }, [setting]);
+  const [items, setItems] = useDropDown();
 
   return (
     <View>
