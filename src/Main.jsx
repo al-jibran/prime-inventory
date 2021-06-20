@@ -19,7 +19,7 @@ const Main = () => {
         await operations.removeValue();
       }
 
-      await operations.setValue({ pcs: 1, box: 20 });
+      await operations.setValue({ pcs: 1, box: 20, peti: 10 });
       const key = await allKeys();
       console.log(key);
     };

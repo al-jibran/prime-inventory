@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
 import { View, Pressable } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { capitalize } from 'lodash';
 
 
 import { Heading, Text } from '../Text';
@@ -64,32 +65,41 @@ const FormHandler = ({ initialValue, onSubmit, onReset, heading }) => {
 };
 
 const FormView = ({ handleReset, handleSubmit }) => {
-  const [setting, ] = useSettings('units');
-  const [items, setItems] = useState([{ label: 'pcs', value: 'pcs'}]);
-  
+  const [setting,] = useSettings('units');
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    console.log('Calling this effect');
+    const units = setting && JSON.parse(setting);
+    const keys = Object.keys(units);
+
+    const items = keys.map(key => ({ label: capitalize(key), value: key }));
+    setItems(items);
+  }, [setting]);
+
   return (
     <View>
       <FieldStyle layout="horizontal">
         <Text>Name</Text>
-        <TextInput name="name" autoCapitalize="words" width="50%"/>
+        <TextInput name="name" autoCapitalize="words" width="50%" />
       </FieldStyle>
 
       <FieldStyle layout="horizontal">
         <Text>Stock</Text>
         <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
-          <NumberInput name="stock"/>
-          <DropDownInput name="unit" items={items} setItems={setItems}/>
+          <NumberInput name="stock" />
+          <DropDownInput name="unit" items={items} setItems={setItems} />
         </View>
       </FieldStyle>
 
       <FieldStyle layout="horizontal">
         <Text>Brand</Text>
-        <TextInput name="brand" autoCapitalize="words" width="50%"/>
+        <TextInput name="brand" autoCapitalize="words" width="50%" />
       </FieldStyle>
 
       <FieldStyle layout="horizontal">
         <Text>Comment</Text>
-        <TextInput name="comment" width="50%"/>
+        <TextInput name="comment" width="50%" />
       </FieldStyle>
 
       <FormActions width="30">
