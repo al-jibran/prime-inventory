@@ -50,15 +50,28 @@ const Entries = ({ entries, setEntries }) => {
   const onClearEntries = () => {
     Alert.alert("Clear entries?",
       `Are you sure you want to delete ${entries.length} ${entries.length > 1 ? `items` : `item`}?`,
-      [{ text: "Cancel", onPress: null }, { text: "Yes", onPress: () => setEntries([]) }]);
+      [{
+        text: "Cancel",
+        onPress: null
+      }
+        ,
+      {
+        text: "Yes",
+        onPress: () => setEntries([])
+      }]);
   };
 
+  // INCOMPLETE: Comments should be sent from here
   const onSaveEntries = () => {
     Alert.alert("Save entries?",
       `Are you sure want to save these entries?`,
-      [{ text: "Cancel", onPress: null },
+      [{
+        text: "Cancel",
+        onPress: null
+      },
       {
-        text: "Yes", onPress: () => {
+        text: "Yes",
+        onPress: () => {
           entries.forEach(({ id, stock }) => useDispatch(editProduct(id, { stock })));
         }
       }]);
