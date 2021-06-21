@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, useField } from 'formik';
 import { View, Pressable, StyleSheet, Platform } from 'react-native';
 
-import {  NumberInput, DropDownInput } from '../InputField';
+import { NumberInput, DropDownInput } from '../InputField';
 import { FieldStyle, FormActions } from '../../styles/common';
 import Button from '../Button';
 import { Text } from '../Text';
@@ -50,13 +50,17 @@ const Form = ({ onSubmit }) => {
       <Formik initialValues={initialValues} onSubmit={onSubmit} onReset={onReset}>
         {({ handleSubmit, handleReset }) =>
           <View style={({ marginTop: 10 })}>
-            <FieldStyle layout="horizontal" style={({zIndex: 202020})}>
+            <FieldStyle layout="horizontal" style={({ zIndex: 202020 })}>
               <Text>Quantity</Text>
               <NumberInput name="stock" />
-              <DropDownInput name="unit" items={items} setItems={setItems} direction="BOTTOM"/>
+              <DropDownInput
+                name="unit"
+                items={items}
+                setItems={setItems}
+                direction="BOTTOM" />
             </FieldStyle>
             <FieldStyle>
-              <AutoCompleteField setDisabled={setDisabled}/>
+              <AutoCompleteField setDisabled={setDisabled} />
             </FieldStyle>
             <FormActions>
               <Button bgColor="white" text="Clear" onPress={handleReset} rounded />
@@ -69,7 +73,7 @@ const Form = ({ onSubmit }) => {
   );
 };
 
-const AutoCompleteField = ({setDisabled}) => {
+const AutoCompleteField = ({ setDisabled }) => {
   const [products,] = useStore();
   const [, , idFieldHelpers] = useField('id');
   const [, , nameFieldHelpers] = useField('name');
@@ -92,7 +96,7 @@ const AutoCompleteField = ({setDisabled}) => {
   };
 
   return (
-    <FieldStyle style={styles.autocompleteContainer, {zIndex: 999}}>
+    <FieldStyle style={styles.autocompleteContainer, { zIndex: 999 }}>
       <Autocomplete
         data={filterProducts()}
         hideResults={hide}

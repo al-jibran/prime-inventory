@@ -97,22 +97,27 @@ export const NumberInput = ({ name, min, max, ...props }) => {
 export const DropDownInput = ({ name, items, setItems, direction }) => {
   const [field, , fieldHelpers] = useField(name);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(field.value);
 
+  // function for setValue with formik.
+  const setValue = (state) => {
+    let newState = state;
 
-  const handleValueChange = (value) => {
-    fieldHelpers.setValue(value);
+    if (typeof state === "function") {
+      newState = state(field.value);
+    }
+    fieldHelpers.setValue(newState);
   };
 
   return (
     <DropDownPicker
       open={open}
-      value={value}
+      value={field.value}
       items={items}
       setItems={setItems}
-      setOpen={setOpen}
       setValue={setValue}
-      onChangeValue={handleValueChange}
+      setOpen={setOpen}
+      itemSeparator={true}
+      selectedItemLabelStyle={{ fontWeight: 'bold' }}
       dropDownDirection={direction}
       onPress={Keyboard.dismiss}
       style={({ height: 25 })}

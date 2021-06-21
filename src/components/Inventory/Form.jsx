@@ -77,7 +77,11 @@ const FormView = ({ handleReset, handleSubmit }) => {
         <Text>Stock</Text>
         <View style={({ flexDirection: 'row', justifyContent: 'flex-end' })}>
           <NumberInput name="stock" />
-          <DropDownInput name="unit" items={items} setItems={setItems} direction="TOP" />
+          <DropDownInput
+            name="unit"
+            items={items}
+            setItems={setItems}
+            direction="TOP" />
         </View>
       </FieldStyle>
 

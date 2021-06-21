@@ -64,7 +64,7 @@ const Entries = ({ entries, setEntries }) => {
   // INCOMPLETE: Comments should be sent from here
   const onSaveEntries = () => {
     Alert.alert("Save entries?",
-      `Are you sure want to save these entries?`,
+      "Are you sure want to save these entries?",
       [{
         text: "Cancel",
         onPress: null
