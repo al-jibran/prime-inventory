@@ -20,10 +20,10 @@ const Bills = () => {
       <Toolbar items={ToolbarItems} justifyItems="center" />
       <FieldStyle>
         <Heading>Comment</Heading>
-        <TextInput multiline={true} value={value} onChangeText={onChangeText} style={({borderBottomWidth: 1})}/>
+        <TextInput multiline={true} value={value} onChangeText={onChangeText} style={({ borderBottomWidth: 1 })} />
       </FieldStyle>
       <AddEntry entries={entries} setEntries={setEntries} />
-      <Entries entries={entries} />
+      <Entries entries={entries} setEntries={setEntries} />
     </Container>
   );
 };

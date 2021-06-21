@@ -88,7 +88,6 @@ const AutoCompleteField = ({setDisabled}) => {
     idFieldHelpers.setValue(item.id);
     nameFieldHelpers.setValue(item.name);
     setDisabled(false);
-    console.log("added here", item);
     hideResults();
   };
 
