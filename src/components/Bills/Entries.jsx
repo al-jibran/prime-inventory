@@ -5,6 +5,8 @@ import { Text, Heading } from '../Text';
 import { FieldStyle } from '../../styles/common';
 import styled from 'styled-components/native';
 import Button from '../Button';
+import { useStore } from '../../contexts/StoreContext';
+import { editProduct } from '../../productReducer';
 
 const EntriesStyle = styled.View`
   margin-top: 15px;
@@ -31,7 +33,7 @@ const ListEmptyComponent = () => {
 
 const renderItem = (product, index, deleteEntry) => {
   return (
-    <Pressable style={({borderBottomWidth: 1, borderColor: "#eee"})} onLongPress={() => deleteEntry(product.id)}>
+    <Pressable style={({ borderBottomWidth: 1, borderColor: "#eee" })} onLongPress={() => deleteEntry(product.id)}>
       <FieldStyle layout="horizontal" >
         <Text>{index + 1}</Text>
         <Text>{product.name}</Text>
@@ -42,6 +44,7 @@ const renderItem = (product, index, deleteEntry) => {
 };
 
 const Entries = ({ entries, setEntries }) => {
+  const [, useDispatch] = useStore();
   const hide = entries.length ? { display: 'flex' } : { display: 'none' };
 
   const onClearEntries = () => {
@@ -53,11 +56,15 @@ const Entries = ({ entries, setEntries }) => {
   const onSaveEntries = () => {
     Alert.alert("Save entries?",
       `Are you sure want to save these entries?`,
-      [{ text: "Cancel", onPress: null }, { text: "Yes", onPress: () => console.log(entries) }]);
+      [{ text: "Cancel", onPress: null },
+      {
+        text: "Yes", onPress: () => {
+          entries.forEach(({ id, stock }) => useDispatch(editProduct(id, { stock })));
+        }
+      }]);
   };
 
   const onDeleteEntry = (id) => {
-    console.log("triggered");
     const newEntries = entries.filter(entry => entry.id !== id);
     setEntries(newEntries);
   };
