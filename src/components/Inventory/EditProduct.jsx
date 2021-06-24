@@ -23,7 +23,6 @@ const EditProduct = ({ setVisible, data }) => {
     stock = changeBy * unitValue;
 
     const product = { name, brand, stock, comment };
-    console.log(data.id, product);
 
     editProduct({ variables: { id: data.id, product } });
 
