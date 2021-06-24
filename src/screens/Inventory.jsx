@@ -53,10 +53,16 @@ const Inventory = () => {
 
 const ProductsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data, loading, error } = useQuery(GET_INVENTORY);
+  const { data, loading, error } = useQuery(GET_INVENTORY, {
+    fetchPolicy: "cache-and-network",
+  });
 
   if (loading) {
     return <Text>Loading</Text>;
+  }
+
+  if (error) {
+    return <Text>{error.message}</Text>;
   }
 
   const products = data.getInventory;
@@ -81,7 +87,7 @@ const ProductsList = () => {
         />
       }
       data={filterProducts()}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.id}
       renderItem={({ item }) => renderItem(item, products, null)}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

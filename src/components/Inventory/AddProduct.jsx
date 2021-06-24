@@ -1,26 +1,31 @@
-import React from 'react';
-import FormHandler from './Form';
-import { useStore } from '../../contexts/StoreContext';
-import { addProduct } from '../../productReducer';
-import { useDropDown } from '../../hooks/useDropDown';
+import React from "react";
+import { useMutation } from "@apollo/client";
+
+import FormHandler from "./Form";
+import { useDropDown } from "../../hooks/useDropDown";
+import { CREATE_PRODUCT, GET_INVENTORY } from "../../graphql/queries";
 
 const initialValue = {
-  name: '',
-  stock: '0',
-  brand: '',
-  comment: '',
-  unit: 'pcs'
+  name: "",
+  stock: "0",
+  brand: "",
+  comment: "",
+  unit: "pcs",
 };
 
 const AddProduct = ({ setVisible }) => {
-  const [products, dispatch] = useStore();
-  const { getValueForItem } = useDropDown('units');
+  const [createProduct, { data }] = useMutation(CREATE_PRODUCT, {
+    refetchQueries: () => [{ query: GET_INVENTORY }],
+  });
 
-  const onSubmit = async ({ name, stock, brand, unit }) => {
+  const { getValueForItem } = useDropDown("units");
+
+  const onSubmit = async ({ name, stock, brand, unit, comment }) => {
     const unitValue = getValueForItem(unit);
     stock *= unitValue;
+    const product = { name, brand, stock, comment };
 
-    dispatch(addProduct({ name, brand, stock, id: (products.length + 1) }));
+    createProduct({ variables: { product } });
     setVisible(false);
   };
 
@@ -29,11 +34,12 @@ const AddProduct = ({ setVisible }) => {
   };
 
   return (
-    <FormHandler 
-    initialValue={initialValue} 
-    onSubmit={onSubmit} 
-    onReset={onReset}
-    heading="Add a product" />
+    <FormHandler
+      initialValue={initialValue}
+      onSubmit={onSubmit}
+      onReset={onReset}
+      heading="Add a product"
+    />
   );
 };
 

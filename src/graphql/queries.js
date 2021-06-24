@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_INVENTORY = gql`
-  query {
+  query products {
     getInventory {
       id
       name
@@ -24,14 +24,13 @@ export const GET_PRODUCT = `
   }
 `;
 
-export const CREATE_PRODUCT = `
+export const CREATE_PRODUCT = gql`
   mutation CreateProduct($product: ProductInput!) {
     createProduct(product: $product) {
       id
       name
       stock
       brand
-      history
     }
   }
 `;
