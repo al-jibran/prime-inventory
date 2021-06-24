@@ -1,27 +1,31 @@
-import React from 'react';
-import FormHandler from './Form';
-import { useStore } from '../../contexts/StoreContext';
-import { editProduct } from '../../productReducer';
-import { useDropDown } from '../../hooks/useDropDown';
+import React from "react";
+import { useMutation } from "@apollo/client";
+
+import FormHandler from "./Form";
+import { UPDATE_PRODUCT } from "../../graphql/queries";
+import { useDropDown } from "../../hooks/useDropDown";
 
 const EditProduct = ({ setVisible, data }) => {
-  const [, dispatch] = useStore();
-  const { getValueForItem } = useDropDown('units');
+  const [editProduct] = useMutation(UPDATE_PRODUCT);
+  const { getValueForItem } = useDropDown("units");
 
   const initialValue = {
     name: data.name,
     stock: "0",
     brand: data.brand,
-    comment: '',
-    unit: 'pcs',
+    comment: "",
+    unit: "pcs",
   };
 
-  const onSubmit = async ({ name, stock, brand, unit }) => {
+  const onSubmit = async ({ name, stock, brand, comment, unit }) => {
     const unitValue = getValueForItem(unit);
     const changeBy = parseInt(stock);
     stock = changeBy * unitValue;
 
-    dispatch(editProduct(data.id, { name, brand, stock }));
+    const product = { name, brand, stock, comment };
+    console.log(data.id, product);
+
+    editProduct({ variables: { id: data.id, product } });
 
     setVisible(false);
   };
@@ -35,7 +39,8 @@ const EditProduct = ({ setVisible, data }) => {
       initialValue={initialValue}
       onSubmit={onSubmit}
       onReset={onReset}
-      heading="Edit product" />
+      heading="Edit product"
+    />
   );
 };
 
