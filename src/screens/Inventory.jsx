@@ -1,34 +1,54 @@
 // Native Imports
 import React, { useState } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
-import { useQuery } from "@apollo/client";
-import { GET_INVENTORY } from "../graphql/queries";
+import { useQuery, useMutation } from "@apollo/client";
+import { DELETE_PRODUCT, GET_INVENTORY } from "../graphql/queries";
 
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
 import Searchbar from "../components/Searchbar";
 import AddProduct from "../components/Inventory/AddProduct";
 import Modal from "../components/Modal";
-import { deleteProduct } from "../productReducer";
 import Toolbar from "../components/Toolbar";
 
 //Styles
 import { Container } from "../styles/common";
 
-const renderItem = (item, products, dispatch) => {
+const RenderProduct = ({ item }) => {
+  const [deleteProduct] = useMutation(DELETE_PRODUCT, {
+    update: (cache, { data }) => {
+      try {
+        cache.modify({
+          fields: {
+            getInventory(list, { readField }) {
+              return list.filter(
+                (pro) => readField("id", pro) !== data.deleteProduct.id
+              );
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  });
+
   // Opens a delete alert with Alert.alert() and displays a title, message and buttons for the action.
   const deleteTitle = `Delete ${item.name}?`;
   const deleteMessage = `The product ${item.name} from ${item.brand} will be deleted permanently.\n\nDo you want to continue?`;
   const buttons = [
     { text: "Cancel", onPress: null, style: "cancel" },
-    { text: "Yes", onPress: () => dispatch(deleteProduct(item.id)) },
+    {
+      text: "Yes",
+      onPress: () => deleteProduct({ variables: { id: item.id } }),
+    },
   ];
 
   return (
     <Pressable
       onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}
     >
-      <ProductItem item={item} products={products} />
+      <ProductItem item={item} />
     </Pressable>
   );
 };
@@ -68,6 +88,7 @@ const ProductsList = () => {
   const products = data.getInventory;
 
   // Filters the products based on search query. "" search query displays all products.
+  // Update when pagination takes place to search from the database rather than local state.
   const filterProducts = () =>
     products.filter((item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -88,7 +109,7 @@ const ProductsList = () => {
       }
       data={filterProducts()}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => renderItem(item, products, null)}
+      renderItem={({ item }) => <RenderProduct item={item} />}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
     />
