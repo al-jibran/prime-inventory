@@ -1,50 +1,48 @@
 import { gql } from "@apollo/client";
 
+const ProductFragment = gql`
+  fragment ProductFields on Product {
+    id
+    name
+    brand
+    stock
+    history
+  }
+`;
+
 export const GET_INVENTORY = gql`
   query products {
     getInventory {
-      id
-      name
-      brand
-      stock
-      history
+      ...ProductFields
     }
   }
+  ${ProductFragment}
 `;
 
 export const GET_PRODUCT = `
   query GetProduct($id: ID!){
     getProduct(id: $id) {
-      id
-      name
-      brand
-      stock
-      history
+      ...ProductFields
     }
   }
-`;
+${ProductFragment}`;
 
 export const CREATE_PRODUCT = gql`
   mutation CreateProduct($product: ProductInput!) {
     createProduct(product: $product) {
-      id
-      name
-      stock
-      brand
+      ...ProductFields
     }
   }
+  ${ProductFragment}
 `;
 
 export const UPDATE_PRODUCT = gql`
   mutation UpdateProduct($id: ID!, $product: ProductInput!) {
     updateProduct(id: $id, product: $product) {
-      id
-      name
-      stock
-      brand
-      history
+      ...ProductFields
     }
   }
+  ${ProductFragment}
 `;
 
 export const DELETE_PRODUCT = gql`
