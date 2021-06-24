@@ -1,31 +1,47 @@
-import React, { useEffect } from 'react';
-import Main from './src/Main';
+import React, { useEffect } from "react";
+import Main from "./src/Main";
 
-import DeviceStorageContext from './src/contexts/DeviceStorageContext';
-import DeviceStorage from './src/utilities/deviceStorage';
-import { StoreProvider } from './src/contexts/StoreContext';
-import { initialState, reducer } from './src/productReducer';
+import DeviceStorageContext from "./src/contexts/DeviceStorageContext";
+import DeviceStorage from "./src/utilities/deviceStorage";
 
-const deviceStorage = new DeviceStorage('setting');
-const unitStorage = new DeviceStorage('unit');
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  ApolloProvider,
+} from "@apollo/client";
+
+const httpLink = new HttpLink({
+  uri: "http://192.168.0.198:4000",
+});
+
+const cache = new InMemoryCache();
+
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache: cache,
+});
+
+const deviceStorage = new DeviceStorage("setting");
+const unitStorage = new DeviceStorage("unit");
 
 const App = () => {
   useEffect(() => {
     const removeOldSettings = async () => {
-      await unitStorage.removeValueStored('pcs');
-      await unitStorage.removeValueStored('box');
-      await unitStorage.removeValueStored('peti');
+      await unitStorage.removeValueStored("pcs");
+      await unitStorage.removeValueStored("box");
+      await unitStorage.removeValueStored("peti");
     };
 
     removeOldSettings();
   });
 
   return (
-    <DeviceStorageContext.Provider value={deviceStorage}>
-      <StoreProvider initialState={initialState} reducer={reducer}>
+    <ApolloProvider client={apolloClient}>
+      <DeviceStorageContext.Provider value={deviceStorage}>
         <Main />
-      </StoreProvider>
-    </DeviceStorageContext.Provider>
+      </DeviceStorageContext.Provider>
+    </ApolloProvider>
   );
 };
 
