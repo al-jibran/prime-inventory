@@ -15,7 +15,7 @@ import Toolbar from "../components/Toolbar";
 import { Container } from "../styles/common";
 
 const RenderProduct = ({ item }) => {
-  const [deleteProduct] = useMutation(DELETE_PRODUCT, {
+  const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT, {
     update: (cache, { data }) => {
       try {
         cache.modify({
@@ -43,6 +43,9 @@ const RenderProduct = ({ item }) => {
       onPress: () => deleteProduct({ variables: { id: item.id } }),
     },
   ];
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
 
   return (
     <Pressable
@@ -73,9 +76,7 @@ const Inventory = () => {
 
 const ProductsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data, loading, error } = useQuery(GET_INVENTORY, {
-    fetchPolicy: "cache-and-network",
-  });
+  const { data, loading, error } = useQuery(GET_INVENTORY);
 
   if (loading) {
     return <Text>Loading</Text>;
@@ -85,7 +86,7 @@ const ProductsList = () => {
     return <Text>{error.message}</Text>;
   }
 
-  const products = data.getInventory;
+  const products = data.getInventory.node.edges;
 
   // Filters the products based on search query. "" search query displays all products.
   // Update when pagination takes place to search from the database rather than local state.
