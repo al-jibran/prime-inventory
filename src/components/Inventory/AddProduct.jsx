@@ -15,7 +15,7 @@ const initialValue = {
 
 const AddProduct = ({ setVisible }) => {
   const [createProduct, { data }] = useMutation(CREATE_PRODUCT, {
-    refetchQueries: () => [{ query: GET_INVENTORY }],
+    refetchQueries: [GET_INVENTORY],
   });
 
   const { getValueForItem } = useDropDown("units");

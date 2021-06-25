@@ -11,15 +11,25 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 
+import { relayStylePagination } from "@apollo/client/utilities";
+
 const httpLink = new HttpLink({
   uri: "http://192.168.0.198:4000",
 });
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        getInventory: relayStylePagination(),
+      },
+    },
+  },
+});
 
 const apolloClient = new ApolloClient({
   link: httpLink,
-  cache: cache,
+  cache,
 });
 
 const deviceStorage = new DeviceStorage("setting");

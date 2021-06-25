@@ -11,19 +11,20 @@ const ProductFragment = gql`
 `;
 
 export const GET_INVENTORY = gql`
-  query products($after: ID, $pageSize: Int) {
-    getInventory(after: $after, pageSize: $pageSize) {
-      node {
-        edges {
+  query inventory($after: String, $first: Int) {
+    getInventory(after: $after, first: $first) {
+      edges {
+        node {
           ...ProductFields
         }
+        cursor
       }
       pageInfo {
         startCursor
         endCursor
         hasNextPage
-        pageSize
       }
+      totalCount
     }
   }
   ${ProductFragment}
