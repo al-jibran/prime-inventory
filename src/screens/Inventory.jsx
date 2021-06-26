@@ -1,7 +1,7 @@
 // Native Imports
 import React, { useState } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { DELETE_PRODUCT, GET_INVENTORY } from "../graphql/queries";
 
 // Custom Imports
@@ -16,7 +16,7 @@ import { Container } from "../styles/common";
 
 const RenderProduct = ({ item }) => {
   const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT, {
-    update: (cache, { data }) => {
+    update: (cache) => {
       cache.modify({
         fields: {
           getInventory(existing, { DELETE }) {
