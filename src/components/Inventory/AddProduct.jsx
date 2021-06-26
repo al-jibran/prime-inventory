@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import FormHandler from "./Form";
 import { useDropDown } from "../../hooks/useDropDown";
