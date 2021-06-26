@@ -17,25 +17,19 @@ import { Container } from "../styles/common";
 const RenderProduct = ({ item }) => {
   const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT, {
     update: (cache, { data }) => {
-      try {
-        cache.modify({
-          fields: {
-            getInventory(list, { readField }) {
-              return list.filter(
-                (pro) => readField("id", pro) !== data.deleteProduct.id
-              );
-            },
+      cache.modify({
+        fields: {
+          getInventory(existing, { DELETE }) {
+            return DELETE;
           },
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
+        },
+      });
     },
   });
 
   // Opens a delete alert with Alert.alert() and displays a title, message and buttons for the action.
   const deleteTitle = `Delete ${item.name}?`;
-  const deleteMessage = `The product ${item.name} from ${item.brand} will be deleted permanently.\n\nDo you want to continue?`;
+  const deleteMessage = `The "${item.name}" from "${item.brand}" will be deleted permanently.\n\nDo you want to continue?`;
   const buttons = [
     { text: "Cancel", onPress: null, style: "cancel" },
     {
@@ -43,15 +37,13 @@ const RenderProduct = ({ item }) => {
       onPress: () => deleteProduct({ variables: { id: item.id } }),
     },
   ];
-  if (error) {
-    return <Text>{error.message}</Text>;
-  }
 
   return (
     <Pressable
       onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}
     >
       <ProductItem item={item} />
+      {error && <Text>{error.message}</Text>}
     </Pressable>
   );
 };

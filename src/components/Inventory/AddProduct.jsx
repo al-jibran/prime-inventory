@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 
 import FormHandler from "./Form";
 import { useDropDown } from "../../hooks/useDropDown";
@@ -14,8 +14,8 @@ const initialValue = {
 };
 
 const AddProduct = ({ setVisible }) => {
-  const [createProduct, { data }] = useMutation(CREATE_PRODUCT, {
-    refetchQueries: [GET_INVENTORY],
+  const [createProduct] = useMutation(CREATE_PRODUCT, {
+    refetchQueries: [{ query: GET_INVENTORY }],
   });
 
   const { getValueForItem } = useDropDown("units");
