@@ -24,7 +24,7 @@ const EditProduct = ({ setVisible, data }) => {
 
     const product = { name, brand, stock, comment };
 
-    editProduct({ variables: { id: data.id, product } });
+    editProduct({ variables: { id: data._id, product } });
 
     setVisible(false);
   };
