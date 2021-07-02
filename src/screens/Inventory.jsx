@@ -116,7 +116,7 @@ const ProductsList = () => {
         />
       }
       data={filterProducts()}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
       renderItem={({ item }) => <RenderProduct item={item} />}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

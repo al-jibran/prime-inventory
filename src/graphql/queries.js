@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 const ProductFragment = gql`
   fragment ProductFields on Product {
-    id
+    _id
     name
     brand
     stock
@@ -62,7 +62,7 @@ export const UPDATE_PRODUCT = gql`
 export const DELETE_PRODUCT = gql`
   mutation DeleteProduct($id: ID!) {
     deleteProduct(id: $id) {
-      id
+      _id
     }
   }
 `;
