@@ -34,7 +34,7 @@ const RenderProduct = ({ item }) => {
     { text: "Cancel", onPress: null, style: "cancel" },
     {
       text: "Yes",
-      onPress: () => deleteProduct({ variables: { id: item.id } }),
+      onPress: () => deleteProduct({ variables: { id: item._id } }),
     },
   ];
 
