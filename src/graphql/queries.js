@@ -6,13 +6,24 @@ const ProductFragment = gql`
     name
     brand
     stock
-    history
   }
 `;
 
 export const GET_INVENTORY = gql`
-  query inventory($after: String, $first: Int) {
-    getInventory(after: $after, first: $first) {
+  query Inventory(
+    $after: String
+    $first: Int
+    $orderBy: OrderBy
+    $orderDirection: OrderDirection
+    $search: String
+  ) {
+    inventory(
+      after: $after
+      first: $first
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      search: $search
+    ) {
       edges {
         node {
           ...ProductFields
@@ -32,8 +43,9 @@ export const GET_INVENTORY = gql`
 
 export const GET_PRODUCT = `
   query GetProduct($id: ID!){
-    getProduct(id: $id) {
+    product(id: $id) {
       ...ProductFields
+      history
     }
   }
 ${ProductFragment}`;

@@ -82,7 +82,7 @@ const ProductsList = () => {
     return <Text>{error.message}</Text>;
   }
 
-  const products = data.getInventory.edges.map((edge) => edge.node);
+  const products = data.inventory.edges.map((edge) => edge.node);
 
   // Filters the products based on search query. "" search query displays all products.
   // Update when pagination takes place to search from the database rather than local state.
@@ -93,7 +93,7 @@ const ProductsList = () => {
   /* Searchbar component has to be directly in ListHeaderComponent. Otherwise, the Searchbar loses focus. */
 
   const onEndReached = () => {
-    const canFetchMore = !loading && data?.getInventory.pageInfo.hasNextPage;
+    const canFetchMore = !loading && data?.inventory.pageInfo.hasNextPage;
 
     if (!canFetchMore) {
       return;
@@ -101,7 +101,7 @@ const ProductsList = () => {
 
     fetchMore({
       variables: {
-        after: data.getInventory.pageInfo.endCursor,
+        after: data.inventory.pageInfo.endCursor,
       },
     });
   };
