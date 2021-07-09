@@ -19,7 +19,7 @@ const RenderProduct = ({ item }) => {
     update: (cache) => {
       cache.modify({
         fields: {
-          getInventory(existing, { DELETE }) {
+          inventory(existing, { DELETE }) {
             return DELETE;
           },
         },
@@ -68,9 +68,15 @@ const Inventory = () => {
 
 const ProductsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [first] = useState(10);
+  const [orderDirection] = useState("DESC");
+  const [orderBy] = useState("CREATED_AT");
+
   const { data, loading, error, fetchMore } = useQuery(GET_INVENTORY, {
     variables: {
-      first: 10,
+      first,
+      orderDirection,
+      orderBy,
     },
   });
 
