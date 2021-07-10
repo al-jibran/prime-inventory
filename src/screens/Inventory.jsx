@@ -16,7 +16,8 @@ import Toolbar from "../components/Toolbar";
 import { Container } from "../styles/common";
 
 const RenderProduct = ({ item }) => {
-  const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT, {
+  const [error, setError] = useState("");
+  const [deleteProduct] = useMutation(DELETE_PRODUCT, {
     update: (cache) => {
       cache.modify({
         fields: {
@@ -25,6 +26,10 @@ const RenderProduct = ({ item }) => {
           },
         },
       });
+    },
+    onError: (error) => {
+      setError(error.message);
+      setTimeout(() => setError(""), 1000);
     },
   });
 
@@ -44,7 +49,7 @@ const RenderProduct = ({ item }) => {
       onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}
     >
       <ProductItem item={item} />
-      {error && <Text>{error.message}</Text>}
+      {error !== "" && <Text>{error}</Text>}
     </Pressable>
   );
 };
@@ -59,7 +64,7 @@ const Inventory = () => {
           <ToolbarItems visible={visible} toggleModal={setVisiblity} />
         )}
       />
-      <ProductsList />
+      <ProductListContainer />
       <Modal visible={visible}>
         <AddProduct setVisible={setVisiblity} />
       </Modal>
@@ -67,12 +72,11 @@ const Inventory = () => {
   );
 };
 
-const ProductsList = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [first] = useState(10);
-  const [orderDirection] = useState("DESC");
-  const [orderBy] = useState("CREATED_AT");
-
+const useProducts = (
+  first = 10,
+  orderBy = "CREATED_AT",
+  orderDirection = "DESC"
+) => {
   const { data, loading, error, fetchMore, refetch } = useQuery(GET_INVENTORY, {
     variables: {
       first,
@@ -81,19 +85,11 @@ const ProductsList = () => {
     },
   });
 
+  const products = data?.inventory.edges.map((edge) => edge.node);
+
   const debounced = useDebouncedCallback((value) => {
     refetch({ search: value });
   }, 500);
-
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error) {
-    return <Text>{error.message}</Text>;
-  }
-
-  const products = data?.inventory.edges.map((edge) => edge.node);
 
   const onEndReached = () => {
     const canFetchMore = !loading && data?.inventory.pageInfo.hasNextPage;
@@ -109,13 +105,34 @@ const ProductsList = () => {
     });
   };
 
+  return {
+    products,
+    error,
+    loading,
+    filter: debounced,
+    fetchMore: onEndReached,
+  };
+};
+
+const ProductListContainer = () => {
+  const { products, loading, error, fetchMore, filter } = useProducts();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
+
   return (
     <FlatList
       ListHeaderComponent={
         <Searchbar
           placeholder="Search"
           onChangeText={(query) => {
-            debounced(query);
+            filter(query);
             setSearchQuery(query);
           }}
           value={searchQuery}
@@ -125,10 +142,9 @@ const ProductsList = () => {
       data={products}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => <RenderProduct item={item} />}
-      refreshing={loading}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
-      onEndReached={onEndReached}
+      onEndReached={fetchMore}
       onEndReachedThreshold={0.1}
     />
   );
