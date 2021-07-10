@@ -1,9 +1,9 @@
 // Native Imports
 import React, { useState } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { DELETE_PRODUCT, GET_INVENTORY } from "../graphql/queries";
-import { useDebounce, useDebouncedCallback } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
