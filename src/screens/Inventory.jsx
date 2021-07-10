@@ -1,8 +1,9 @@
 // Native Imports
 import React, { useState } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { DELETE_PRODUCT, GET_INVENTORY } from "../graphql/queries";
+import { useDebounce, useDebouncedCallback } from "use-debounce";
 
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
@@ -72,7 +73,7 @@ const ProductsList = () => {
   const [orderDirection] = useState("DESC");
   const [orderBy] = useState("CREATED_AT");
 
-  const { data, loading, error, fetchMore } = useQuery(GET_INVENTORY, {
+  const { data, loading, error, fetchMore, refetch } = useQuery(GET_INVENTORY, {
     variables: {
       first,
       orderDirection,
@@ -80,23 +81,15 @@ const ProductsList = () => {
     },
   });
 
-  if (loading) {
-    return <Text>Loading</Text>;
-  }
+  const debounced = useDebouncedCallback((value) => {
+    refetch({ search: value });
+  }, 500);
 
   if (error) {
     return <Text>{error.message}</Text>;
   }
 
-  const products = data.inventory.edges.map((edge) => edge.node);
-
-  // Filters the products based on search query. "" search query displays all products.
-  // Update when pagination takes place to search from the database rather than local state.
-  const filterProducts = () =>
-    products.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  /* Searchbar component has to be directly in ListHeaderComponent. Otherwise, the Searchbar loses focus. */
+  const products = data?.inventory.edges.map((edge) => edge.node);
 
   const onEndReached = () => {
     const canFetchMore = !loading && data?.inventory.pageInfo.hasNextPage;
@@ -111,19 +104,24 @@ const ProductsList = () => {
       },
     });
   };
+
   return (
     <FlatList
       ListHeaderComponent={
         <Searchbar
           placeholder="Search"
-          onChangeText={(query) => setSearchQuery(query)}
+          onChangeText={(query) => {
+            debounced(query);
+            setSearchQuery(query);
+          }}
           value={searchQuery}
           clearButtonMode="while-editing"
         />
       }
-      data={filterProducts()}
+      data={products}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => <RenderProduct item={item} />}
+      refreshing={loading}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       onEndReached={onEndReached}
