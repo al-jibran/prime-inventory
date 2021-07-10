@@ -51,7 +51,6 @@ const renderItem = (product, index, deleteEntry) => {
 };
 
 const Entries = ({ entries, setEntries }) => {
-  const [, useDispatch] = useStore();
   const hide = entries.length ? { display: "flex" } : { display: "none" };
 
   const onClearEntries = () => {

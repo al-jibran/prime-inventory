@@ -8,6 +8,7 @@ import Button from "../Button";
 import { Text } from "../Text";
 import Autocomplete from "react-native-autocomplete-input";
 import { useDropDown } from "../../hooks/useDropDown";
+import { useProducts } from "../../hooks/useProducts";
 
 const initialValues = {
   stock: "0",
@@ -91,17 +92,11 @@ const Form = ({ onSubmit }) => {
 };
 
 const AutoCompleteField = ({ setDisabled }) => {
-  const [products] = useStore();
   const [, , idFieldHelpers] = useField("id");
   const [, , nameFieldHelpers] = useField("name");
   const [query, , queryHelpers] = useField("query");
   const [hide, setHide] = useState(true);
-
-  const filterProducts = () => {
-    return products.filter((item) =>
-      item.name.toLowerCase().includes(query.value.toLowerCase())
-    );
-  };
+  const { products, filter } = useProducts();
 
   const hideResults = () => setHide(true);
   const showResults = () => setHide(false);
@@ -117,7 +112,7 @@ const AutoCompleteField = ({ setDisabled }) => {
   return (
     <FieldStyle style={(styles.autocompleteContainer, { zIndex: 999 })}>
       <Autocomplete
-        data={filterProducts()}
+        data={products}
         hideResults={hide}
         value={query.value}
         placeholder="Enter product name"
@@ -131,6 +126,7 @@ const AutoCompleteField = ({ setDisabled }) => {
         clearButtonMode={"always"}
         onChangeText={(text) => {
           text.length === 0 && hideResults();
+          filter(text);
           queryHelpers.setValue(text);
           setDisabled(true);
         }}
