@@ -85,6 +85,10 @@ const ProductsList = () => {
     refetch({ search: value });
   }, 500);
 
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
   if (error) {
     return <Text>{error.message}</Text>;
   }
