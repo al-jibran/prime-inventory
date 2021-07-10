@@ -1,9 +1,7 @@
 // Native Imports
 import React, { useState } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
-import { useQuery, useMutation } from "@apollo/client";
-import { DELETE_PRODUCT, GET_INVENTORY } from "../graphql/queries";
-import { useDebouncedCallback } from "use-debounce";
+import { useMutation } from "@apollo/client";
 
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
@@ -11,6 +9,8 @@ import Searchbar from "../components/Searchbar";
 import AddProduct from "../components/Inventory/AddProduct";
 import Modal from "../components/Modal";
 import Toolbar from "../components/Toolbar";
+import { useProducts } from "../hooks/useProducts";
+import { DELETE_PRODUCT } from "../graphql/queries";
 
 //Styles
 import { Container } from "../styles/common";
@@ -70,48 +70,6 @@ const Inventory = () => {
       </Modal>
     </Container>
   );
-};
-
-const useProducts = (
-  first = 10,
-  orderBy = "CREATED_AT",
-  orderDirection = "DESC"
-) => {
-  const { data, loading, error, fetchMore, refetch } = useQuery(GET_INVENTORY, {
-    variables: {
-      first,
-      orderDirection,
-      orderBy,
-    },
-  });
-
-  const products = data?.inventory.edges.map((edge) => edge.node);
-
-  const debounced = useDebouncedCallback((value) => {
-    refetch({ search: value });
-  }, 500);
-
-  const onEndReached = () => {
-    const canFetchMore = !loading && data?.inventory.pageInfo.hasNextPage;
-
-    if (!canFetchMore) {
-      return;
-    }
-
-    fetchMore({
-      variables: {
-        after: data.inventory.pageInfo.endCursor,
-      },
-    });
-  };
-
-  return {
-    products,
-    error,
-    loading,
-    filter: debounced,
-    fetchMore: onEndReached,
-  };
 };
 
 const ProductListContainer = () => {
