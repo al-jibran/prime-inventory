@@ -82,9 +82,7 @@ const Entries = ({ entries, setEntries }) => {
       {
         text: "Yes",
         onPress: () => {
-          entries.forEach(({ id, stock }) =>
-            useDispatch(editProduct(id, { stock }))
-          );
+          console.log(entries);
         },
       },
     ]);

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import Form from './Form';
-import { useDropDown } from '../../hooks/useDropDown';
-import { Heading } from '../Text';
-import styled from 'styled-components/native';
+import Form from "./Form";
+import { useDropDown } from "../../hooks/useDropDown";
+import { Heading } from "../Text";
+import styled from "styled-components/native";
 
 const AddEntryContainer = styled.View`
   margin-top: 10px;
@@ -11,7 +11,7 @@ const AddEntryContainer = styled.View`
 `;
 
 const AddEntry = ({ entries, setEntries }) => {
-  const { getValueForItem } = useDropDown('units');
+  const { getValueForItem } = useDropDown("units");
 
   const onSaveEntry = ({ stock, name, id, unit }, { resetForm }) => {
     const changeBy = getValueForItem(unit);

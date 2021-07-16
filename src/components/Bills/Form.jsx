@@ -103,7 +103,7 @@ const AutoCompleteField = ({ setDisabled }) => {
 
   const handleOnPress = (item) => {
     queryHelpers.setValue(item.name);
-    idFieldHelpers.setValue(item.id);
+    idFieldHelpers.setValue(item._id);
     nameFieldHelpers.setValue(item.name);
     setDisabled(false);
     hideResults();
