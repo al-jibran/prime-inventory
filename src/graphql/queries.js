@@ -78,3 +78,11 @@ export const DELETE_PRODUCT = gql`
     }
   }
 `;
+
+export const BULK_UPDATE_PRODUCTS = gql`
+  mutation BulkUpdateProducts($bill: Bill!) {
+    bulkUpdateProducts(bill: $bill) {
+      _id
+    }
+  }
+`;

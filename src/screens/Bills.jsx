@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import { View, TextInput } from 'react-native';
+import React, { useState } from "react";
+import { View, TextInput } from "react-native";
+import { useMutation } from "@apollo/client";
 
-import { Text, Heading } from '../components/Text';
-import { Container, FieldStyle } from '../styles/common';
-import Toolbar from '../components/Toolbar';
-import AddEntry from '../components/Bills/AddEntry';
-import Entries from '../components/Bills/Entries';
+import { Text, Heading } from "../components/Text";
+import { Container, FieldStyle } from "../styles/common";
+import Toolbar from "../components/Toolbar";
+import AddEntry from "../components/Bills/AddEntry";
+import Entries from "../components/Bills/Entries";
+import { BULK_UPDATE_PRODUCTS } from "../graphql/queries";
 
 const Bills = () => {
+  const [bulkUpdateProducts] = useMutation(BULK_UPDATE_PRODUCTS, {
+    onError: (error) => {
+      console.log(error.message);
+    },
+  });
+
   const [entries, setEntries] = useState([]);
-  const [value, setValue] = useState("");
+  const [comment, setComment] = useState("");
 
   const onChangeText = (text) => {
-    setValue(text);
+    setComment(text);
+  };
+
+  const submitEntries = () => {
+    bulkUpdateProducts({ variables: { bill: { comment, entries } } });
   };
 
   return (
@@ -20,10 +32,19 @@ const Bills = () => {
       <Toolbar items={ToolbarItems} justifyItems="center" />
       <FieldStyle>
         <Heading>Comment</Heading>
-        <TextInput multiline={true} value={value} onChangeText={onChangeText} style={({ borderBottomWidth: 1 })} />
+        <TextInput
+          multiline={true}
+          value={comment}
+          onChangeText={onChangeText}
+          style={{ borderBottomWidth: 1 }}
+        />
       </FieldStyle>
       <AddEntry entries={entries} setEntries={setEntries} />
-      <Entries entries={entries} setEntries={setEntries} />
+      <Entries
+        entries={entries}
+        setEntries={setEntries}
+        submitEntries={submitEntries}
+      />
     </Container>
   );
 };

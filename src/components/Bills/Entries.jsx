@@ -50,7 +50,7 @@ const renderItem = (product, index, deleteEntry) => {
   );
 };
 
-const Entries = ({ entries, setEntries }) => {
+const Entries = ({ entries, setEntries, submitEntries }) => {
   const hide = entries.length ? { display: "flex" } : { display: "none" };
 
   const onClearEntries = () => {
@@ -82,7 +82,7 @@ const Entries = ({ entries, setEntries }) => {
       {
         text: "Yes",
         onPress: () => {
-          console.log(entries);
+          submitEntries();
         },
       },
     ]);
