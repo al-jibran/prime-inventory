@@ -75,6 +75,7 @@ const Inventory = () => {
 const ProductListContainer = () => {
   const { products, loading, error, fetchMore, filter } = useProducts();
   const [searchQuery, setSearchQuery] = useState("");
+  const [refereshing, setRefreshing] = useState(false);
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -104,6 +105,12 @@ const ProductListContainer = () => {
       showsVerticalScrollIndicator={false}
       onEndReached={fetchMore}
       onEndReachedThreshold={0.1}
+      refreshing={refereshing}
+      onRefresh={() => {
+        setRefreshing(true);
+        filter("");
+        setRefreshing(false);
+      }}
     />
   );
 };
