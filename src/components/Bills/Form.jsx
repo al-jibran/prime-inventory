@@ -13,7 +13,7 @@ import { useProducts } from "../../hooks/useProducts";
 const initialValues = {
   stock: "0",
   name: "",
-  id: "",
+  _id: "",
   query: "",
   unit: "pcs",
 };
@@ -92,7 +92,7 @@ const Form = ({ onSubmit }) => {
 };
 
 const AutoCompleteField = ({ setDisabled }) => {
-  const [, , idFieldHelpers] = useField("id");
+  const [, , idFieldHelpers] = useField("_id");
   const [, , nameFieldHelpers] = useField("name");
   const [query, , queryHelpers] = useField("query");
   const [hide, setHide] = useState(true);

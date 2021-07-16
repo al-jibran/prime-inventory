@@ -13,11 +13,11 @@ const AddEntryContainer = styled.View`
 const AddEntry = ({ entries, setEntries }) => {
   const { getValueForItem } = useDropDown("units");
 
-  const onSaveEntry = ({ stock, name, id, unit }, { resetForm }) => {
+  const onSaveEntry = ({ stock, name, _id, unit }, { resetForm }) => {
     const changeBy = getValueForItem(unit);
     stock *= changeBy;
 
-    setEntries(entries.concat({ id, name, stock }));
+    setEntries(entries.concat({ _id, name, stock }));
     resetForm();
   };
 
