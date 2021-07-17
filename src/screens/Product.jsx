@@ -9,7 +9,7 @@ const Product = ({ route }) => {
   const { name } = client.readFragment({
     id: `Product:${id}`,
     fragment: gql`
-      fragment P1 on Product {
+      fragment ProductFragment on Product {
         name
         brand
         stock

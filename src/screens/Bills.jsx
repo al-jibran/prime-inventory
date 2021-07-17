@@ -29,7 +29,6 @@ const Bills = () => {
 
   return (
     <Container padLeft={20} padRight={20}>
-      <Toolbar items={ToolbarItems} justifyItems="center" />
       <FieldStyle>
         <Heading>Comment</Heading>
         <TextInput
@@ -46,14 +45,6 @@ const Bills = () => {
         submitEntries={submitEntries}
       />
     </Container>
-  );
-};
-
-const ToolbarItems = () => {
-  return (
-    <View>
-      <Text>Bills</Text>
-    </View>
   );
 };
 

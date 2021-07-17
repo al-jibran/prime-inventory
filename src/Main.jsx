@@ -12,9 +12,8 @@ import Bills from "./screens/Bills";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSettings } from "./hooks/useSettings";
 import Product from "./screens/Product";
-import Toolbar from "./components/Toolbar";
 
-const getRouteName = (route) => {
+export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
 
   return routeName;
@@ -45,7 +44,7 @@ const Home = () => {
       })}
       initialRouteName="Inventory"
     >
-      <Tab.Screen name="Bills" component={Bills} options={{ title: "Bills" }} />
+      <Tab.Screen name="Bills" component={Bills} />
       <Tab.Screen
         name="Inventory"
         component={Inventory}
@@ -57,7 +56,6 @@ const Home = () => {
 
 const Main = () => {
   const [units, operations, allKeys] = useSettings("units");
-  const [visible, setVisiblity] = useState(false);
 
   useEffect(() => {
     const initSettings = async () => {
@@ -86,22 +84,6 @@ const Main = () => {
         <Stack.Screen name="Product" component={Product} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
-
-const ToolbarItems = ({ visible, toggleModal }) => {
-  const onPressAdd = () => {
-    toggleModal(!visible);
-  };
-
-  return (
-    <>
-      <Text>Filter</Text>
-      <Text>Inventory</Text>
-      <Pressable onPress={onPressAdd}>
-        <Text>Add</Text>
-      </Pressable>
-    </>
   );
 };
 

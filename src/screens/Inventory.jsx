@@ -1,7 +1,8 @@
 // Native Imports
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
 import { useMutation } from "@apollo/client";
+import { useNavigation } from "@react-navigation/core";
 
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
@@ -15,7 +16,9 @@ import { DELETE_PRODUCT } from "../graphql/queries";
 //Styles
 import { Container } from "../styles/common";
 
-const RenderProduct = ({ item, navigation }) => {
+const RenderProduct = ({ item }) => {
+  const navigation = useNavigation();
+
   const [error, setError] = useState("");
   const [deleteProduct] = useMutation(DELETE_PRODUCT, {
     update: (cache) => {
@@ -46,7 +49,7 @@ const RenderProduct = ({ item, navigation }) => {
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("Product")}
+      onPress={() => navigation.navigate("Product", { id: item._id })}
       onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}
     >
       <ProductItem item={item} />
@@ -58,13 +61,18 @@ const RenderProduct = ({ item, navigation }) => {
 const Inventory = ({ navigation }) => {
   const [visible, setVisiblity] = useState(false);
 
+  useLayoutEffect(() => {
+    navigation.dangerouslyGetParent().setOptions({
+      // eslint-disable-next-line react/display-name
+      headerRight: () => (
+        <AddProductButton visible={visible} toggleModal={setVisiblity} />
+      ),
+      headerRightContainerStyle: { paddingRight: 20 },
+    });
+  }, [navigation]);
+
   return (
     <Container padLeft={20} padRight={20}>
-      <Toolbar
-        items={() => (
-          <ToolbarItems visible={visible} toggleModal={setVisiblity} />
-        )}
-      />
       <ProductListContainer navigation={navigation} />
       <Modal visible={visible}>
         <AddProduct setVisible={setVisiblity} />
@@ -73,7 +81,7 @@ const Inventory = ({ navigation }) => {
   );
 };
 
-const ProductListContainer = ({ navigation }) => {
+const ProductListContainer = () => {
   const { products, loading, error, fetchMore, filter } = useProducts();
   const [searchQuery, setSearchQuery] = useState("");
   const [refereshing, setRefreshing] = useState(false);
@@ -97,9 +105,7 @@ const ProductListContainer = ({ navigation }) => {
       }
       data={products}
       keyExtractor={(item) => item._id}
-      renderItem={({ item }) => (
-        <RenderProduct item={item} navigation={navigation} />
-      )}
+      renderItem={({ item }) => <RenderProduct item={item} />}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       onEndReached={fetchMore}
@@ -126,19 +132,15 @@ const ProductListContainer = ({ navigation }) => {
   );
 };
 
-const ToolbarItems = ({ visible, toggleModal }) => {
+const AddProductButton = ({ visible, toggleModal }) => {
   const onPressAdd = () => {
     toggleModal(!visible);
   };
 
   return (
-    <>
-      <Text>Filter</Text>
-      <Text>Inventory</Text>
-      <Pressable onPress={onPressAdd}>
-        <Text>Add</Text>
-      </Pressable>
-    </>
+    <Pressable onPress={onPressAdd}>
+      <Text>Add</Text>
+    </Pressable>
   );
 };
 
