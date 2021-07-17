@@ -67,8 +67,8 @@ const Inventory = ({ navigation }) => {
         <AddProductButton visible={visible} toggleModal={setVisiblity} />
       ),
       headerLeft: () => <FilterProductsButton />,
-      headerRightContainerStyle: { paddingRight: 20 },
-      headerLeftContainerStyle: { paddingLeft: 20 },
+      headerRightContainerStyle: { paddingRight: 25 },
+      headerLeftContainerStyle: { paddingLeft: 25 },
     });
   }, [navigation]);
 
