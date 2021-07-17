@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { View, TextInput } from "react-native";
+import { TextInput } from "react-native";
 import { useMutation } from "@apollo/client";
 
-import { Text, Heading } from "../components/Text";
+import { Heading } from "../components/Text";
 import { Container, FieldStyle } from "../styles/common";
-import Toolbar from "../components/Toolbar";
 import AddEntry from "../components/Bills/AddEntry";
 import Entries from "../components/Bills/Entries";
 import { BULK_UPDATE_PRODUCTS } from "../graphql/queries";
