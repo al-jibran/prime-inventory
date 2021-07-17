@@ -48,7 +48,11 @@ const Main = () => {
         initialRouteName="Inventory"
       >
         <Tab.Screen name="Bills" component={Bills} />
-        <Tab.Screen name="Inventory" component={Inventory} />
+        <Tab.Screen
+          name="Inventory"
+          component={Inventory}
+          options={{ unmountOnBlur: true }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

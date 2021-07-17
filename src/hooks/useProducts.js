@@ -20,6 +20,7 @@ export const useProducts = (
       onError: (error) => {
         console.log(error);
       },
+      fetchPolicy: "cache-and-network",
     });
 
   const products = data?.inventory.edges.map((edge) => edge.node);
