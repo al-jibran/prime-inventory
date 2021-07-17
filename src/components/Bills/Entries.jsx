@@ -36,7 +36,7 @@ const renderItem = (product, index, deleteEntry) => {
   return (
     <Pressable
       style={{ borderBottomWidth: 1, borderColor: "#eee" }}
-      onLongPress={() => deleteEntry(product.id)}
+      onLongPress={() => deleteEntry(product._id)}
     >
       <FieldStyle layout="horizontal">
         <Text>{index + 1}</Text>
@@ -89,7 +89,7 @@ const Entries = ({ entries, setEntries, submitEntries }) => {
   };
 
   const onDeleteEntry = (id) => {
-    const newEntries = entries.filter((entry) => entry.id !== id);
+    const newEntries = entries.filter((entry) => entry._id !== id);
     setEntries(newEntries);
   };
 
