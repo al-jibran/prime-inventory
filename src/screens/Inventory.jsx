@@ -120,8 +120,8 @@ const ProductListContainer = () => {
       ListEmptyComponent={() => {
         return (
           <Text>
-            There doesn't seem to be anything here. Start by clicking the add
-            button
+            There doesn&apos;t seem to be anything here. Start by clicking the
+            add button
           </Text>
         );
       }}
