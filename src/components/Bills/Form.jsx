@@ -96,7 +96,11 @@ const AutoCompleteField = ({ setDisabled }) => {
   const [, , nameFieldHelpers] = useField("name");
   const [query, , queryHelpers] = useField("query");
   const [hide, setHide] = useState(true);
-  const { products, filter } = useProducts(5);
+  const { getProducts, products, filter } = useProducts(5);
+
+  useState(() => {
+    getProducts();
+  }, []);
 
   const hideResults = () => setHide(true);
   const showResults = () => setHide(false);
