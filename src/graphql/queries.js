@@ -41,14 +41,13 @@ export const GET_INVENTORY = gql`
   ${ProductFragment}
 `;
 
-export const GET_PRODUCT = `
-  query GetProduct($id: ID!){
+export const GET_PRODUCT = gql`
+  query Product($id: ID!) {
     product(id: $id) {
-      ...ProductFields
-      history
+      _id
     }
   }
-${ProductFragment}`;
+`;
 
 export const CREATE_PRODUCT = gql`
   mutation CreateProduct($product: ProductInput!) {

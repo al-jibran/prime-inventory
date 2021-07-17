@@ -1,19 +1,19 @@
-import styled from 'styled-components/native';
-import Constants from 'expo-constants';
+import styled from "styled-components/native";
+import Constants from "expo-constants";
 
 // change paddings to 20 if there's no need for custom padding
 export const Container = styled.View`
-margin-top: ${Constants.statusBarHeight + 15}px; 
-padding-left: ${props => props.padLeft || 0}px;
-padding-right: ${props => props.padRight || 0}px;
-flex: 1;
+  padding-left: ${(props) => props.padLeft || 0}px;
+  padding-right: ${(props) => props.padRight || 0}px;
+  flex: 1;
 `;
 
 export const FieldStyle = styled.View`
-    flex-direction: ${props => props.layout === 'horizontal' ? 'row': 'column'};
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  flex-direction: ${(props) =>
+    props.layout === "horizontal" ? "row" : "column"};
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 export const SearchInput = styled.TextInput`
@@ -27,7 +27,7 @@ export const FormActions = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-self: flex-end;
-  width: ${({width}) => width || "100"}%;
+  width: ${({ width }) => width || "100"}%;
   margin-top: 10px;
   z-index: -10000;
 `;
