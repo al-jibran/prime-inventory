@@ -104,6 +104,7 @@ const ProductListContainer = () => {
       refreshing={refereshing}
       onRefresh={() => {
         setRefreshing(true);
+        setSearchQuery("");
         filter("");
         setRefreshing(false);
       }}
