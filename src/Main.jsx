@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Pressable } from "react-native";
-import { Text } from "./components/Text";
+/* eslint-disable react/display-name */
+import React, { useEffect } from "react";
 import Inventory from "./screens/Inventory";
 import {
   NavigationContainer,
@@ -20,14 +19,34 @@ export const getRouteName = (route) => {
 };
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const RootStack = createStackNavigator();
+const InventoryStack = createStackNavigator();
+const BillsStack = createStackNavigator();
+
+const InventoryStackScreen = () => {
+  return (
+    <InventoryStack.Navigator
+      screenOptions={{ cardStyle: { backgroundColor: "white" } }}
+    >
+      <InventoryStack.Screen name="Inventory" component={Inventory} />
+    </InventoryStack.Navigator>
+  );
+};
+
+const BillsStackScreen = () => {
+  return (
+    <BillsStack.Navigator
+      screenOptions={{ cardStyle: { backgroundColor: "white" } }}
+    >
+      <BillsStack.Screen name="Bills" component={Bills} />
+    </BillsStack.Navigator>
+  );
+};
 
 const Home = () => {
   return (
     <Tab.Navigator
-      sceneContainerStyle={{ backgroundColor: "white" }}
       screenOptions={({ route }) => ({
-        // eslint-disable-next-line react/display-name
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -44,10 +63,10 @@ const Home = () => {
       })}
       initialRouteName="Inventory"
     >
-      <Tab.Screen name="Bills" component={Bills} />
+      <Tab.Screen name="Bills" component={BillsStackScreen} />
       <Tab.Screen
         name="Inventory"
-        component={Inventory}
+        component={InventoryStackScreen}
         options={{ unmountOnBlur: true }}
       />
     </Tab.Navigator>
@@ -73,16 +92,17 @@ const Main = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
+      <RootStack.Navigator
+        initialRouteName="Home"
+        screenOptions={{ cardStyle: { backgroundColor: "white" } }}
+      >
+        <RootStack.Screen
           name="Home"
           component={Home}
-          options={({ route }) => ({
-            headerTitle: getRouteName(route),
-          })}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="Product" component={Product} />
-      </Stack.Navigator>
+        <RootStack.Screen name="Product" component={Product} />
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 };

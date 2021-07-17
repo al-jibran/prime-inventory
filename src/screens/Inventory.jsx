@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 // Native Imports
 import React, { useState, useLayoutEffect } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
@@ -9,7 +10,6 @@ import ProductItem from "../components/Inventory/ProductItem";
 import Searchbar from "../components/Searchbar";
 import AddProduct from "../components/Inventory/AddProduct";
 import Modal from "../components/Modal";
-import Toolbar from "../components/Toolbar";
 import { useProducts } from "../hooks/useProducts";
 import { DELETE_PRODUCT } from "../graphql/queries";
 
@@ -62,12 +62,13 @@ const Inventory = ({ navigation }) => {
   const [visible, setVisiblity] = useState(false);
 
   useLayoutEffect(() => {
-    navigation.dangerouslyGetParent().setOptions({
-      // eslint-disable-next-line react/display-name
+    navigation.setOptions({
       headerRight: () => (
         <AddProductButton visible={visible} toggleModal={setVisiblity} />
       ),
+      headerLeft: () => <FilterProductsButton />,
       headerRightContainerStyle: { paddingRight: 20 },
+      headerLeftContainerStyle: { paddingLeft: 20 },
     });
   }, [navigation]);
 
@@ -140,6 +141,14 @@ const AddProductButton = ({ visible, toggleModal }) => {
   return (
     <Pressable onPress={onPressAdd}>
       <Text>Add</Text>
+    </Pressable>
+  );
+};
+
+const FilterProductsButton = () => {
+  return (
+    <Pressable onPress={null}>
+      <Text>Filter</Text>
     </Pressable>
   );
 };
