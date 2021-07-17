@@ -14,7 +14,6 @@ import { DELETE_PRODUCT } from "../graphql/queries";
 
 //Styles
 import { Container } from "../styles/common";
-import { useEffect } from "react";
 
 const RenderProduct = ({ item }) => {
   const [error, setError] = useState("");
@@ -74,14 +73,9 @@ const Inventory = () => {
 };
 
 const ProductListContainer = () => {
-  const { getProducts, products, loading, error, fetchMore, filter } =
-    useProducts();
+  const { products, loading, error, fetchMore, filter } = useProducts();
   const [searchQuery, setSearchQuery] = useState("");
   const [refereshing, setRefreshing] = useState(false);
-
-  useEffect(() => {
-    getProducts();
-  }, []);
 
   if (loading) {
     return <Text>Loading...</Text>;

@@ -1,4 +1,4 @@
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useDebouncedCallback } from "use-debounce/lib";
 import { GET_INVENTORY } from "../graphql/queries";
 
@@ -7,21 +7,20 @@ export const useProducts = (
   orderBy = "CREATED_AT",
   orderDirection = "DESC"
 ) => {
-  const [getProducts, { data, loading, error, fetchMore, refetch }] =
-    useLazyQuery(GET_INVENTORY, {
-      variables: {
-        first,
-        orderDirection,
-        orderBy,
-      },
-      onCompleted: (data) => {
-        console.log(data.inventory.totalCount);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-      fetchPolicy: "cache-and-network",
-    });
+  const { data, loading, error, fetchMore, refetch } = useQuery(GET_INVENTORY, {
+    variables: {
+      first,
+      orderDirection,
+      orderBy,
+    },
+    onCompleted: (data) => {
+      console.log(data.inventory.totalCount);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    fetchPolicy: "cache-and-network",
+  });
 
   const products = data?.inventory.edges.map((edge) => edge.node);
 
@@ -44,7 +43,6 @@ export const useProducts = (
   };
 
   return {
-    getProducts,
     products,
     error,
     loading,
