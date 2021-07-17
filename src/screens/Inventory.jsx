@@ -83,6 +83,14 @@ const ProductListContainer = () => {
     getProducts();
   }, []);
 
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
+
   return (
     <FlatList
       ListHeaderComponent={
@@ -110,14 +118,6 @@ const ProductListContainer = () => {
         setRefreshing(false);
       }}
       ListEmptyComponent={() => {
-        if (loading) {
-          return <Text>Loading...</Text>;
-        }
-
-        if (error) {
-          return <Text>{error.message}</Text>;
-        }
-
         return (
           <Text>
             There doesn't seem to be anything here. Start by clicking the add

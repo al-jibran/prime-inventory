@@ -7,21 +7,25 @@ export const useProducts = (
   orderBy = "CREATED_AT",
   orderDirection = "DESC"
 ) => {
-  const [getProducts, { data, loading, error, fetchMore }] = useLazyQuery(
-    GET_INVENTORY,
-    {
+  const [getProducts, { data, loading, error, fetchMore, refetch }] =
+    useLazyQuery(GET_INVENTORY, {
       variables: {
         first,
         orderDirection,
         orderBy,
       },
-    }
-  );
+      onCompleted: (data) => {
+        console.log(data.inventory.totalCount);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
 
   const products = data?.inventory.edges.map((edge) => edge.node);
 
   const debounced = useDebouncedCallback((value) => {
-    getProducts({ search: value });
+    refetch({ search: value });
   }, 500);
 
   const onEndReached = () => {
