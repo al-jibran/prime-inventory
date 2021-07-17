@@ -15,7 +15,7 @@ import { DELETE_PRODUCT } from "../graphql/queries";
 //Styles
 import { Container } from "../styles/common";
 
-const RenderProduct = ({ item }) => {
+const RenderProduct = ({ item, navigation }) => {
   const [error, setError] = useState("");
   const [deleteProduct] = useMutation(DELETE_PRODUCT, {
     update: (cache) => {
@@ -46,6 +46,7 @@ const RenderProduct = ({ item }) => {
 
   return (
     <Pressable
+      onPress={() => navigation.navigate("Product")}
       onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}
     >
       <ProductItem item={item} />
@@ -54,7 +55,7 @@ const RenderProduct = ({ item }) => {
   );
 };
 
-const Inventory = () => {
+const Inventory = ({ navigation }) => {
   const [visible, setVisiblity] = useState(false);
 
   return (
@@ -64,7 +65,7 @@ const Inventory = () => {
           <ToolbarItems visible={visible} toggleModal={setVisiblity} />
         )}
       />
-      <ProductListContainer />
+      <ProductListContainer navigation={navigation} />
       <Modal visible={visible}>
         <AddProduct setVisible={setVisiblity} />
       </Modal>
@@ -72,7 +73,7 @@ const Inventory = () => {
   );
 };
 
-const ProductListContainer = () => {
+const ProductListContainer = ({ navigation }) => {
   const { products, loading, error, fetchMore, filter } = useProducts();
   const [searchQuery, setSearchQuery] = useState("");
   const [refereshing, setRefreshing] = useState(false);
@@ -96,7 +97,9 @@ const ProductListContainer = () => {
       }
       data={products}
       keyExtractor={(item) => item._id}
-      renderItem={({ item }) => <RenderProduct item={item} />}
+      renderItem={({ item }) => (
+        <RenderProduct item={item} navigation={navigation} />
+      )}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       onEndReached={fetchMore}
