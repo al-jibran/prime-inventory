@@ -77,10 +77,6 @@ const ProductListContainer = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [refereshing, setRefreshing] = useState(false);
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
   if (error) {
     return <Text>{error.message}</Text>;
   }
@@ -112,6 +108,9 @@ const ProductListContainer = () => {
         setRefreshing(false);
       }}
       ListEmptyComponent={() => {
+        if (loading) {
+          return <Text>Loading...</Text>;
+        }
         return (
           <Text>
             There doesn&apos;t seem to be anything here. Start by clicking the
