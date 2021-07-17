@@ -14,6 +14,7 @@ import { DELETE_PRODUCT } from "../graphql/queries";
 
 //Styles
 import { Container } from "../styles/common";
+import { useEffect } from "react";
 
 const RenderProduct = ({ item }) => {
   const [error, setError] = useState("");
@@ -73,17 +74,14 @@ const Inventory = () => {
 };
 
 const ProductListContainer = () => {
-  const { products, loading, error, fetchMore, filter } = useProducts();
+  const { getProducts, products, loading, error, fetchMore, filter } =
+    useProducts();
   const [searchQuery, setSearchQuery] = useState("");
   const [refereshing, setRefreshing] = useState(false);
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error) {
-    return <Text>{error.message}</Text>;
-  }
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <FlatList
@@ -110,6 +108,22 @@ const ProductListContainer = () => {
         setRefreshing(true);
         filter("");
         setRefreshing(false);
+      }}
+      ListEmptyComponent={() => {
+        if (loading) {
+          return <Text>Loading...</Text>;
+        }
+
+        if (error) {
+          return <Text>{error.message}</Text>;
+        }
+
+        return (
+          <Text>
+            There doesn't seem to be anything here. Start by clicking the add
+            button
+          </Text>
+        );
       }}
     />
   );
