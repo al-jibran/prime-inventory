@@ -1,44 +1,65 @@
-import React from 'react';
-import styled, { css } from 'styled-components/native';
-import Theme from '../theme';
+import React from "react";
+import styled, { css } from "styled-components/native";
+import Theme from "../theme";
 
 const ButtonContainer = styled.Pressable`
   background-color: ${({ bgColor }) => {
     if (bgColor) {
       switch (bgColor) {
-        case 'primary': return Theme.color.primary;
-        case 'danger': return Theme.color.danger;
-        case 'success': return Theme.color.success;
-        case 'warning': return Theme.color.warning;
-        default: return bgColor;
+        case "primary":
+          return Theme.color.primary;
+        case "danger":
+          return Theme.color.danger;
+        case "success":
+          return Theme.color.success;
+        case "warning":
+          return Theme.color.warning;
+        default:
+          return bgColor;
       }
     } else {
       return Theme.color.textPrimary;
     }
   }};
 
-  ${({bgColor}) => bgColor === 'white' && css `border: 1px solid #ccc;`}
+  ${({ bgColor }) =>
+    bgColor === "white" &&
+    css`
+      border: 1px solid #ccc;
+    `}
 
-  padding-top: ${props => props.padTop || 8}px;
-  padding-bottom: ${props => props.padBottom || 8}px;
-  padding-left: ${props => props.padLeft || 5}px;
-  padding-right: ${props => props.padLeft || 5}px;
-  width: ${props => props.width || '100'}px
-  
-  ${({ rounded }) => rounded && css`border-radius: 10px`};
-  ${({ disabled }) => disabled && css`opacity: 0.5`};
+  padding-top: ${(props) => props.padTop || 8}px;
+  padding-bottom: ${(props) => props.padBottom || 8}px;
+  padding-left: ${(props) => props.padLeft || 5}px;
+  padding-right: ${(props) => props.padRight || 5}px;
+  width: ${(props) => props.width || "100"}px;
+  ${({ rounded, borderColor }) =>
+    rounded &&
+    css`
+      border-radius: 10px;
+      border-color: ${borderColor || "#DDD"};
+    `};
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.5;
+    `};
 `;
-
 
 const ButtonText = styled.Text`
   text-align: center;
-  color: ${props => props.color || props.bgColor === 'white' ? Theme.color.textPrimary : 'white'};
+  color: ${(props) =>
+    props.color || props.bgColor === "white"
+      ? Theme.color.textPrimary
+      : "white"};
 `;
 
 const Button = ({ text, onPress, ...props }) => {
   return (
     <ButtonContainer onPress={onPress} {...props}>
-      <ButtonText color={props.color} {...props}>{text}</ButtonText>
+      <ButtonText color={props.color} {...props}>
+        {text}
+      </ButtonText>
     </ButtonContainer>
   );
 };
