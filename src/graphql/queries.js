@@ -63,8 +63,8 @@ export const CREATE_PRODUCT = gql`
 `;
 
 export const UPDATE_PRODUCT = gql`
-  mutation UpdateProduct($id: MongoObjectID!, $product: ProductInput!) {
-    updateProduct(id: $id, product: $product) {
+  mutation UpdateProduct($id: MongoObjectID!, $change: ProductInput!) {
+    updateProduct(id: $id, change: $change) {
       ...ProductFields
     }
   }

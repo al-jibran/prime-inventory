@@ -22,9 +22,9 @@ const EditProduct = ({ setVisible, data }) => {
     const changeBy = parseInt(stock);
     stock = changeBy * unitValue;
 
-    const product = { name, brand, stock, comment };
+    const change = { name, brand, stock, comment };
 
-    editProduct({ variables: { id: data._id, product } });
+    editProduct({ variables: { id: data._id, change } });
 
     setVisible(false);
   };
