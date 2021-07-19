@@ -8,8 +8,6 @@ import { useNavigation } from "@react-navigation/core";
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
 import Searchbar from "../components/Searchbar";
-import AddProduct from "../components/Inventory/AddProduct";
-import Modal from "../components/Modal";
 import { useProducts } from "../hooks/useProducts";
 import { DELETE_PRODUCT } from "../graphql/queries";
 
@@ -131,9 +129,10 @@ const ProductListContainer = () => {
 };
 
 const AddProductButton = () => {
-  const navigate = useNavigation();
+  const navigation = useNavigation();
+
   const onPressAdd = () => {
-    navigate.navigate("AddModal");
+    navigation.navigate("AddProduct");
   };
 
   return (

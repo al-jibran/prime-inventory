@@ -1,18 +1,32 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation, gql } from "@apollo/client";
 
 import FormHandler from "./Form";
 import { UPDATE_PRODUCT } from "../../graphql/queries";
 import { useDropDown } from "../../hooks/useDropDown";
+import { useNavigation } from "@react-navigation/native";
 
-const EditProduct = ({ setVisible, data }) => {
+const EditProduct = ({ id }) => {
+  const navigation = useNavigation();
   const [editProduct] = useMutation(UPDATE_PRODUCT);
   const { getValueForItem } = useDropDown("units");
+  const client = useApolloClient();
+
+  const { name, brand } = client.readFragment({
+    id: `Product:${id}`,
+    fragment: gql`
+      fragment ProductFragment on Product {
+        name
+        brand
+        stock
+      }
+    `,
+  });
 
   const initialValue = {
-    name: data.name,
+    name: name,
     stock: "0",
-    brand: data.brand,
+    brand: brand,
     comment: "",
     unit: "pcs",
   };
@@ -24,13 +38,13 @@ const EditProduct = ({ setVisible, data }) => {
 
     const change = { name, brand, stock, comment };
 
-    editProduct({ variables: { id: data._id, change } });
+    editProduct({ variables: { id, change } });
 
-    setVisible(false);
+    navigation.navigate("Home");
   };
 
   const onReset = () => {
-    setVisible(false);
+    navigation.navigate("Home");
   };
 
   return (

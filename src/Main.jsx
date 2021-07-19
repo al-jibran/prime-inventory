@@ -5,7 +5,7 @@ import {
   NavigationContainer,
   getFocusedRouteNameFromRoute,
 } from "@react-navigation/native";
-import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Bills from "./screens/Bills";
@@ -13,6 +13,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSettings } from "./hooks/useSettings";
 import Product from "./screens/Product";
 import AddProduct from "./components/Inventory/AddProduct";
+import EditProduct from "./components/Inventory/EditProduct";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
@@ -127,8 +128,13 @@ const Main = () => {
         />
         <RootStack.Screen name="Product" component={Product} />
         <RootStack.Screen
-          name="AddModal"
+          name="AddProduct"
           component={AddProductModal}
+          options={modalOptions}
+        />
+        <RootStack.Screen
+          name="EditProduct"
+          component={EditProductModal}
           options={modalOptions}
         />
       </RootStack.Navigator>
@@ -140,6 +146,14 @@ const AddProductModal = () => {
   return (
     <KeyboardAvoidingView behavior="position" style={styles.overlay}>
       <AddProduct />
+    </KeyboardAvoidingView>
+  );
+};
+
+const EditProductModal = ({ route }) => {
+  return (
+    <KeyboardAvoidingView behavior="position" style={styles.overlay}>
+      <EditProduct id={route.params.id} />
     </KeyboardAvoidingView>
   );
 };

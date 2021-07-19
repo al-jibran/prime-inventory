@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import styled from "styled-components/native";
-
-import Modal from "../Modal";
-import EditProduct from "./EditProduct";
 import { Text, SubText } from "../Text";
 import Theme from "../../theme";
 import { ShadowBox } from "../../styles/common";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductItemStyle = styled(ShadowBox)`
   height: 75px;
@@ -28,7 +26,7 @@ const Stock = styled.Pressable`
 `;
 
 const ProductItem = ({ item }) => {
-  const [visible, setVisible] = useState(false);
+  const navigation = useNavigation();
 
   let color = Theme.color.danger;
 
@@ -39,7 +37,7 @@ const ProductItem = ({ item }) => {
   }
 
   const handleStockPress = () => {
-    setVisible(true);
+    navigation.navigate("EditProduct", { id: item._id });
   };
 
   return (
@@ -53,9 +51,6 @@ const ProductItem = ({ item }) => {
           {item.stock}
         </Text>
       </Stock>
-      <Modal visible={visible}>
-        <EditProduct setVisible={setVisible} data={item} />
-      </Modal>
     </ProductItemStyle>
   );
 };
