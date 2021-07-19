@@ -28,7 +28,7 @@ const Detail = styled.View`
 
 const TransactionDetails = styled(ShadowBox)`
   margin-top: 15px;
-  padding: 15px;
+  padding: 8px 15px;
   margin-bottom: 0;
 `;
 
@@ -89,13 +89,16 @@ const ListHeaderComponent = ({ id }) => {
 };
 
 const renderItem = ({ item }) => {
-  console.log(typeof item.created);
+  const date = new Date(item.created).toLocaleDateString();
+  const time = new Date(item.created).toLocaleTimeString();
   return (
     <Togglable>
       <TransactionDetails>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Date</SubHeading>
-          <Text>{item.created}</Text>
+          <Text>
+            {date} | {time}
+          </Text>
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
@@ -112,7 +115,7 @@ const renderItem = ({ item }) => {
 const Product = ({ route }) => {
   const { id } = route.params;
   const { data, loading, error } = useQuery(GET_PRODUCT_HISTORY, {
-    variables: { id, first: 5 },
+    variables: { id, first: 7 },
   });
 
   if (error) {
@@ -128,6 +131,21 @@ const Product = ({ route }) => {
         ListHeaderComponent={<ListHeaderComponent id={id} />}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
+        ListEmptyComponent={() => {
+          if (loading) {
+            return <Text>Loading...</Text>;
+          }
+          if (error) {
+            return <Text>{error.message}</Text>;
+          }
+
+          return (
+            <Text>
+              There doesn&amp;t seem to be anyhthing here. This product&amp;s
+              history will appear here.
+            </Text>
+          );
+        }}
       />
     </Container>
   );
