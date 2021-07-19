@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { View, Pressable, Alert } from "react-native";
-import { ShadowBox } from "../styles/common";
+import { View, Pressable } from "react-native";
 
 const Toggle = styled.View`
   display: ${(props) => (props.visible ? "flex" : "none")}};

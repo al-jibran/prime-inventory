@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SectionList, View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled, { css } from "styled-components/native";
