@@ -36,3 +36,13 @@ export const FormActions = styled.View`
   margin-top: 10px;
   z-index: -10000;
 `;
+
+export const ShadowBox = styled.View`
+  width: 100%;
+  shadow-color: #ddd;
+  shadow-offset: 1px 1px;
+  shadow-opacity: 1;
+  shadow-radius: 3px;
+  elevation: 5;
+  background-color: #fff;
+`;

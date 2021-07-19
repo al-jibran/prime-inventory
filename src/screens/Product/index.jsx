@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { gql, useApolloClient } from "@apollo/client";
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { Heading, Text, SubHeading } from "../../components/Text";
-import { Container } from "../../styles/common";
+import { Container, ShadowBox } from "../../styles/common";
 import Button from "../../components/Button";
 import Theme from "../../theme";
+import Togglable from "../../components/Togglable";
 
-const Details = styled.View`
+const Details = css`
   flex-shrink: 1;
   margin-bottom: 30px;
+`;
+
+const DetailsContainer = styled.View`
+  ${Details}
 `;
 
 const Detail = styled.View`
@@ -19,33 +24,21 @@ const Detail = styled.View`
   margin-bottom: ${(props) => props.mBottom || 5}px;
 `;
 
-const TransactionDetails = styled(Details)`
-  width: 100%;
+const TransactionDetails = styled(ShadowBox)`
   margin-top: 15px;
   padding: 15px;
-  shadow-color: #ddd;
-  shadow-offset: 1px 1px;
-  shadow-opacity: 1;
-  shadow-radius: 3px;
-  elevation: 5;
-  background-color: #fff;
   margin-bottom: 0;
 `;
 
 const TransactionComment = styled(TransactionDetails)`
   margin: 0;
-  margin-bottom: 30px;
-  display: ${(props) => (props.visible ? "flex" : "none")};
 `;
-
-const Transaction = styled.Pressable``;
 
 const History = styled.View`
   flex-grow: 3;
 `;
 
 const Product = ({ route }) => {
-  const [commentVisible, setCommentVisible] = useState(false);
   const client = useApolloClient();
   const { id } = route.params;
 
@@ -62,7 +55,7 @@ const Product = ({ route }) => {
 
   return (
     <Container mTop={20}>
-      <Details>
+      <DetailsContainer>
         <Detail mTop={10} mBottom={10}>
           <Text>Name</Text>
           <Text color="#ABABAB">{name}</Text>
@@ -75,7 +68,7 @@ const Product = ({ route }) => {
           <Text>Brand</Text>
           <Text color="#ABABAB">{brand}</Text>
         </Detail>
-      </Details>
+      </DetailsContainer>
       <History>
         <Detail>
           <Heading>History</Heading>
@@ -89,7 +82,7 @@ const Product = ({ route }) => {
             width=""
           />
         </Detail>
-        <Transaction onPress={() => setCommentVisible(!commentVisible)}>
+        <Togglable>
           <TransactionDetails>
             <Detail>
               <SubHeading fontSize={Theme.fontSize.body}>Date</SubHeading>
@@ -100,10 +93,10 @@ const Product = ({ route }) => {
               <Text>+5</Text>
             </Detail>
           </TransactionDetails>
-          <TransactionComment visible={commentVisible}>
+          <TransactionComment>
             <Text>Comment was left by among us</Text>
           </TransactionComment>
-        </Transaction>
+        </Togglable>
       </History>
     </Container>
   );
