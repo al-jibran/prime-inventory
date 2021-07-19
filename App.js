@@ -22,6 +22,7 @@ const cache = new InMemoryCache({
     Query: {
       fields: {
         inventory: relayStylePagination(),
+        getProductHistory: relayStylePagination(),
       },
     },
   },

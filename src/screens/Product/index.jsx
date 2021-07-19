@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SectionList, View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled, { css } from "styled-components/native";
@@ -109,44 +109,70 @@ const renderItem = ({ item }) => {
 
 const Product = ({ route }) => {
   const { id } = route.params;
-  const { data, loading, error } = useQuery(GET_PRODUCT_HISTORY, {
+  const [historyData, setHistoryData] = useState([]);
+  const { data, loading, error, fetchMore } = useQuery(GET_PRODUCT_HISTORY, {
     variables: { id, first: 7 },
+    onCompleted: (data) => {
+      console.log(data.getProductHistory.totalCount);
+      const history = data.getProductHistory.edges.map((edge) => edge.node);
+      transformDataForSection(history);
+    },
+    onError: (error) => {
+      console.log(error.message);
+    },
+    fetchPolicy: "cache-and-network",
   });
 
   if (error) {
     return <Text>{error.message}</Text>;
   }
 
-  console.time("start");
-  const history = data?.getProductHistory.edges.map((edge) => edge.node);
-  const dates = new Set(
-    history?.map((his) => new Date(his.created).toDateString())
-  );
-
-  let sectionData = [];
-
-  for (let date of dates.values()) {
-    const sameDateHistory = history?.filter(
-      (his) => new Date(his.created).toDateString() === date
+  const transformDataForSection = (history) => {
+    const dates = new Set(
+      history.map((his) => new Date(his.created).toDateString())
     );
 
-    const sectionItem = {
-      title: date,
-      data: sameDateHistory,
-    };
+    let sectionData = [];
+    for (let date of dates.values()) {
+      const sameDateHistory = history.filter(
+        (his) => new Date(his.created).toDateString() === date
+      );
 
-    sectionData.push(sectionItem);
-  }
-  console.timeEnd("start");
+      const sectionItem = {
+        title: date,
+        data: sameDateHistory,
+      };
+
+      sectionData.push(sectionItem);
+    }
+    setHistoryData(sectionData);
+  };
+
+  const onEndReached = () => {
+    const canFetchMore =
+      !loading && data?.getProductHistory.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data?.getProductHistory.pageInfo.endCursor,
+      },
+    });
+  };
 
   return (
     <Container mTop={20}>
       <SectionList
-        sections={sectionData}
+        sections={historyData}
         ListHeaderComponent={<ListHeaderComponent id={id} />}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         stickySectionHeadersEnabled={false}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.1}
         renderSectionHeader={({ section: { title } }) => (
           <View style={{ marginTop: 15 }}>
             <SubHeading align="center">{title}</SubHeading>
