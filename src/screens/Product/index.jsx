@@ -117,6 +117,7 @@ const Product = ({ route }) => {
     return <Text>{error.message}</Text>;
   }
 
+  console.time("start");
   const history = data?.getProductHistory.edges.map((edge) => edge.node);
   const dates = new Set(
     history?.map((his) => new Date(his.created).toDateString())
@@ -136,6 +137,7 @@ const Product = ({ route }) => {
 
     sectionData.push(sectionItem);
   }
+  console.timeEnd("start");
 
   return (
     <Container mTop={20}>
@@ -144,6 +146,7 @@ const Product = ({ route }) => {
         ListHeaderComponent={<ListHeaderComponent id={id} />}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
+        stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title } }) => (
           <View style={{ marginTop: 15 }}>
             <SubHeading align="center">{title}</SubHeading>
