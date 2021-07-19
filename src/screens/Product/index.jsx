@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { gql, useApolloClient } from "@apollo/client";
 import styled from "styled-components/native";
-import { Heading, Text, SubHeading } from "../components/Text";
-import { Container } from "../styles/common";
-import Button from "../components/Button";
-import Theme from "../theme";
+import { Heading, Text, SubHeading } from "../../components/Text";
+import { Container } from "../../styles/common";
+import Button from "../../components/Button";
+import Theme from "../../theme";
 
 const Details = styled.View`
   flex-shrink: 1;
