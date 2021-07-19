@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import { SectionList, View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled, { css } from "styled-components/native";
 import { Heading, Text, SubHeading } from "../../components/Text";
@@ -36,9 +36,7 @@ const TransactionComment = styled(TransactionDetails)`
   margin: 0;
 `;
 
-const History = styled.View`
-  flex-grow: 3;
-`;
+const History = styled.View``;
 
 const ListHeaderComponent = ({ id }) => {
   const client = useApolloClient();
@@ -89,16 +87,13 @@ const ListHeaderComponent = ({ id }) => {
 };
 
 const renderItem = ({ item }) => {
-  const date = new Date(item.created).toLocaleDateString();
   const time = new Date(item.created).toLocaleTimeString();
   return (
     <Togglable>
       <TransactionDetails>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Date</SubHeading>
-          <Text>
-            {date} | {time}
-          </Text>
+          <Text>{time}</Text>
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
@@ -123,14 +118,37 @@ const Product = ({ route }) => {
   }
 
   const history = data?.getProductHistory.edges.map((edge) => edge.node);
+  const dates = new Set(
+    history?.map((his) => new Date(his.created).toDateString())
+  );
+
+  let sectionData = [];
+
+  for (let date of dates.values()) {
+    const sameDateHistory = history?.filter(
+      (his) => new Date(his.created).toDateString() === date
+    );
+
+    const sectionItem = {
+      title: date,
+      data: sameDateHistory,
+    };
+
+    sectionData.push(sectionItem);
+  }
 
   return (
     <Container mTop={20}>
-      <FlatList
-        data={history}
+      <SectionList
+        sections={sectionData}
         ListHeaderComponent={<ListHeaderComponent id={id} />}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
+        renderSectionHeader={({ section: { title } }) => (
+          <View style={{ marginTop: 15 }}>
+            <SubHeading align="center">{title}</SubHeading>
+          </View>
+        )}
         ListEmptyComponent={() => {
           if (loading) {
             return <Text>Loading...</Text>;
@@ -141,7 +159,7 @@ const Product = ({ route }) => {
 
           return (
             <Text>
-              There doesn&amp;t seem to be anyhthing here. This product&amp;s
+              There doesn&apos;t seem to be anything here. This product&apos;s
               history will appear here.
             </Text>
           );
