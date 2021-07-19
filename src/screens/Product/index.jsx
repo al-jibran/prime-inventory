@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { gql, useApolloClient } from "@apollo/client";
+import { FlatList, View } from "react-native";
+import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled, { css } from "styled-components/native";
 import { Heading, Text, SubHeading } from "../../components/Text";
 import { Container, ShadowBox } from "../../styles/common";
 import Button from "../../components/Button";
 import Theme from "../../theme";
 import Togglable from "../../components/Togglable";
+import { GET_PRODUCT_HISTORY } from "../../graphql/queries";
 
 const Details = css`
   flex-shrink: 1;
@@ -38,9 +40,8 @@ const History = styled.View`
   flex-grow: 3;
 `;
 
-const Product = ({ route }) => {
+const ListHeaderComponent = ({ id }) => {
   const client = useApolloClient();
-  const { id } = route.params;
 
   const { name, stock, brand } = client.readFragment({
     id: `Product:${id}`,
@@ -54,7 +55,7 @@ const Product = ({ route }) => {
   });
 
   return (
-    <Container mTop={20}>
+    <View>
       <DetailsContainer>
         <Detail mTop={10} mBottom={10}>
           <Text>Name</Text>
@@ -82,22 +83,52 @@ const Product = ({ route }) => {
             width=""
           />
         </Detail>
-        <Togglable>
-          <TransactionDetails>
-            <Detail>
-              <SubHeading fontSize={Theme.fontSize.body}>Date</SubHeading>
-              <Text>17/05/21</Text>
-            </Detail>
-            <Detail>
-              <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-              <Text>+5</Text>
-            </Detail>
-          </TransactionDetails>
-          <TransactionComment>
-            <Text>Comment was left by among us</Text>
-          </TransactionComment>
-        </Togglable>
       </History>
+    </View>
+  );
+};
+
+const renderItem = ({ item }) => {
+  console.log(typeof item.created);
+  return (
+    <Togglable>
+      <TransactionDetails>
+        <Detail>
+          <SubHeading fontSize={Theme.fontSize.body}>Date</SubHeading>
+          <Text>{item.created}</Text>
+        </Detail>
+        <Detail>
+          <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
+          <Text>+5</Text>
+        </Detail>
+      </TransactionDetails>
+      <TransactionComment>
+        <Text>{item.comment}</Text>
+      </TransactionComment>
+    </Togglable>
+  );
+};
+
+const Product = ({ route }) => {
+  const { id } = route.params;
+  const { data, loading, error } = useQuery(GET_PRODUCT_HISTORY, {
+    variables: { id, first: 5 },
+  });
+
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
+
+  const history = data?.getProductHistory.edges.map((edge) => edge.node);
+
+  return (
+    <Container mTop={20}>
+      <FlatList
+        data={history}
+        ListHeaderComponent={<ListHeaderComponent id={id} />}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id}
+      />
     </Container>
   );
 };

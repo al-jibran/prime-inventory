@@ -9,6 +9,19 @@ const ProductFragment = gql`
   }
 `;
 
+const TransactionFragment = gql`
+  fragment TransactionFields on Transaction {
+    _id
+    comment
+    type
+    created
+    changes {
+      productId
+      change
+    }
+  }
+`;
+
 export const GET_INVENTORY = gql`
   query Inventory(
     $after: String
@@ -84,4 +97,24 @@ export const BULK_UPDATE_PRODUCTS = gql`
       _id
     }
   }
+`;
+
+export const GET_PRODUCT_HISTORY = gql`
+  query GetProductHistory($id: MongoObjectID!, $after: String, $first: Int) {
+    getProductHistory(id: $id, after: $after, first: $first) {
+      edges {
+        node {
+          ...TransactionFields
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+      }
+      totalCount
+    }
+  }
+  ${TransactionFragment}
 `;

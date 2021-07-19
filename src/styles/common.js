@@ -38,7 +38,7 @@ export const FormActions = styled.View`
 `;
 
 export const ShadowBox = styled.View`
-  width: 100%;
+  width: 99%;
   shadow-color: #ddd;
   shadow-offset: 1px 1px;
   shadow-opacity: 1;

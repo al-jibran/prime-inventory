@@ -11,7 +11,7 @@ const Togglable = ({ children }) => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <View style={{ marginBottom: 0 }}>
+    <View style={{ marginBottom: 0, flex: 1, justifyContent: "flex-end" }}>
       <Pressable onPress={() => setVisible(!visible)}>{children[0]}</Pressable>
       <Toggle visible={visible}>{children[1]}</Toggle>
     </View>
