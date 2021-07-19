@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import FormHandler from "./Form";
 import { useDropDown } from "../../hooks/useDropDown";
 import { CREATE_PRODUCT, GET_INVENTORY } from "../../graphql/queries";
+import { useNavigation } from "@react-navigation/native";
 
 const initialValue = {
   name: "",
@@ -13,7 +14,8 @@ const initialValue = {
   unit: "pcs",
 };
 
-const AddProduct = ({ setVisible }) => {
+const AddProduct = () => {
+  const navigation = useNavigation();
   const [createProduct] = useMutation(CREATE_PRODUCT, {
     refetchQueries: [{ query: GET_INVENTORY }],
   });
@@ -26,11 +28,11 @@ const AddProduct = ({ setVisible }) => {
     const product = { name, brand, stock, comment };
 
     createProduct({ variables: { product } });
-    setVisible(false);
+    navigation.navigate("Home");
   };
 
   const onReset = () => {
-    setVisible(false);
+    navigation.navigate("Home");
   };
 
   return (

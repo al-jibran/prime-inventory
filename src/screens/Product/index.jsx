@@ -87,12 +87,16 @@ const ListHeaderComponent = ({ id }) => {
 };
 
 const renderItem = ({ item }) => {
-  const time = new Date(item.created).toLocaleTimeString();
+  const time = new Date(item.created).toLocaleTimeString("en-us", {
+    hour12: true,
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   return (
     <Togglable>
       <TransactionDetails>
         <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Date</SubHeading>
+          <SubHeading fontSize={Theme.fontSize.body}>Time</SubHeading>
           <Text>{time}</Text>
         </Detail>
         <Detail>
@@ -109,13 +113,14 @@ const renderItem = ({ item }) => {
 
 const Product = ({ route }) => {
   const { id } = route.params;
-  const [historyData, setHistoryData] = useState([]);
+  const [sectionData, setSectionData] = useState([]);
   const { data, loading, error, fetchMore } = useQuery(GET_PRODUCT_HISTORY, {
     variables: { id, first: 7 },
     onCompleted: (data) => {
       console.log(data.getProductHistory.totalCount);
       const history = data.getProductHistory.edges.map((edge) => edge.node);
-      transformDataForSection(history);
+      const transformed = transformDataForSection(history);
+      setSectionData(transformed);
     },
     onError: (error) => {
       console.log(error.message);
@@ -128,9 +133,11 @@ const Product = ({ route }) => {
   }
 
   const transformDataForSection = (history) => {
-    const dates = new Set(
-      history.map((his) => new Date(his.created).toDateString())
-    );
+    const dates = new Set();
+
+    for (let item of history) {
+      dates.add(new Date(item.created).toDateString());
+    }
 
     let sectionData = [];
     for (let date of dates.values()) {
@@ -145,7 +152,8 @@ const Product = ({ route }) => {
 
       sectionData.push(sectionItem);
     }
-    setHistoryData(sectionData);
+
+    return sectionData;
   };
 
   const onEndReached = () => {
@@ -166,13 +174,13 @@ const Product = ({ route }) => {
   return (
     <Container mTop={20}>
       <SectionList
-        sections={historyData}
+        sections={sectionData}
         ListHeaderComponent={<ListHeaderComponent id={id} />}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         stickySectionHeadersEnabled={false}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.05}
         renderSectionHeader={({ section: { title } }) => (
           <View style={{ marginTop: 15 }}>
             <SubHeading align="center">{title}</SubHeading>

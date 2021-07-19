@@ -75,9 +75,6 @@ const Inventory = ({ navigation }) => {
   return (
     <Container padLeft={20} padRight={20}>
       <ProductListContainer navigation={navigation} />
-      <Modal visible={visible}>
-        <AddProduct setVisible={setVisiblity} />
-      </Modal>
     </Container>
   );
 };
@@ -133,9 +130,10 @@ const ProductListContainer = () => {
   );
 };
 
-const AddProductButton = ({ visible, toggleModal }) => {
+const AddProductButton = () => {
+  const navigate = useNavigation();
   const onPressAdd = () => {
-    toggleModal(!visible);
+    navigate.navigate("AddModal");
   };
 
   return (

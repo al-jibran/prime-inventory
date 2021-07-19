@@ -5,12 +5,14 @@ import {
   NavigationContainer,
   getFocusedRouteNameFromRoute,
 } from "@react-navigation/native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Bills from "./screens/Bills";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSettings } from "./hooks/useSettings";
 import Product from "./screens/Product";
+import AddProduct from "./components/Inventory/AddProduct";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
@@ -73,6 +75,27 @@ const Home = () => {
   );
 };
 
+const modalOptions = {
+  cardStyle: { backgroundColor: "transparent" },
+  headerShown: false,
+  cardOverlayEnabled: true,
+  cardStyleInterpolator: ({ current: { progress } }) => ({
+    cardStyle: {
+      opacity: progress.interpolate({
+        inputRange: [0, 0.5, 0.9, 1],
+        outputRange: [0, 0.25, 0.7, 1],
+      }),
+    },
+    overlayStyle: {
+      opacity: progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 0.5],
+        extrapolate: "clamp",
+      }),
+    },
+  }),
+};
+
 const Main = () => {
   const [units, operations, allKeys] = useSettings("units");
 
@@ -93,6 +116,7 @@ const Main = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
+        mode="modal"
         initialRouteName="Home"
         screenOptions={{ cardStyle: { backgroundColor: "white" } }}
       >
@@ -102,9 +126,29 @@ const Main = () => {
           options={{ headerShown: false }}
         />
         <RootStack.Screen name="Product" component={Product} />
+        <RootStack.Screen
+          name="AddModal"
+          component={AddProductModal}
+          options={modalOptions}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );
 };
+
+const AddProductModal = () => {
+  return (
+    <KeyboardAvoidingView behavior="position" style={styles.overlay}>
+      <AddProduct />
+    </KeyboardAvoidingView>
+  );
+};
+
+const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+});
 
 export default Main;
