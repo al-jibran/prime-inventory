@@ -18,7 +18,6 @@ const EditProduct = ({ id }) => {
       fragment ProductFragment on Product {
         name
         brand
-        stock
       }
     `,
   });
