@@ -96,7 +96,6 @@ const Entries = ({ entries, setEntries, submitEntries }) => {
   return (
     <EntriesStyle>
       <FlatList
-        ListHeaderComponent={() => <Heading>Entries</Heading>}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => renderItem(item, index, onDeleteEntry)}
         data={entries}
@@ -106,8 +105,7 @@ const Entries = ({ entries, setEntries, submitEntries }) => {
             onPressedSave={onSaveEntries}
           />
         )}
-        ListHeaderComponentStyle={{ flexShrink: 1 }}
-        contentContainerStyle={{ flexGrow: 3 }}
+        contentContainerStyle={{ flexGrow: 3, marginRight: 25, marginLeft: 25 }}
         ListFooterComponentStyle={{
           ...hide,
           justifyContent: "space-between",

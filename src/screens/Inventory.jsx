@@ -65,16 +65,12 @@ const Inventory = ({ navigation }) => {
         <AddProductButton visible={visible} toggleModal={setVisiblity} />
       ),
       headerLeft: () => <FilterProductsButton />,
-      headerRightContainerStyle: { paddingRight: 25 },
-      headerLeftContainerStyle: { paddingLeft: 25 },
+      headerRightContainerStyle: { paddingRight: 20 },
+      headerLeftContainerStyle: { paddingLeft: 20 },
     });
   }, [navigation]);
 
-  return (
-    <Container padLeft={20} padRight={20}>
-      <ProductListContainer navigation={navigation} />
-    </Container>
-  );
+  return <ProductListContainer navigation={navigation} />;
 };
 
 const ProductListContainer = () => {
@@ -102,8 +98,7 @@ const ProductListContainer = () => {
       data={products}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => <RenderProduct item={item} />}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ marginLeft: 20, marginRight: 20 }}
       onEndReached={fetchMore}
       onEndReachedThreshold={0.1}
       refreshing={refereshing}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextInput } from "react-native";
+import { TextInput, View } from "react-native";
 import { useMutation } from "@apollo/client";
 
 import { Heading } from "../components/Text";
@@ -27,23 +27,28 @@ const Bills = () => {
   };
 
   return (
-    <Container padLeft={20} padRight={20}>
-      <FieldStyle>
-        <Heading>Comment</Heading>
-        <TextInput
-          multiline={true}
-          value={comment}
-          onChangeText={onChangeText}
-          style={{ borderBottomWidth: 1 }}
+    <View style={{ flex: 1 }}>
+      <Container>
+        <FieldStyle>
+          <Heading>Comment</Heading>
+          <TextInput
+            multiline={true}
+            value={comment}
+            onChangeText={onChangeText}
+            style={{ borderBottomWidth: 1 }}
+          />
+        </FieldStyle>
+        <AddEntry entries={entries} setEntries={setEntries} />
+      </Container>
+      <View style={{ zIndex: -100, flex: 1 }}>
+        <Heading mLeftRight={20}>Entries</Heading>
+        <Entries
+          entries={entries}
+          setEntries={setEntries}
+          submitEntries={submitEntries}
         />
-      </FieldStyle>
-      <AddEntry entries={entries} setEntries={setEntries} />
-      <Entries
-        entries={entries}
-        setEntries={setEntries}
-        submitEntries={submitEntries}
-      />
-    </Container>
+      </View>
+    </View>
   );
 };
 

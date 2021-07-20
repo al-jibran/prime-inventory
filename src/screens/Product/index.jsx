@@ -36,6 +36,17 @@ const TransactionComment = styled(TransactionDetails)`
   margin: 0;
 `;
 
+const AdaptiveText = styled.Text`
+  color: ${({ children: text }) => {
+    if (text > 0) {
+      return Theme.color.success;
+    } else if (text < 0) {
+      return Theme.color.danger;
+    }
+    return Theme.color.textPrimary;
+  }};
+`;
+
 const History = styled.View``;
 
 const ListHeaderComponent = ({ id }) => {
@@ -87,6 +98,10 @@ const ListHeaderComponent = ({ id }) => {
 };
 
 const renderItem = (item, id) => {
+  if (!item) {
+    return null;
+  }
+
   const time = new Date(item.created).toLocaleTimeString("en-us", {
     hour12: true,
     hour: "2-digit",
@@ -104,7 +119,7 @@ const renderItem = (item, id) => {
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <Text>{stockChange}</Text>
+          <AdaptiveText>{stockChange}</AdaptiveText>
         </Detail>
         {item.type === "BILL" && (
           <Detail>
@@ -176,37 +191,36 @@ const Product = ({ route }) => {
   };
 
   return (
-    <Container mTop={20}>
-      <SectionList
-        sections={sectionData}
-        ListHeaderComponent={<ListHeaderComponent id={id} />}
-        renderItem={({ item }) => renderItem(item, id)}
-        keyExtractor={(item) => item._id}
-        stickySectionHeadersEnabled={false}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={{ marginTop: 15 }}>
-            <SubHeading align="center">{title}</SubHeading>
-          </View>
-        )}
-        ListEmptyComponent={() => {
-          if (loading) {
-            return <Text>Loading...</Text>;
-          }
-          if (error) {
-            return <Text>{error.message}</Text>;
-          }
+    <SectionList
+      sections={sectionData}
+      contentContainerStyle={{ marginLeft: 20, marginRight: 20 }}
+      ListHeaderComponent={<ListHeaderComponent id={id} />}
+      renderItem={({ item }) => renderItem(item, id)}
+      keyExtractor={(item) => item._id}
+      stickySectionHeadersEnabled={false}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0}
+      renderSectionHeader={({ section: { title } }) => (
+        <View style={{ marginTop: 15 }}>
+          <SubHeading align="center">{title}</SubHeading>
+        </View>
+      )}
+      ListEmptyComponent={() => {
+        if (loading) {
+          return <Text>Loading...</Text>;
+        }
+        if (error) {
+          return <Text>{error.message}</Text>;
+        }
 
-          return (
-            <Text>
-              There doesn&apos;t seem to be anything here. This product&apos;s
-              history will appear here.
-            </Text>
-          );
-        }}
-      />
-    </Container>
+        return (
+          <Text>
+            There doesn&apos;t seem to be anything here. This product&apos;s
+            history will appear here.
+          </Text>
+        );
+      }}
+    />
   );
 };
 

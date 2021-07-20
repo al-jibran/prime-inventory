@@ -5,6 +5,8 @@ export const Text = styled.Text`
   font-size: ${(props) => props.fontSize || Theme.fontSize.body}px;
   color: ${(props) => props.color || Theme.color.textPrimary};
   text-align: ${(props) => props.align || "left"};
+  margin: ${(props) => props.mTopBottom || 0}px
+    ${(props) => props.mLeftRight || 0}px;
 `;
 
 export const SubText = styled(Text)`

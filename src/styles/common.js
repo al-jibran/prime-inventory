@@ -2,15 +2,9 @@ import styled from "styled-components/native";
 
 // change paddings to 20 if there's no need for custom padding
 export const Container = styled.View`
-  padding-left: ${(props) => props.padLeft || 25}px;
-  padding-right: ${(props) => props.padRight || 25}px;
-  padding-top: ${(props) => props.padTop || 0}px;
-  padding-bottom: ${(props) => props.padBottom || 0}px;
-  margin-top: ${(props) => props.mTop || 0}px;
-  margin-bottom: ${(props) => props.mBottom || 0}px;
-  margin-left: ${(props) => props.mLeft || 0}px;
-  margin-right: ${(props) => props.mRight || 0}px;
   flex: 1;
+  margin-left: ${(props) => (props.mLeft ? props.mLeft : "20")}px;
+  margin-right: ${(props) => (props.mRight ? props.mRight : "20")}px;
 `;
 
 export const FieldStyle = styled.View`
