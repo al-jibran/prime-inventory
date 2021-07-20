@@ -3,8 +3,8 @@ import { FlatList, View } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";
-import { Container } from "../../styles/common";
 import { Text } from "../../components/Text";
+import ListEmptyComponent from "../../components/ListEmptyComponent";
 
 const History = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -12,16 +12,7 @@ const History = () => {
     variables: {
       first: 9,
     },
-    onCompleted: (data) => {},
   });
-
-  if (loading) {
-    return <Text>Loading</Text>;
-  }
-
-  if (error) {
-    return <Text>{error.message}</Text>;
-  }
 
   const history = data?.transactions.edges.map((edge) => edge.node);
 
@@ -39,7 +30,15 @@ const History = () => {
         renderItem={({ item }) => <Text>{item.comment}</Text>}
         keyExtractor={(item) => item._id}
         style={{ marginTop: 20 }}
+        ListEmptyComponent={
+          <ListEmptyComponent
+            loading={loading}
+            error={error}
+            text={["There are currently no transactions to show."]}
+          />
+        }
         contentContainerStyle={{
+          flex: 1,
           marginRight: 25,
           marginLeft: 25,
         }}

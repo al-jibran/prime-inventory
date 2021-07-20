@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components/native";
+import styled from "styled-components/native";
 
 // change paddings to 20 if there's no need for custom padding
 export const Container = styled.View`
