@@ -1,14 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import { Text, SubHeading, AdaptiveText } from "../../components/Text";
+import { View } from "react-native";
+import { Heading, Text, SubHeading } from "../../components/Text";
 
 import Theme from "../../theme";
 import Togglable from "../../components/Togglable";
-import { ShadowBox, Detail } from "../../styles/common";
+import {
+  ShadowBox,
+  Detail,
+  HorizontalAndVerticalCenter,
+  AlignBySide,
+} from "../../styles/common";
+import {
+  ProductHistoryInfo,
+  ProductHistoryReveal,
+} from "../Product/ProductHistory";
 
 const TransactionDetails = styled(ShadowBox)`
+  ${AlignBySide}
   margin-top: 15px;
-  padding: 8px 15px;
   margin-bottom: 0;
 `;
 
@@ -44,48 +54,27 @@ const HistoryItemRender = ({ item, id, historyOf }) => {
   return (
     <Togglable>
       <TransactionDetails>
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Time</SubHeading>
-          <Text>{time}</Text>
-        </Detail>
-        <AdditionalInfo />
+        <HorizontalAndVerticalCenter
+          style={{
+            backgroundColor:
+              item.type === "BILL" ? Theme.color.danger : Theme.color.primary,
+            height: "100%",
+            flexGrow: 2,
+            opacity: 0.69,
+          }}
+        >
+          <Heading color="white">{item.type === "BILL" ? "B" : "P"}</Heading>
+        </HorizontalAndVerticalCenter>
+        <View style={{ flexGrow: 8, padding: 8 }}>
+          <Detail>
+            <SubHeading fontSize={Theme.fontSize.body}>Time</SubHeading>
+            <Text>{time}</Text>
+          </Detail>
+          <AdditionalInfo />
+        </View>
       </TransactionDetails>
       <RevealInfo />
     </Togglable>
-  );
-};
-
-const ProductHistoryInfo = ({ item, id }) => {
-  const stockChange = item?.changes.find(
-    (change) => change.productId === id
-  )?.change;
-
-  return (
-    <>
-      <Detail>
-        <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-        <AdaptiveText>
-          {stockChange > 0 && "+"}
-          {stockChange}
-        </AdaptiveText>
-      </Detail>
-      {item.type === "BILL" && (
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Bill No</SubHeading>
-          <Text>{item.bill_no}</Text>
-        </Detail>
-      )}
-    </>
-  );
-};
-
-const ProductHistoryReveal = ({ item }) => {
-  return (
-    <>
-      <TransactionComment>
-        <Text>{item.comment}</Text>
-      </TransactionComment>
-    </>
   );
 };
 
