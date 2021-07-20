@@ -8,11 +8,18 @@ const HorizontalAndVerticalCenter = styled.View`
   align-items: center;
 `;
 
-const ListEmptyComponent = ({ text }) => {
+const ListEmptyComponent = ({ loading, error, text }) => {
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
+
   return (
     <HorizontalAndVerticalCenter>
       {text.map((line, i) => (
-        <Text key={i} color="gray">
+        <Text key={i} color="#aaa">
           {line}
         </Text>
       ))}

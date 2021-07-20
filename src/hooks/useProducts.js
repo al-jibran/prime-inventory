@@ -25,7 +25,7 @@ export const useProducts = (
   const products = data?.inventory.edges.map((edge) => edge.node);
 
   const debounced = useDebouncedCallback((value) => {
-    refetch({ search: value });
+    data && refetch({ search: value });
   }, 500);
 
   const onEndReached = () => {

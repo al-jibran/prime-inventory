@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import Theme from "../../theme";
 import Togglable from "../../components/Togglable";
 import { GET_PRODUCT_HISTORY } from "../../graphql/queries";
+import ListEmptyComponent from "../../components/ListEmptyComponent";
 
 const Details = css`
   flex-shrink: 1;
@@ -185,33 +186,26 @@ const Product = ({ route }) => {
   return (
     <SectionList
       sections={sectionData}
-      contentContainerStyle={{ marginLeft: 20, marginRight: 20 }}
-      ListHeaderComponent={<ListHeaderComponent id={id} />}
-      renderItem={({ item }) => renderItem(item, id)}
       keyExtractor={(item) => item._id}
       stickySectionHeadersEnabled={false}
       onEndReached={onEndReached}
       onEndReachedThreshold={0}
+      ListHeaderComponent={<ListHeaderComponent id={id} />}
       renderSectionHeader={({ section: { title } }) => (
         <View style={{ marginTop: 15 }}>
           <SubHeading align="center">{title}</SubHeading>
         </View>
       )}
-      ListEmptyComponent={() => {
-        if (loading) {
-          return <Text>Loading...</Text>;
-        }
-        if (error) {
-          return <Text>{error.message}</Text>;
-        }
-
-        return (
-          <Text>
-            There doesn&apos;t seem to be anything here. This product&apos;s
-            history will appear here.
-          </Text>
-        );
-      }}
+      renderItem={({ item }) => renderItem(item, id)}
+      ListEmptyComponent={
+        <ListEmptyComponent
+          loading={loading}
+          error={error}
+          text={["The product's history is currently empty."]}
+        />
+      }
+      style={{ marginTop: 20 }}
+      contentContainerStyle={{ marginLeft: 20, marginRight: 20, flexGrow: 1 }}
     />
   );
 };

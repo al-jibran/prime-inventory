@@ -10,9 +10,9 @@ import ProductItem from "../components/Inventory/ProductItem";
 import Searchbar from "../components/Searchbar";
 import { useProducts } from "../hooks/useProducts";
 import { DELETE_PRODUCT } from "../graphql/queries";
+import ListEmptyComponent from "../components/ListEmptyComponent";
 
 //Styles
-import { Container } from "../styles/common";
 
 const RenderProduct = ({ item }) => {
   const navigation = useNavigation();
@@ -98,7 +98,7 @@ const ProductListContainer = () => {
       data={products}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => <RenderProduct item={item} />}
-      contentContainerStyle={{ marginLeft: 20, marginRight: 20 }}
+      contentContainerStyle={{ marginLeft: 20, marginRight: 20, flexGrow: 1 }}
       onEndReached={fetchMore}
       onEndReachedThreshold={0.1}
       refreshing={refereshing}
@@ -108,17 +108,15 @@ const ProductListContainer = () => {
         filter("");
         setRefreshing(false);
       }}
-      ListEmptyComponent={() => {
-        if (loading) {
-          return <Text>Loading...</Text>;
-        }
-        return (
-          <Text>
-            There doesn&apos;t seem to be anything here. Start by clicking the
-            add button
-          </Text>
-        );
-      }}
+      ListEmptyComponent={
+        <ListEmptyComponent
+          loading={loading}
+          text={[
+            "There are no products to show here.",
+            "Start by clicking the add button",
+          ]}
+        />
+      }
     />
   );
 };
