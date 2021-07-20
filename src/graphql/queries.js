@@ -56,9 +56,10 @@ export const GET_INVENTORY = gql`
 `;
 
 export const GET_PRODUCT = gql`
-  query Product($id: ID!) {
+  query Product($id: MongoObjectID!) {
     product(id: $id) {
       _id
+      name
     }
   }
 `;
