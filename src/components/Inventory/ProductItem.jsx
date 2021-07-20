@@ -3,7 +3,7 @@ import { View } from "react-native";
 import styled from "styled-components/native";
 import { Text, SubText } from "../Text";
 import Theme from "../../theme";
-import { ShadowBox } from "../../styles/common";
+import { ShadowBox, AlignBySide } from "../../styles/common";
 import { useNavigation } from "@react-navigation/native";
 
 const ProductItemStyle = styled(ShadowBox)`
@@ -16,11 +16,9 @@ const ProductItemStyle = styled(ShadowBox)`
 `;
 
 const Stock = styled.Pressable`
+  ${AlignBySide}
   width: 75px;
-  justify-content: center;
-  align-items: center;
   background-color: ${(props) => props.bgColor || Theme.color.danger};
-  align-self: stretch;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
