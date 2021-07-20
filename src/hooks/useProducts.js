@@ -3,7 +3,7 @@ import { useDebouncedCallback } from "use-debounce/lib";
 import { GET_INVENTORY } from "../graphql/queries";
 
 export const useProducts = (
-  first = 10,
+  first = 8,
   orderBy = "CREATED_AT",
   orderDirection = "DESC"
 ) => {
