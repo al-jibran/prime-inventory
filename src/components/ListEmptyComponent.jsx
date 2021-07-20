@@ -1,5 +1,7 @@
 import React from "react";
+import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
+import Theme from "../theme";
 import { Text } from "./Text";
 
 const HorizontalAndVerticalCenter = styled.View`
@@ -9,22 +11,21 @@ const HorizontalAndVerticalCenter = styled.View`
 `;
 
 const ListEmptyComponent = ({ loading, error, text }) => {
+  let content;
+
   if (loading) {
-    return <Text>Loading...</Text>;
-  }
-  if (error) {
-    return <Text>{error.message}</Text>;
+    content = <ActivityIndicator size="large" />;
+  } else if (error) {
+    content = <Text color={Theme.color.danger}>{error.message}</Text>;
+  } else {
+    content = text.map((line, i) => (
+      <Text key={i} color="#aaa">
+        {line}
+      </Text>
+    ));
   }
 
-  return (
-    <HorizontalAndVerticalCenter>
-      {text.map((line, i) => (
-        <Text key={i} color="#aaa">
-          {line}
-        </Text>
-      ))}
-    </HorizontalAndVerticalCenter>
-  );
+  return <HorizontalAndVerticalCenter>{content}</HorizontalAndVerticalCenter>;
 };
 
 export default ListEmptyComponent;

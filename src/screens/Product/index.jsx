@@ -141,10 +141,6 @@ const Product = ({ route }) => {
     fetchPolicy: "cache-and-network",
   });
 
-  if (error) {
-    return <Text>{error.message}</Text>;
-  }
-
   const history = data
     ? data.getProductHistory.edges.map((edge) => edge.node)
     : [];
