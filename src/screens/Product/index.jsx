@@ -92,10 +92,9 @@ const renderItem = (item, id) => {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const stockChange = item.changes.find(
+  const stockChange = item?.changes.find(
     (change) => change.productId === id
-  ).change;
-  console.log(item.type === "BILL" ? item : undefined);
+  )?.change;
   return (
     <Togglable>
       <TransactionDetails>
