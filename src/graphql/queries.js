@@ -15,6 +15,7 @@ const TransactionFragment = gql`
     comment
     type
     created
+    bill_no
     changes {
       productId
       change

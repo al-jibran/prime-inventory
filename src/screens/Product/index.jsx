@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SectionList, View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled, { css } from "styled-components/native";
@@ -86,12 +86,16 @@ const ListHeaderComponent = ({ id }) => {
   );
 };
 
-const renderItem = ({ item }) => {
+const renderItem = (item, id) => {
   const time = new Date(item.created).toLocaleTimeString("en-us", {
     hour12: true,
     hour: "2-digit",
     minute: "2-digit",
   });
+  const stockChange = item.changes.find(
+    (change) => change.productId === id
+  ).change;
+  console.log(item.type === "BILL" ? item : undefined);
   return (
     <Togglable>
       <TransactionDetails>
@@ -101,8 +105,14 @@ const renderItem = ({ item }) => {
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <Text>+5</Text>
+          <Text>{stockChange}</Text>
         </Detail>
+        {item.type === "BILL" && (
+          <Detail>
+            <SubHeading fontSize={Theme.fontSize.body}>Bill No</SubHeading>
+            <Text>{item.bill_no}</Text>
+          </Detail>
+        )}
       </TransactionDetails>
       <TransactionComment>
         <Text>{item.comment}</Text>
@@ -171,7 +181,7 @@ const Product = ({ route }) => {
       <SectionList
         sections={sectionData}
         ListHeaderComponent={<ListHeaderComponent id={id} />}
-        renderItem={renderItem}
+        renderItem={({ item }) => renderItem(item, id)}
         keyExtractor={(item) => item._id}
         stickySectionHeadersEnabled={false}
         onEndReached={onEndReached}
