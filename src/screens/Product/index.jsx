@@ -113,14 +113,10 @@ const renderItem = ({ item }) => {
 
 const Product = ({ route }) => {
   const { id } = route.params;
-  const [sectionData, setSectionData] = useState([]);
   const { data, loading, error, fetchMore } = useQuery(GET_PRODUCT_HISTORY, {
-    variables: { id, first: 7 },
+    variables: { id, first: 8 },
     onCompleted: (data) => {
       console.log(data.getProductHistory.totalCount);
-      const history = data.getProductHistory.edges.map((edge) => edge.node);
-      const transformed = transformDataForSection(history);
-      setSectionData(transformed);
     },
     onError: (error) => {
       console.log(error.message);
@@ -132,29 +128,28 @@ const Product = ({ route }) => {
     return <Text>{error.message}</Text>;
   }
 
-  const transformDataForSection = (history) => {
-    const dates = new Set();
+  const history = data
+    ? data.getProductHistory.edges.map((edge) => edge.node)
+    : [];
+  const dates = new Set();
 
-    for (let item of history) {
-      dates.add(new Date(item.created).toDateString());
-    }
+  for (let item of history) {
+    dates.add(new Date(item.created).toDateString());
+  }
 
-    let sectionData = [];
-    for (let date of dates.values()) {
-      const sameDateHistory = history.filter(
-        (his) => new Date(his.created).toDateString() === date
-      );
+  let sectionData = [];
+  for (let date of dates.values()) {
+    const sameDateHistory = history.filter(
+      (his) => new Date(his.created).toDateString() === date
+    );
 
-      const sectionItem = {
-        title: date,
-        data: sameDateHistory,
-      };
+    const sectionItem = {
+      title: date,
+      data: sameDateHistory,
+    };
 
-      sectionData.push(sectionItem);
-    }
-
-    return sectionData;
-  };
+    sectionData.push(sectionItem);
+  }
 
   const onEndReached = () => {
     const canFetchMore =
@@ -180,7 +175,7 @@ const Product = ({ route }) => {
         keyExtractor={(item) => item._id}
         stickySectionHeadersEnabled={false}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.05}
+        onEndReachedThreshold={0}
         renderSectionHeader={({ section: { title } }) => (
           <View style={{ marginTop: 15 }}>
             <SubHeading align="center">{title}</SubHeading>
