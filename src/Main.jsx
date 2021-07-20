@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useEffect } from "react";
+import { Platform } from "react-native";
 import Inventory from "./screens/Inventory";
 import {
   NavigationContainer,
@@ -159,7 +160,10 @@ const Main = () => {
 
 const AddProductModal = () => {
   return (
-    <KeyboardAvoidingView behavior="position" style={styles.overlay}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "position" : null}
+      style={styles.overlay}
+    >
       <AddProduct />
     </KeyboardAvoidingView>
   );
@@ -167,7 +171,10 @@ const AddProductModal = () => {
 
 const EditProductModal = ({ route }) => {
   return (
-    <KeyboardAvoidingView behavior="position" style={styles.overlay}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "position" : null}
+      style={styles.overlay}
+    >
       <EditProduct id={route.params.id} />
     </KeyboardAvoidingView>
   );

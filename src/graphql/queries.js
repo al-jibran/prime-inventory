@@ -119,3 +119,23 @@ export const GET_PRODUCT_HISTORY = gql`
   }
   ${TransactionFragment}
 `;
+
+export const GET_TRANSACTIONS = gql`
+  query Transactions($after: String, $first: Int) {
+    transactions(after: $after, first: $first) {
+      edges {
+        node {
+          ...TransactionFields
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+      }
+      totalCount
+    }
+  }
+  ${TransactionFragment}
+`;
