@@ -14,6 +14,7 @@ import { useSettings } from "./hooks/useSettings";
 import Product from "./screens/Product";
 import AddProduct from "./components/Inventory/AddProduct";
 import EditProduct from "./components/Inventory/EditProduct";
+import History from "./screens/History";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
@@ -25,6 +26,7 @@ const Tab = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 const InventoryStack = createStackNavigator();
 const BillsStack = createStackNavigator();
+const HistoryStack = createStackNavigator();
 
 const InventoryStackScreen = () => {
   return (
@@ -46,6 +48,16 @@ const BillsStackScreen = () => {
   );
 };
 
+const HistoryStackScreen = () => {
+  return (
+    <HistoryStack.Navigator
+      screenOptions={{ cardStyle: { backgroundColor: "white" } }}
+    >
+      <HistoryStack.Screen name="History" component={History} />
+    </HistoryStack.Navigator>
+  );
+};
+
 const Home = () => {
   return (
     <Tab.Navigator
@@ -59,6 +71,8 @@ const Home = () => {
               : "ios-information-circle-outline";
           } else if (route.name === "Bills") {
             iconName = `ios-list`;
+          } else if (route.name === "History") {
+            iconName = focused ? "time" : `time-outline`;
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -72,6 +86,7 @@ const Home = () => {
         options={{ unmountOnBlur: true }}
       />
       <Tab.Screen name="Bills" component={BillsStackScreen} />
+      <Tab.Screen name="History" component={HistoryStackScreen} />
     </Tab.Navigator>
   );
 };
