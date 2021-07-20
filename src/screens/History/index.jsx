@@ -3,8 +3,8 @@ import { FlatList, View } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";
-import { Text } from "../../components/Text";
 import ListEmptyComponent from "../../components/ListEmptyComponent";
+import HistoryItemRender from "./HistoryItemRender";
 
 const History = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -18,7 +18,14 @@ const History = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View>
+      <View
+        style={{
+          marginLeft: 20,
+          marginRight: 20,
+          flexShrink: 1,
+          marginTop: 20,
+        }}
+      >
         <SegmentedControlTab
           values={["All", "Bills"]}
           selectedIndex={selectedIndex}
@@ -27,9 +34,10 @@ const History = () => {
       </View>
       <FlatList
         data={history}
-        renderItem={({ item }) => <Text>{item.comment}</Text>}
+        renderItem={({ item }) => (
+          <HistoryItemRender item={item} id={item._id} />
+        )}
         keyExtractor={(item) => item._id}
-        style={{ marginTop: 20 }}
         ListEmptyComponent={
           <ListEmptyComponent
             loading={loading}
@@ -38,9 +46,9 @@ const History = () => {
           />
         }
         contentContainerStyle={{
-          flex: 1,
-          marginRight: 25,
-          marginLeft: 25,
+          marginRight: 20,
+          marginLeft: 20,
+          flexGrow: 1,
         }}
       />
     </View>

@@ -1,40 +1,16 @@
 import React from "react";
 import { SectionList, View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
-import styled, { css } from "styled-components/native";
-import { Heading, Text, SubHeading, AdaptiveText } from "../../components/Text";
-import { ShadowBox } from "../../styles/common";
+import styled from "styled-components/native";
+import { Heading, Text, SubHeading } from "../../components/Text";
 import Button from "../../components/Button";
-import Theme from "../../theme";
-import Togglable from "../../components/Togglable";
 import { GET_PRODUCT_HISTORY } from "../../graphql/queries";
 import ListEmptyComponent from "../../components/ListEmptyComponent";
-
-const Details = css`
-  flex-shrink: 1;
-  margin-bottom: 30px;
-`;
+import HistoryItemRender from "../History/HistoryItemRender";
+import { Detail, TopContainerStyle } from "../../styles/common";
 
 const DetailsContainer = styled.View`
-  ${Details}
-`;
-
-const Detail = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: ${(props) => props.mTop || 5}px;
-  margin-bottom: ${(props) => props.mBottom || 5}px;
-`;
-
-const TransactionDetails = styled(ShadowBox)`
-  margin-top: 15px;
-  padding: 8px 15px;
-  margin-bottom: 0;
-`;
-
-const TransactionComment = styled(TransactionDetails)`
-  margin: 0;
+  ${TopContainerStyle}
 `;
 
 const History = styled.View``;
@@ -84,47 +60,6 @@ const ListHeaderComponent = ({ id }) => {
         </Detail>
       </History>
     </View>
-  );
-};
-
-const renderItem = (item, id) => {
-  if (!item) {
-    return null;
-  }
-
-  const time = new Date(item.created).toLocaleTimeString("en-us", {
-    hour12: true,
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const stockChange = item?.changes.find(
-    (change) => change.productId === id
-  )?.change;
-  return (
-    <Togglable>
-      <TransactionDetails>
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Time</SubHeading>
-          <Text>{time}</Text>
-        </Detail>
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <AdaptiveText>
-            {stockChange > 0 && "+"}
-            {stockChange}
-          </AdaptiveText>
-        </Detail>
-        {item.type === "BILL" && (
-          <Detail>
-            <SubHeading fontSize={Theme.fontSize.body}>Bill No</SubHeading>
-            <Text>{item.bill_no}</Text>
-          </Detail>
-        )}
-      </TransactionDetails>
-      <TransactionComment>
-        <Text>{item.comment}</Text>
-      </TransactionComment>
-    </Togglable>
   );
 };
 
@@ -192,7 +127,9 @@ const Product = ({ route }) => {
           <SubHeading align="center">{title}</SubHeading>
         </View>
       )}
-      renderItem={({ item }) => renderItem(item, id)}
+      renderItem={({ item }) => (
+        <HistoryItemRender item={item} id={id} historyOf="product" />
+      )}
       ListEmptyComponent={
         <ListEmptyComponent
           loading={loading}
