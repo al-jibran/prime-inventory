@@ -21,3 +21,15 @@ export const Heading = styled(Text)`
 export const SubHeading = styled(Heading)`
   font-size: ${(props) => props.fontSize || Theme.fontSize.subheading}px;
 `;
+
+export const AdaptiveText = styled(Text)`
+  color: ${({ children }) => {
+    const text = children[1] ? parseInt(children[1]) : children;
+    if (text > 0) {
+      return Theme.color.success;
+    } else if (text < 0) {
+      return Theme.color.danger;
+    }
+    return Theme.color.textPrimary;
+  }};
+`;

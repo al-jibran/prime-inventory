@@ -28,7 +28,6 @@ const styles =
       position: "absolute",
       right: 0,
       top: 0,
-      zIndex: 999,
     },
   });
 
@@ -57,7 +56,7 @@ const Form = ({ onSubmit }) => {
       >
         {({ handleSubmit, handleReset }) => (
           <View style={{ marginTop: 10 }}>
-            <FieldStyle layout="horizontal">
+            <FieldStyle layout="horizontal" style={{ zIndex: 202020 }}>
               <Text>Quantity</Text>
               <NumberInput name="stock" />
               <DropDownInput
@@ -111,7 +110,7 @@ const AutoCompleteField = ({ setDisabled }) => {
   };
 
   return (
-    <FieldStyle style={styles.autocompleteContainer}>
+    <FieldStyle style={(styles.autocompleteContainer, { zIndex: 999 })}>
       <Autocomplete
         data={products}
         hideResults={hide}

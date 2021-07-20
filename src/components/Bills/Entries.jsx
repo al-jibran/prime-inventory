@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, Pressable, View, Alert } from "react-native";
 
-import { Text, Heading } from "../Text";
+import { Text, AdaptiveText } from "../Text";
 import { FieldStyle } from "../../styles/common";
 import styled from "styled-components/native";
 import Button from "../Button";
@@ -41,10 +41,10 @@ const renderItem = (product, index, deleteEntry) => {
       <FieldStyle layout="horizontal">
         <Text>{index + 1}</Text>
         <Text>{product.name}</Text>
-        <Text>
+        <AdaptiveText>
           {product.stock > 0 && "+"}
           {product.stock}
-        </Text>
+        </AdaptiveText>
       </FieldStyle>
     </Pressable>
   );

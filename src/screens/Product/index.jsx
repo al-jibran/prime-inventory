@@ -2,8 +2,8 @@ import React from "react";
 import { SectionList, View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled, { css } from "styled-components/native";
-import { Heading, Text, SubHeading } from "../../components/Text";
-import { Container, ShadowBox } from "../../styles/common";
+import { Heading, Text, SubHeading, AdaptiveText } from "../../components/Text";
+import { ShadowBox } from "../../styles/common";
 import Button from "../../components/Button";
 import Theme from "../../theme";
 import Togglable from "../../components/Togglable";
@@ -34,17 +34,6 @@ const TransactionDetails = styled(ShadowBox)`
 
 const TransactionComment = styled(TransactionDetails)`
   margin: 0;
-`;
-
-const AdaptiveText = styled.Text`
-  color: ${({ children: text }) => {
-    if (text > 0) {
-      return Theme.color.success;
-    } else if (text < 0) {
-      return Theme.color.danger;
-    }
-    return Theme.color.textPrimary;
-  }};
 `;
 
 const History = styled.View``;
@@ -119,7 +108,10 @@ const renderItem = (item, id) => {
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <AdaptiveText>{stockChange}</AdaptiveText>
+          <AdaptiveText>
+            {stockChange > 0 && "+"}
+            {stockChange}
+          </AdaptiveText>
         </Detail>
         {item.type === "BILL" && (
           <Detail>
