@@ -15,7 +15,7 @@ const EditProduct = ({ id }) => {
   const { name, brand } = client.readFragment({
     id: `Product:${id}`,
     fragment: gql`
-      fragment ProductFragment on Product {
+      fragment EditFragment on Product {
         name
         brand
       }
