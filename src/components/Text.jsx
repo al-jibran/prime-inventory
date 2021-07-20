@@ -7,6 +7,7 @@ export const Text = styled.Text`
   text-align: ${(props) => props.align || "left"};
   margin: ${(props) => props.mTopBottom || 0}px
     ${(props) => props.mLeftRight || 0}px;
+  flex-shrink: 1;
 `;
 
 export const SubText = styled(Text)`
