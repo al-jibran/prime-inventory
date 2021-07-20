@@ -70,7 +70,7 @@ const Home = () => {
               ? "ios-information-circle"
               : "ios-information-circle-outline";
           } else if (route.name === "Bills") {
-            iconName = `ios-list`;
+            iconName = focused ? `document-text` : `document-text-outline`;
           } else if (route.name === "History") {
             iconName = focused ? "time" : `time-outline`;
           }
