@@ -1,14 +1,8 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import styled from "styled-components/native";
 import Theme from "../theme";
 import { Text } from "./Text";
-
-const HorizontalAndVerticalCenter = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
+import { HorizontalAndVerticalCenter } from "../styles/common";
 
 const ListEmptyComponent = ({ loading, error, text }) => {
   let content;

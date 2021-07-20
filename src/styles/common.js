@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 // change paddings to 20 if there's no need for custom padding
 export const Container = styled.View`
@@ -39,4 +39,30 @@ export const ShadowBox = styled.View`
   shadow-radius: 3px;
   elevation: 5;
   background-color: #fff;
+`;
+
+export const Detail = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: ${(props) => props.mTop || 5}px;
+  margin-bottom: ${(props) => props.mBottom || 5}px;
+`;
+
+export const TopContainerStyle = css`
+  flex-shrink: 1;
+  margin-bottom: 30px;
+`;
+
+export const HorizontalAndVerticalCenter = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const AlignBySide = css`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
 `;
