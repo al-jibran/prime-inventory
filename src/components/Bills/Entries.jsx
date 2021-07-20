@@ -1,16 +1,10 @@
 import React from "react";
-import { FlatList, Pressable, View, Alert } from "react-native";
+import { FlatList, Pressable, Alert } from "react-native";
 
 import { Text, AdaptiveText } from "../Text";
 import { FieldStyle } from "../../styles/common";
-import styled from "styled-components/native";
 import Button from "../Button";
-
-const EntriesStyle = styled.View`
-  margin-top: 15px;
-  z-index: -1;
-  flex-grow: 1;
-`;
+import ListEmptyComponent from "../ListEmptyComponent";
 
 const ListFooterComponent = ({ onPressedClear, onPressedSave }) => {
   return (
@@ -18,17 +12,6 @@ const ListFooterComponent = ({ onPressedClear, onPressedSave }) => {
       <Button bgColor="white" text="Clear" rounded onPress={onPressedClear} />
       <Button bgColor="success" text="Save" rounded onPress={onPressedSave} />
     </>
-  );
-};
-
-const ListEmptyComponent = () => {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text color="gray" align="center">
-        There are no entries here.
-      </Text>
-      <Text color="gray">Add some by filling up the form.</Text>
-    </View>
   );
 };
 
@@ -94,27 +77,32 @@ const Entries = ({ entries, setEntries, submitEntries }) => {
   };
 
   return (
-    <EntriesStyle>
-      <FlatList
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item, index }) => renderItem(item, index, onDeleteEntry)}
-        data={entries}
-        ListFooterComponent={() => (
-          <ListFooterComponent
-            onPressedClear={onClearEntries}
-            onPressedSave={onSaveEntries}
-          />
-        )}
-        contentContainerStyle={{ flexGrow: 3, marginRight: 25, marginLeft: 25 }}
-        ListFooterComponentStyle={{
-          ...hide,
-          justifyContent: "space-between",
-          flexDirection: "row",
-          marginTop: 15,
-        }}
-        ListEmptyComponent={ListEmptyComponent}
-      />
-    </EntriesStyle>
+    <FlatList
+      keyExtractor={(_, index) => index.toString()}
+      renderItem={({ item, index }) => renderItem(item, index, onDeleteEntry)}
+      data={entries}
+      ListFooterComponent={() => (
+        <ListFooterComponent
+          onPressedClear={onClearEntries}
+          onPressedSave={onSaveEntries}
+        />
+      )}
+      contentContainerStyle={{ flexGrow: 1, marginRight: 25, marginLeft: 25 }}
+      ListFooterComponentStyle={{
+        ...hide,
+        justifyContent: "space-between",
+        flexDirection: "row",
+        marginTop: 15,
+      }}
+      ListEmptyComponent={
+        <ListEmptyComponent
+          text={[
+            "There are no entries here.",
+            "Add some by filling up the form above",
+          ]}
+        />
+      }
+    />
   );
 };
 
