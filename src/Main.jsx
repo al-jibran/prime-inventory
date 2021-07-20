@@ -66,12 +66,12 @@ const Home = () => {
       })}
       initialRouteName="Inventory"
     >
-      <Tab.Screen name="Bills" component={BillsStackScreen} />
       <Tab.Screen
         name="Inventory"
         component={InventoryStackScreen}
         options={{ unmountOnBlur: true }}
       />
+      <Tab.Screen name="Bills" component={BillsStackScreen} />
     </Tab.Navigator>
   );
 };
