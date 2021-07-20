@@ -29,12 +29,6 @@ export const ProductHistoryInfo = ({ item, id }) => {
           {stockChange}
         </AdaptiveText>
       </Detail>
-      {item.type === "BILL" && (
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Bill No</SubHeading>
-          <Text>{item.bill_no}</Text>
-        </Detail>
-      )}
     </>
   );
 };
