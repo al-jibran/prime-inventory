@@ -21,6 +21,7 @@ import {
   ProductHistoryInfo,
   ProductHistoryReveal,
 } from "../Product/ProductHistory";
+import TransactionComment from "./TransactionComment";
 
 const TransactionDetails = styled(ShadowBox)`
   ${AlignBySide}
@@ -29,7 +30,7 @@ const TransactionDetails = styled(ShadowBox)`
   flex-basis: 0;
 `;
 
-const TransactionContent = styled(ShadowBox)`
+const TransactionProducts = styled(ShadowBox)`
   padding: 8px 15px;
   flex: 1;
 `;
@@ -123,27 +124,27 @@ const TransactionHistoryInfo = ({ item }) => {
 
 const TransactionHistoryReveal = ({ item }) => {
   if (item.type === "PRODUCT") {
-    return <ProductHistoryReveal item={item} />;
+    return <TransactionComment item={item} />;
   }
 
   return (
     <>
-      <ProductHistoryReveal item={item} />
+      <TransactionComment item={item} />
       <FlatList
         ListHeaderComponent={
-          <TransactionContent>
+          <TransactionProducts>
             <Detail>
               <SubText fontWeight={Theme.fontWeight.bold}>
                 Products Changed
               </SubText>
             </Detail>
-          </TransactionContent>
+          </TransactionProducts>
         }
         style={{ margin: 0 }}
         data={item.changes}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
-          <TransactionContent>
+          <TransactionProducts>
             <Detail>
               <Text fontWeight={Theme.fontWeight.light}>{item.name}</Text>
               <AdaptiveText fontWeight={Theme.fontWeight.light}>
@@ -151,7 +152,7 @@ const TransactionHistoryReveal = ({ item }) => {
                 {item.change}
               </AdaptiveText>
             </Detail>
-          </TransactionContent>
+          </TransactionProducts>
         )}
       />
     </>
