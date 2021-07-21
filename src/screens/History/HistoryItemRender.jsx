@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { View } from "react-native";
+import { View, FlatList } from "react-native";
 import { Heading, Text, SubHeading, AdaptiveText } from "../../components/Text";
 
 import Theme from "../../theme";
@@ -20,6 +20,7 @@ const TransactionDetails = styled(ShadowBox)`
   ${AlignBySide}
   margin-top: 15px;
   margin-bottom: 0;
+  flex-basis: 0;
 `;
 
 const TransactionComment = styled(TransactionDetails)`
@@ -28,6 +29,11 @@ const TransactionComment = styled(TransactionDetails)`
   align-items: flex-start;
   padding: 8px 15px;
   margin: 0;
+`;
+
+const TransactionContent = styled(ShadowBox)`
+  padding: 8px 15px;
+  flex: 1;
 `;
 
 const HistoryItemRender = ({ item, id, historyOf }) => {
@@ -124,11 +130,27 @@ const TransactionHistoryReveal = ({ item }) => {
   }
 
   return (
-    <>
+    <View>
       <TransactionComment>
         <Text>{item.comment}</Text>
       </TransactionComment>
-    </>
+      <FlatList
+        style={{ margin: 0 }}
+        data={item.changes}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <TransactionContent>
+            <Detail>
+              <Text size={Theme.fontSize.body}>{item.name}</Text>
+              <AdaptiveText>
+                {item.change > 0 && "+"}
+                {item.change}
+              </AdaptiveText>
+            </Detail>
+          </TransactionContent>
+        )}
+      />
+    </View>
   );
 };
 
