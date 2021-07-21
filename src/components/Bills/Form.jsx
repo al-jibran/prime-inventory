@@ -66,7 +66,7 @@ const Form = ({ onSubmit }) => {
                 direction="BOTTOM"
               />
             </FieldStyle>
-            <FieldStyle>
+            <FieldStyle style={{ ...styles.autocompleteContainer }}>
               <AutoCompleteField setDisabled={setDisabled} />
             </FieldStyle>
             <FormActions>
@@ -110,28 +110,26 @@ const AutoCompleteField = ({ setDisabled }) => {
   };
 
   return (
-    <FieldStyle style={(styles.autocompleteContainer, { zIndex: 999 })}>
-      <Autocomplete
-        data={products}
-        hideResults={hide}
-        value={query.value}
-        placeholder="Enter product name"
-        onTextInput={showResults}
-        onSubmitEditing={hideResults}
-        name="query"
-        flatListProps={{
-          keyExtractor: (_, idx) => idx.toString(),
-          renderItem: ({ item }) => renderItem(item, handleOnPress),
-        }}
-        clearButtonMode={"always"}
-        onChangeText={(text) => {
-          text.length === 0 && hideResults();
-          filter(text);
-          queryHelpers.setValue(text);
-          setDisabled(true);
-        }}
-      />
-    </FieldStyle>
+    <Autocomplete
+      data={products}
+      hideResults={hide}
+      value={query.value}
+      placeholder="Enter product name"
+      onTextInput={showResults}
+      onSubmitEditing={hideResults}
+      name="query"
+      flatListProps={{
+        keyExtractor: (_, idx) => idx.toString(),
+        renderItem: ({ item }) => renderItem(item, handleOnPress),
+      }}
+      clearButtonMode={"always"}
+      onChangeText={(text) => {
+        text.length === 0 && hideResults();
+        filter(text);
+        queryHelpers.setValue(text);
+        setDisabled(true);
+      }}
+    />
   );
 };
 
