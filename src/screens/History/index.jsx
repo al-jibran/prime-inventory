@@ -7,11 +7,13 @@ import ListEmptyComponent from "../../components/ListEmptyComponent";
 import HistoryItemRender from "./HistoryItemRender";
 
 const History = () => {
+  const tabValues = ["ALL", "BILL"];
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { data, loading, error } = useQuery(GET_TRANSACTIONS, {
+  const { data, loading, error, refetch } = useQuery(GET_TRANSACTIONS, {
     variables: {
       first: 9,
     },
+    fetchPolicy: "cache-and-network",
   });
 
   const history = data?.transactions.edges.map((edge) => edge.node);
@@ -27,9 +29,12 @@ const History = () => {
         }}
       >
         <SegmentedControlTab
-          values={["All", "Bills"]}
+          values={tabValues}
           selectedIndex={selectedIndex}
-          onTabPress={(index) => setSelectedIndex(index)}
+          onTabPress={(index) => {
+            refetch({ filterBy: tabValues[index] });
+            setSelectedIndex(index);
+          }}
         />
       </View>
       <FlatList

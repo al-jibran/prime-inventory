@@ -123,8 +123,12 @@ export const GET_PRODUCT_HISTORY = gql`
 `;
 
 export const GET_TRANSACTIONS = gql`
-  query Transactions($after: String, $first: Int) {
-    transactions(after: $after, first: $first) {
+  query Transactions(
+    $after: String
+    $first: Int
+    $filterBy: FilterTransactionsBy
+  ) {
+    transactions(after: $after, first: $first, filterBy: $filterBy) {
       edges {
         node {
           ...TransactionFields
