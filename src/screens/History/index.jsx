@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";

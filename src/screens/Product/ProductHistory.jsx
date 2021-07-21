@@ -14,7 +14,7 @@ export const ProductHistoryInfo = ({ item, id }) => {
     <>
       <Detail>
         <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-        <AdaptiveText fontWeight={Theme.fontWeight.light}>
+        <AdaptiveText>
           {stockChange > 0 && "+"}
           {stockChange}
         </AdaptiveText>

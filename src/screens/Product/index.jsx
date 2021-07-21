@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled from "styled-components/native";
-import { Heading, Text, SubHeading } from "../../components/Text";
+import { Heading, Text } from "../../components/Text";
 import Button from "../../components/Button";
 import { GET_PRODUCT_HISTORY } from "../../graphql/queries";
 import ListEmptyComponent from "../../components/ListEmptyComponent";
