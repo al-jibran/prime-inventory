@@ -8,6 +8,7 @@ import { GET_PRODUCT_HISTORY } from "../../graphql/queries";
 import HistoryItemRender from "../History/HistoryItemRender";
 import { Detail, TopContainerStyle } from "../../styles/common";
 import SectionListByDate from "../../components/SectionListByDate";
+import FetchMoreFooter from "../../components/FetchMoreFooter";
 
 const DetailsContainer = styled.View`
   ${TopContainerStyle}
@@ -65,7 +66,7 @@ const ListHeaderComponent = ({ id }) => {
 
 const Product = ({ route }) => {
   const { id } = route.params;
-  const { data, loading, error, refetch, fetchMore } = useQuery(
+  const { data, loading, error, refetch, fetchMore, networkStatus } = useQuery(
     GET_PRODUCT_HISTORY,
     {
       variables: { id, first: 8 },
@@ -76,6 +77,7 @@ const Product = ({ route }) => {
         console.log(error.message);
       },
       fetchPolicy: "cache-and-network",
+      notifyOnNetworkStatusChange: true,
     }
   );
 
@@ -103,6 +105,7 @@ const Product = ({ route }) => {
       data={history}
       loading={loading}
       error={error}
+      listEmptyText={"There is currently no history to show."}
       refetch={refetch}
       onEndReached={onEndReached}
       onEndReachedThreshold={0}
@@ -110,7 +113,8 @@ const Product = ({ route }) => {
       renderItem={({ item }) => (
         <HistoryItemRender item={item} id={id} historyOf="product" />
       )}
-      listEmptyText={"There is currently no history to show."}
+      ListFooterComponent={<FetchMoreFooter networkStatus={networkStatus} />}
+      ListFooterComponentStyle={{ marginTop: 15 }}
     />
   );
 };

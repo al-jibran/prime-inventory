@@ -17,6 +17,7 @@ import { Text } from "../components/Text";
 import Button from "../components/Button";
 
 import Theme from "../theme";
+import FetchMoreFooter from "../components/FetchMoreFooter";
 
 const RenderProduct = ({ item, largestValue }) => {
   const navigation = useNavigation();
@@ -141,6 +142,10 @@ const ProductListContainer = () => {
           ]}
         />
       }
+      ListFooterComponent={
+        <FetchMoreFooter networkStatus={info.networkStatus} />
+      }
+      ListFooterComponentStyle={{ marginTop: 15 }}
     />
   );
 };

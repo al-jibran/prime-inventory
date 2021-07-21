@@ -5,12 +5,13 @@ import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";
 import HistoryItemRender from "./HistoryItemRender";
 import SectionListByDate from "../../components/SectionListByDate";
+import FetchMoreFooter from "../../components/FetchMoreFooter";
 
 const History = () => {
   const tabValues = ["ALL", "BILL"];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
-  const { data, loading, error, fetchMore, refetch } = useQuery(
+  const { data, loading, error, fetchMore, refetch, networkStatus } = useQuery(
     GET_TRANSACTIONS,
     {
       variables: {
@@ -74,6 +75,8 @@ const History = () => {
         renderItem={({ item }) => (
           <HistoryItemRender item={item} id={item._id} />
         )}
+        ListFooterComponent={<FetchMoreFooter networkStatus={networkStatus} />}
+        ListFooterComponentStyle={{ marginTop: 15 }}
       />
     </View>
   );
