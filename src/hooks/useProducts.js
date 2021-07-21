@@ -1,12 +1,14 @@
 import { useQuery } from "@apollo/client";
 import { useDebouncedCallback } from "use-debounce/lib";
 import { GET_INVENTORY } from "../graphql/queries";
+import { useState } from "react";
 
 export const useProducts = (
   first = 8,
   orderBy = "CREATED_AT",
   orderDirection = "DESC"
 ) => {
+  const [refreshing, setRefreshing] = useState(false);
   const { data, loading, error, fetchMore, refetch } = useQuery(GET_INVENTORY, {
     variables: {
       first,
@@ -15,6 +17,7 @@ export const useProducts = (
     },
     onCompleted: (data) => {
       console.log(data.inventory.totalCount);
+      setRefreshing(false);
     },
     onError: (error) => {
       console.log(error);
@@ -48,5 +51,7 @@ export const useProducts = (
     loading,
     filter: debounced,
     fetchMore: onEndReached,
+    refreshing,
+    setRefreshing,
   };
 };

@@ -75,9 +75,16 @@ const Inventory = ({ navigation }) => {
 };
 
 const ProductListContainer = () => {
-  const { products, loading, error, fetchMore, filter } = useProducts();
+  const {
+    products,
+    loading,
+    error,
+    fetchMore,
+    filter,
+    refreshing,
+    setRefreshing,
+  } = useProducts();
   const [searchQuery, setSearchQuery] = useState("");
-  const [refereshing, setRefreshing] = useState(false);
   const largestValue = maxBy(products, (obj) => obj.stock)?.stock;
 
   if (error) {
@@ -105,12 +112,11 @@ const ProductListContainer = () => {
       contentContainerStyle={{ marginLeft: 20, marginRight: 20, flexGrow: 1 }}
       onEndReached={fetchMore}
       onEndReachedThreshold={0.1}
-      refreshing={refereshing}
+      refreshing={refreshing}
       onRefresh={() => {
         setRefreshing(true);
         setSearchQuery("");
         filter("");
-        setRefreshing(false);
       }}
       ListEmptyComponent={
         <ListEmptyComponent

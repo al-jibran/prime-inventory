@@ -5,21 +5,19 @@ import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";
 import HistoryItemRender from "./HistoryItemRender";
 import SectionListByDate from "../../components/SectionListByDate";
-import useRefresh from "../../hooks/useRefresh";
 
 const History = () => {
-  const [refresh, setRefresh] = useRefresh();
   const tabValues = ["ALL", "BILL"];
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
   const { data, loading, error, fetchMore, refetch } = useQuery(
     GET_TRANSACTIONS,
     {
       variables: {
         first: 7,
       },
-      onCompleted: (data) => {
-        console.log(data.transactions.totalCount);
-        setRefresh(false);
+      onCompleted: () => {
+        setRefreshing(false);
       },
       fetchPolicy: "cache-and-network",
     }
@@ -64,10 +62,9 @@ const History = () => {
         data={history}
         loading={loading}
         error={error}
-        refreshing={refresh}
-        extraData={refresh}
+        refreshing={refreshing}
         onRefresh={() => {
-          setRefresh(true);
+          setRefreshing(true);
           refetch();
         }}
         listEmptyText={"There are currently no transactions to show."}
