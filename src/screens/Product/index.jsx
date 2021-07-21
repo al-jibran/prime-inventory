@@ -5,7 +5,6 @@ import styled from "styled-components/native";
 import { Heading, Text } from "../../components/Text";
 import Button from "../../components/Button";
 import { GET_PRODUCT_HISTORY } from "../../graphql/queries";
-import ListEmptyComponent from "../../components/ListEmptyComponent";
 import HistoryItemRender from "../History/HistoryItemRender";
 import { Detail, TopContainerStyle } from "../../styles/common";
 import SectionListByDate from "../../components/SectionListByDate";

@@ -8,7 +8,7 @@ const ListEmptyComponent = ({ loading, error, text }) => {
   let content;
 
   if (loading) {
-    content = <ActivityIndicator size="large" />;
+    content = <ActivityIndicator size="large" color="#0000ff" />;
   } else if (error) {
     content = <Text color={Theme.color.danger}>{error.message}</Text>;
   } else {

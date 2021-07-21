@@ -7,7 +7,6 @@ const SectionListByDate = ({
   data,
   loading,
   error,
-  refetch,
   listEmptyText,
   ...props
 }) => {
