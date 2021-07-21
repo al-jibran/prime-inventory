@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextInput, View } from "react-native";
+import { Alert, TextInput, View } from "react-native";
 import { useMutation } from "@apollo/client";
 
 import { Heading } from "../components/Text";
@@ -10,8 +10,14 @@ import { BULK_UPDATE_PRODUCTS } from "../graphql/queries";
 
 const Bills = () => {
   const [bulkUpdateProducts] = useMutation(BULK_UPDATE_PRODUCTS, {
+    onCompleted: () => {
+      Alert.alert(
+        "Bill was successfully created and the values have been changed!"
+      );
+      setEntries([]);
+    },
     onError: (error) => {
-      console.log(error.message);
+      Alert.alert("There was a problem creating the bill.", error.message);
     },
   });
 
