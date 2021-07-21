@@ -1,38 +1,31 @@
 import React from "react";
-import styled from "styled-components";
-import { View, FlatList } from "react-native";
-import {
-  Heading,
-  Text,
-  SubHeading,
-  AdaptiveText,
-  SubText,
-} from "../../components/Text";
+import styled from "styled-components/native";
+import { View } from "react-native";
 
 import Theme from "../../theme";
 import Togglable from "../../components/Togglable";
+import { Heading, Text, SubHeading } from "../../components/Text";
+
 import {
-  ShadowBox,
   Detail,
   HorizontalAndVerticalCenter,
   AlignBySide,
+  ShadowBox,
 } from "../../styles/common";
 import {
   ProductHistoryInfo,
   ProductHistoryReveal,
 } from "../Product/ProductHistory";
-import TransactionComment from "./TransactionComment";
+import {
+  TransactionHistoryInfo,
+  TransactionHistoryReveal,
+} from "./TransactionHistory";
 
 const TransactionDetails = styled(ShadowBox)`
   ${AlignBySide}
   margin-top: 15px;
   margin-bottom: 0;
   flex-basis: 0;
-`;
-
-const TransactionProducts = styled(ShadowBox)`
-  padding: 8px 15px;
-  flex: 1;
 `;
 
 const HistoryItemRender = ({ item, id, historyOf }) => {
@@ -97,65 +90,6 @@ const HistoryItemRender = ({ item, id, historyOf }) => {
       </TransactionDetails>
       <RevealInfo />
     </Togglable>
-  );
-};
-
-const TransactionHistoryInfo = ({ item }) => {
-  if (item.type === "PRODUCT") {
-    const changes = item.changes[0];
-    return (
-      <>
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Product Name</SubHeading>
-          <Text>{changes.name}</Text>
-        </Detail>
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <AdaptiveText fontWeight={Theme.fontWeight.light}>
-            {changes.change > 0 && "+"}
-            {changes.change}
-          </AdaptiveText>
-        </Detail>
-      </>
-    );
-  }
-  return null;
-};
-
-const TransactionHistoryReveal = ({ item }) => {
-  if (item.type === "PRODUCT") {
-    return <TransactionComment item={item} />;
-  }
-
-  return (
-    <>
-      <TransactionComment item={item} />
-      <FlatList
-        ListHeaderComponent={
-          <TransactionProducts>
-            <Detail>
-              <SubText fontWeight={Theme.fontWeight.bold}>
-                Products Changed
-              </SubText>
-            </Detail>
-          </TransactionProducts>
-        }
-        style={{ margin: 0 }}
-        data={item.changes}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => (
-          <TransactionProducts>
-            <Detail>
-              <Text fontWeight={Theme.fontWeight.light}>{item.name}</Text>
-              <AdaptiveText fontWeight={Theme.fontWeight.light}>
-                {item.change > 0 && "+"}
-                {item.change}
-              </AdaptiveText>
-            </Detail>
-          </TransactionProducts>
-        )}
-      />
-    </>
   );
 };
 
