@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 // Native Imports
 import React, { useState, useLayoutEffect } from "react";
-import { FlatList, Text, Pressable, Alert } from "react-native";
+import { FlatList, Pressable, Alert } from "react-native";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/core";
 import { maxBy } from "lodash";
@@ -12,8 +12,10 @@ import Searchbar from "../components/Searchbar";
 import { useProducts } from "../hooks/useProducts";
 import { DELETE_PRODUCT } from "../graphql/queries";
 import ListEmptyComponent from "../components/ListEmptyComponent";
+import { HorizontalAndVerticalCenter } from "../styles/common";
+import { Text } from "../components/Text";
 
-//Styles
+import Theme from "../theme";
 
 const RenderProduct = ({ item, largestValue }) => {
   const navigation = useNavigation();
@@ -88,7 +90,11 @@ const ProductListContainer = () => {
   const largestValue = maxBy(products, (obj) => obj.stock)?.stock;
 
   if (error) {
-    return <Text>{error.message}</Text>;
+    return (
+      <HorizontalAndVerticalCenter>
+        <Text color={Theme.color.danger}>Error: {error.message}</Text>
+      </HorizontalAndVerticalCenter>
+    );
   }
 
   return (
