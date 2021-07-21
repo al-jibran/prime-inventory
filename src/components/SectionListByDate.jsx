@@ -1,13 +1,21 @@
 import React from "react";
 import { SectionList, View } from "react-native";
 import { Heading } from "./Text";
+import ListEmptyComponent from "./ListEmptyComponent";
 
-const SectionListByDate = (props) => {
+const SectionListByDate = ({
+  data,
+  loading,
+  error,
+  refetch,
+  listEmptyText,
+  ...props
+}) => {
   const dates = new Set();
 
-  for (let item of props.data) {
+  for (let item of data) {
     dates.add(
-      new Date(item.created).toLocaleDateString("en-us", {
+      new Date(item.created).toLocaleDateString("en-in", {
         day: "2-digit",
         year: "numeric",
         month: "long",
@@ -17,9 +25,9 @@ const SectionListByDate = (props) => {
 
   let sectionData = [];
   for (let date of dates.values()) {
-    const sameDateHistory = props.data.filter(
+    const sameDateHistory = data.filter(
       (data) =>
-        new Date(data.created).toLocaleDateString("en-us", {
+        new Date(data.created).toLocaleDateString("en-in", {
           day: "2-digit",
           year: "numeric",
           month: "long",
@@ -45,6 +53,13 @@ const SectionListByDate = (props) => {
           <Heading>{title}</Heading>
         </View>
       )}
+      ListEmptyComponent={
+        <ListEmptyComponent
+          loading={loading}
+          error={error}
+          text={[listEmptyText]}
+        />
+      }
       contentContainerStyle={{ marginLeft: 20, marginRight: 20, flexGrow: 1 }}
       {...props}
     />

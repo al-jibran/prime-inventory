@@ -66,16 +66,19 @@ const ListHeaderComponent = ({ id }) => {
 
 const Product = ({ route }) => {
   const { id } = route.params;
-  const { data, loading, error, fetchMore } = useQuery(GET_PRODUCT_HISTORY, {
-    variables: { id, first: 8 },
-    onCompleted: (data) => {
-      console.log(data.getProductHistory.totalCount);
-    },
-    onError: (error) => {
-      console.log(error.message);
-    },
-    fetchPolicy: "cache-and-network",
-  });
+  const { data, loading, error, refetch, fetchMore } = useQuery(
+    GET_PRODUCT_HISTORY,
+    {
+      variables: { id, first: 8 },
+      onCompleted: (data) => {
+        console.log(data.getProductHistory.totalCount);
+      },
+      onError: (error) => {
+        console.log(error.message);
+      },
+      fetchPolicy: "cache-and-network",
+    }
+  );
 
   const history = data
     ? data.getProductHistory.edges.map((edge) => edge.node)
@@ -99,19 +102,16 @@ const Product = ({ route }) => {
   return (
     <SectionListByDate
       data={history}
+      loading={loading}
+      error={error}
+      refetch={refetch}
       onEndReached={onEndReached}
       onEndReachedThreshold={0}
       ListHeaderComponent={<ListHeaderComponent id={id} />}
       renderItem={({ item }) => (
         <HistoryItemRender item={item} id={id} historyOf="product" />
       )}
-      ListEmptyComponent={
-        <ListEmptyComponent
-          loading={loading}
-          error={error}
-          text={["The product's history is currently empty."]}
-        />
-      }
+      listEmptyText={"There is currently no history to show."}
     />
   );
 };

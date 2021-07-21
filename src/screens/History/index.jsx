@@ -3,21 +3,23 @@ import { View } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";
-import ListEmptyComponent from "../../components/ListEmptyComponent";
 import HistoryItemRender from "./HistoryItemRender";
 import SectionListByDate from "../../components/SectionListByDate";
+import useRefresh from "../../hooks/useRefresh";
 
 const History = () => {
+  const [refresh, setRefresh] = useRefresh();
   const tabValues = ["ALL", "BILL"];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { data, loading, error, fetchMore, refetch } = useQuery(
     GET_TRANSACTIONS,
     {
       variables: {
-        first: 9,
+        first: 7,
       },
       onCompleted: (data) => {
         console.log(data.transactions.totalCount);
+        setRefresh(false);
       },
       fetchPolicy: "cache-and-network",
     }
@@ -60,18 +62,20 @@ const History = () => {
       </View>
       <SectionListByDate
         data={history}
+        loading={loading}
+        error={error}
+        refreshing={refresh}
+        extraData={refresh}
+        onRefresh={() => {
+          setRefresh(true);
+          refetch();
+        }}
+        listEmptyText={"There are currently no transactions to show."}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.2}
         renderItem={({ item }) => (
           <HistoryItemRender item={item} id={item._id} />
         )}
-        ListEmptyComponent={
-          <ListEmptyComponent
-            loading={loading}
-            error={error}
-            text={["There are currently no transactions to show."]}
-          />
-        }
       />
     </View>
   );
