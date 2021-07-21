@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useApolloClient, gql } from "@apollo/client";
 import { View } from "react-native";
 import { Heading, Text, SubHeading, AdaptiveText } from "../../components/Text";
 
@@ -16,7 +15,6 @@ import {
   ProductHistoryInfo,
   ProductHistoryReveal,
 } from "../Product/ProductHistory";
-import { GET_PRODUCT } from "../../graphql/queries";
 
 const TransactionDetails = styled(ShadowBox)`
   ${AlignBySide}
@@ -25,6 +23,10 @@ const TransactionDetails = styled(ShadowBox)`
 `;
 
 const TransactionComment = styled(TransactionDetails)`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 8px 15px;
   margin: 0;
 `;
 
@@ -50,7 +52,7 @@ const HistoryItemRender = ({ item, id, historyOf }) => {
     if (historyOf === "product") {
       return <ProductHistoryReveal item={item} />;
     }
-    return null;
+    return <TransactionHistoryReveal item={item} />;
   };
 
   return (
@@ -82,7 +84,7 @@ const HistoryItemRender = ({ item, id, historyOf }) => {
               <SubHeading fontSize={Theme.fontSize.body}>
                 Bill Number
               </SubHeading>
-              <Text>PBR-{item.bill_no}</Text>
+              <Text>PTB-{item.bill_no}</Text>
             </Detail>
           )}
           <AdditionalInfo />
@@ -94,40 +96,20 @@ const HistoryItemRender = ({ item, id, historyOf }) => {
 };
 
 const TransactionHistoryInfo = ({ item }) => {
-  const client = useApolloClient();
-  const [product, setProduct] = useState(null);
-  const { productId, change } = item.changes[0];
-
-  useEffect(() => {
-    // To fix 'Can't perform a react state update on unmouted component' error
-    let isMounted = true;
-
-    const fetch = async (item) => {
-      const { data } = await fetchProduct(client, productId);
-      if (isMounted) {
-        setProduct(data.product);
-      }
-    };
-
-    item && item.type === "PRODUCT" && fetch(item);
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (product) {
+  if (item.type === "PRODUCT") {
+    const changes = item.changes[0];
+    console.log(changes);
     return (
       <>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Product Name</SubHeading>
-          <Text>{product.name}</Text>
+          <Text>{changes.name}</Text>
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
           <AdaptiveText>
-            {change > 0 && "+"}
-            {change}
+            {changes.change > 0 && "+"}
+            {changes.change}
           </AdaptiveText>
         </Detail>
       </>
@@ -136,27 +118,18 @@ const TransactionHistoryInfo = ({ item }) => {
   return null;
 };
 
-const fetchProduct = (client, productId) => {
-  const productInCache = client.readFragment({
-    id: `Product:${productId}`,
-    fragment: gql`
-      fragment ProductFragment2 on Product {
-        name
-      }
-    `,
-  });
-
-  if (!productInCache) {
-    return client.query({
-      query: GET_PRODUCT,
-      variables: { id: productId },
-    });
-  } else {
-    return new Promise((resolve, reject) => {
-      resolve({ data: { product: productInCache } });
-      reject("Couldn't retrieve value from cache");
-    });
+const TransactionHistoryReveal = ({ item }) => {
+  if (item.type === "PRODUCT") {
+    return <ProductHistoryReveal item={item} />;
   }
+
+  return (
+    <>
+      <TransactionComment>
+        <Text>{item.comment}</Text>
+      </TransactionComment>
+    </>
+  );
 };
 
 export default HistoryItemRender;

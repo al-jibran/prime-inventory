@@ -19,6 +19,7 @@ const TransactionFragment = gql`
     changes {
       productId
       change
+      name
     }
   }
 `;
