@@ -104,7 +104,6 @@ const HistoryItemRender = ({ item, id, historyOf }) => {
 const TransactionHistoryInfo = ({ item }) => {
   if (item.type === "PRODUCT") {
     const changes = item.changes[0];
-    console.log(changes);
     return (
       <>
         <Detail>
