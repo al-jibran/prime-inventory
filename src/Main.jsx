@@ -79,7 +79,7 @@ const Home = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
-      initialRouteName="History"
+      initialRouteName="Inventory"
     >
       <Tab.Screen
         name="Inventory"
