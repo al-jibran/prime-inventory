@@ -3,12 +3,13 @@ import { Formik, useField } from "formik";
 import { View, Pressable, StyleSheet, Platform } from "react-native";
 
 import { NumberInput, DropDownInput } from "../InputField";
-import { FieldStyle, FormActions } from "../../styles/common";
+import { Detail, FieldStyle, FormActions } from "../../styles/common";
 import Button from "../Button";
-import { Text } from "../Text";
+import { Text, SubText, AdaptiveText } from "../Text";
 import Autocomplete from "react-native-autocomplete-input";
 import { useDropDown } from "../../hooks/useDropDown";
 import { useProducts } from "../../hooks/useProducts";
+import Theme from "../../theme";
 
 const initialValues = {
   stock: "0",
@@ -33,9 +34,13 @@ const styles =
 
 const renderItem = (item, onPress) => {
   return (
-    <Pressable onPress={() => onPress(item)} style={{ padding: 20 }}>
-      <Text>{item.name}</Text>
-    </Pressable>
+    <Detail style={{ padding: 20 }}>
+      <Pressable onPress={() => onPress(item)}>
+        <Text>{item.name}</Text>
+        <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
+      </Pressable>
+      <AdaptiveText>{item.stock}</AdaptiveText>
+    </Detail>
   );
 };
 
@@ -96,7 +101,7 @@ const AutoCompleteField = ({ setDisabled }) => {
   const [, , nameFieldHelpers] = useField("name");
   const [query, , queryHelpers] = useField("query");
   const [hide, setHide] = useState(true);
-  const { products, filter } = useProducts(5);
+  const [products, , { refetchWith }] = useProducts(5);
 
   const hideResults = () => setHide(true);
   const showResults = () => setHide(false);
@@ -125,7 +130,7 @@ const AutoCompleteField = ({ setDisabled }) => {
       clearButtonMode={"always"}
       onChangeText={(text) => {
         text.length === 0 && hideResults();
-        filter(text);
+        refetchWith(text);
         queryHelpers.setValue(text);
         setDisabled(true);
       }}

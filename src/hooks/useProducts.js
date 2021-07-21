@@ -57,7 +57,6 @@ export const useProducts = (
     {
       refetchWith: debounced,
       fetchMore: onEndReached,
-
       setRefreshing,
       refetch,
     },
