@@ -1,5 +1,5 @@
 import React from "react";
-import { SectionList, View } from "react-native";
+import { View } from "react-native";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import styled from "styled-components/native";
 import { Heading, Text, SubHeading } from "../../components/Text";
@@ -8,6 +8,7 @@ import { GET_PRODUCT_HISTORY } from "../../graphql/queries";
 import ListEmptyComponent from "../../components/ListEmptyComponent";
 import HistoryItemRender from "../History/HistoryItemRender";
 import { Detail, TopContainerStyle } from "../../styles/common";
+import SectionListByDate from "../../components/SectionListByDate";
 
 const DetailsContainer = styled.View`
   ${TopContainerStyle}
@@ -79,25 +80,6 @@ const Product = ({ route }) => {
   const history = data
     ? data.getProductHistory.edges.map((edge) => edge.node)
     : [];
-  const dates = new Set();
-
-  for (let item of history) {
-    dates.add(new Date(item.created).toDateString());
-  }
-
-  let sectionData = [];
-  for (let date of dates.values()) {
-    const sameDateHistory = history.filter(
-      (his) => new Date(his.created).toDateString() === date
-    );
-
-    const sectionItem = {
-      title: date,
-      data: sameDateHistory,
-    };
-
-    sectionData.push(sectionItem);
-  }
 
   const onEndReached = () => {
     const canFetchMore =
@@ -115,18 +97,11 @@ const Product = ({ route }) => {
   };
 
   return (
-    <SectionList
-      sections={sectionData}
-      keyExtractor={(item) => item._id}
-      stickySectionHeadersEnabled={false}
+    <SectionListByDate
+      data={history}
       onEndReached={onEndReached}
       onEndReachedThreshold={0}
       ListHeaderComponent={<ListHeaderComponent id={id} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <View style={{ marginTop: 15 }}>
-          <SubHeading align="center">{title}</SubHeading>
-        </View>
-      )}
       renderItem={({ item }) => (
         <HistoryItemRender item={item} id={id} historyOf="product" />
       )}
@@ -137,8 +112,6 @@ const Product = ({ route }) => {
           text={["The product's history is currently empty."]}
         />
       }
-      style={{ marginTop: 20 }}
-      contentContainerStyle={{ marginLeft: 20, marginRight: 20, flexGrow: 1 }}
     />
   );
 };

@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";
 import ListEmptyComponent from "../../components/ListEmptyComponent";
 import HistoryItemRender from "./HistoryItemRender";
+import SectionListByDate from "../../components/SectionListByDate";
 
 const History = () => {
   const tabValues = ["ALL", "BILL"];
@@ -22,7 +23,7 @@ const History = () => {
     }
   );
 
-  const history = data?.transactions.edges.map((edge) => edge.node);
+  const history = data ? data.transactions.edges.map((edge) => edge.node) : [];
 
   const onEndReached = () => {
     const canFetchMore = !loading && data?.transactions.pageInfo.hasNextPage;
@@ -57,9 +58,8 @@ const History = () => {
           }}
         />
       </View>
-      <FlatList
+      <SectionListByDate
         data={history}
-        keyExtractor={(item) => item._id}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.2}
         renderItem={({ item }) => (
@@ -72,11 +72,6 @@ const History = () => {
             text={["There are currently no transactions to show."]}
           />
         }
-        contentContainerStyle={{
-          marginRight: 20,
-          marginLeft: 20,
-          flexGrow: 1,
-        }}
       />
     </View>
   );
