@@ -2,7 +2,7 @@
 // Native Imports
 import React, { useState, useLayoutEffect } from "react";
 import { FlatList, Pressable, Alert } from "react-native";
-import { useMutation } from "@apollo/client";
+import { useMutation, NetworkStatus } from "@apollo/client";
 import { useNavigation } from "@react-navigation/core";
 import { maxBy } from "lodash";
 
@@ -14,6 +14,7 @@ import { DELETE_PRODUCT } from "../graphql/queries";
 import ListEmptyComponent from "../components/ListEmptyComponent";
 import { HorizontalAndVerticalCenter } from "../styles/common";
 import { Text } from "../components/Text";
+import Button from "../components/Button";
 
 import Theme from "../theme";
 
@@ -77,22 +78,29 @@ const Inventory = ({ navigation }) => {
 };
 
 const ProductListContainer = () => {
-  const {
-    products,
-    loading,
-    error,
-    fetchMore,
-    filter,
-    refreshing,
-    setRefreshing,
-  } = useProducts();
+  const [products, info, execute] = useProducts();
   const [searchQuery, setSearchQuery] = useState("");
   const largestValue = maxBy(products, (obj) => obj.stock)?.stock;
 
-  if (error) {
+  if (info.networkStatus === NetworkStatus.refetch) {
     return (
       <HorizontalAndVerticalCenter>
-        <Text color={Theme.color.danger}>Error: {error.message}</Text>
+        <Text>Refetching...</Text>
+      </HorizontalAndVerticalCenter>
+    );
+  }
+
+  if (info.error) {
+    return (
+      <HorizontalAndVerticalCenter>
+        <Text color={Theme.color.danger}>Error: {info.error.message}</Text>
+        <Button
+          text="Retry"
+          margin={10}
+          rounded
+          bgColor="primary"
+          onPress={() => execute.refetch()}
+        />
       </HorizontalAndVerticalCenter>
     );
   }
@@ -103,7 +111,7 @@ const ProductListContainer = () => {
         <Searchbar
           placeholder="Search"
           onChangeText={(query) => {
-            filter(query);
+            execute.refetchWith(query);
             setSearchQuery(query);
           }}
           value={searchQuery}
@@ -116,17 +124,17 @@ const ProductListContainer = () => {
         <RenderProduct item={item} largestValue={largestValue} />
       )}
       contentContainerStyle={{ marginLeft: 20, marginRight: 20, flexGrow: 1 }}
-      onEndReached={fetchMore}
+      onEndReached={execute.fetchMore}
       onEndReachedThreshold={0.1}
-      refreshing={refreshing}
+      refreshing={info.refreshing}
       onRefresh={() => {
-        setRefreshing(true);
+        execute.setRefreshing(true);
         setSearchQuery("");
-        filter("");
+        execute.refetchWith("");
       }}
       ListEmptyComponent={
         <ListEmptyComponent
-          loading={loading}
+          loading={info.loading}
           text={[
             "There are no products to show here.",
             "Start by clicking the add button",

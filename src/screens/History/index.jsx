@@ -20,6 +20,7 @@ const History = () => {
         setRefreshing(false);
       },
       fetchPolicy: "cache-and-network",
+      notifyOnNetworkStatusChange: true,
     }
   );
 

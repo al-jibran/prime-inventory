@@ -9,21 +9,27 @@ export const useProducts = (
   orderDirection = "DESC"
 ) => {
   const [refreshing, setRefreshing] = useState(false);
-  const { data, loading, error, fetchMore, refetch } = useQuery(GET_INVENTORY, {
-    variables: {
-      first,
-      orderDirection,
-      orderBy,
-    },
-    onCompleted: (data) => {
-      console.log(data.inventory.totalCount);
-      setRefreshing(false);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-    fetchPolicy: "cache-and-network",
-  });
+  const { data, loading, error, fetchMore, refetch, networkStatus } = useQuery(
+    GET_INVENTORY,
+    {
+      variables: {
+        first,
+        orderDirection,
+        orderBy,
+      },
+      onCompleted: (data) => {
+        console.log(data.inventory.totalCount);
+        console.log(networkStatus);
+        setRefreshing(false);
+      },
+      onError: (error) => {
+        console.log(networkStatus);
+        console.log(error);
+      },
+      fetchPolicy: "cache-and-network",
+      notifyOnNetworkStatusChange: true,
+    }
+  );
 
   const products = data?.inventory.edges.map((edge) => edge.node);
 
@@ -45,13 +51,15 @@ export const useProducts = (
     });
   };
 
-  return {
+  return [
     products,
-    error,
-    loading,
-    filter: debounced,
-    fetchMore: onEndReached,
-    refreshing,
-    setRefreshing,
-  };
+    { error, loading, networkStatus, refreshing },
+    {
+      refetchWith: debounced,
+      fetchMore: onEndReached,
+
+      setRefreshing,
+      refetch,
+    },
+  ];
 };
