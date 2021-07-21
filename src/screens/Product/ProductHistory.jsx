@@ -37,7 +37,7 @@ export const ProductHistoryReveal = ({ item }) => {
   return (
     <>
       <TransactionComment>
-        <Text>{item.comment}</Text>
+        <Text fontWeight={Theme.fontWeight.light}>{item.comment}</Text>
       </TransactionComment>
     </>
   );

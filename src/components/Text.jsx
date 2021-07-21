@@ -3,6 +3,7 @@ import Theme from "../theme";
 
 export const Text = styled.Text`
   font-size: ${(props) => props.fontSize || Theme.fontSize.body}px;
+  font-weight: ${(props) => props.fontWeight || Theme.fontWeight.normal};
   color: ${(props) => props.color || Theme.color.textPrimary};
   text-align: ${(props) => props.align || "left"};
   margin: ${(props) => props.mTopBottom || 0}px
