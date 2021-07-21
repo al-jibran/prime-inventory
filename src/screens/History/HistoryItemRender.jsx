@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { View, FlatList } from "react-native";
-import { Heading, Text, SubHeading, AdaptiveText } from "../../components/Text";
+import {
+  Heading,
+  Text,
+  SubHeading,
+  AdaptiveText,
+  SubText,
+} from "../../components/Text";
 
 import Theme from "../../theme";
 import Togglable from "../../components/Togglable";
@@ -21,14 +27,6 @@ const TransactionDetails = styled(ShadowBox)`
   margin-top: 15px;
   margin-bottom: 0;
   flex-basis: 0;
-`;
-
-const TransactionComment = styled(TransactionDetails)`
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 8px 15px;
-  margin: 0;
 `;
 
 const TransactionContent = styled(ShadowBox)`
@@ -112,7 +110,7 @@ const TransactionHistoryInfo = ({ item }) => {
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <AdaptiveText>
+          <AdaptiveText fontWeight={Theme.fontWeight.light}>
             {changes.change > 0 && "+"}
             {changes.change}
           </AdaptiveText>
@@ -129,19 +127,26 @@ const TransactionHistoryReveal = ({ item }) => {
   }
 
   return (
-    <View>
-      <TransactionComment>
-        <Text>{item.comment}</Text>
-      </TransactionComment>
+    <>
+      <ProductHistoryReveal item={item} />
       <FlatList
+        ListHeaderComponent={
+          <TransactionContent>
+            <Detail>
+              <SubText fontWeight={Theme.fontWeight.bold}>
+                Products Changed
+              </SubText>
+            </Detail>
+          </TransactionContent>
+        }
         style={{ margin: 0 }}
         data={item.changes}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <TransactionContent>
             <Detail>
-              <Text size={Theme.fontSize.body}>{item.name}</Text>
-              <AdaptiveText>
+              <Text fontWeight={Theme.fontWeight.light}>{item.name}</Text>
+              <AdaptiveText fontWeight={Theme.fontWeight.light}>
                 {item.change > 0 && "+"}
                 {item.change}
               </AdaptiveText>
@@ -149,7 +154,7 @@ const TransactionHistoryReveal = ({ item }) => {
           </TransactionContent>
         )}
       />
-    </View>
+    </>
   );
 };
 

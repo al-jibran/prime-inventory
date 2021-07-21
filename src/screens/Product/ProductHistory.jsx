@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Text, SubHeading, AdaptiveText } from "../../components/Text";
+import { Text, SubHeading, AdaptiveText, SubText } from "../../components/Text";
 
 import Theme from "../../theme";
 import { ShadowBox, Detail } from "../../styles/common";
@@ -24,7 +24,7 @@ export const ProductHistoryInfo = ({ item, id }) => {
     <>
       <Detail>
         <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-        <AdaptiveText>
+        <AdaptiveText fontWeight={Theme.fontWeight.light}>
           {stockChange > 0 && "+"}
           {stockChange}
         </AdaptiveText>
@@ -37,6 +37,9 @@ export const ProductHistoryReveal = ({ item }) => {
   return (
     <>
       <TransactionComment>
+        <Detail>
+          <SubText fontWeight={Theme.fontWeight.bold}>Comment</SubText>
+        </Detail>
         <Text fontWeight={Theme.fontWeight.light}>{item.comment}</Text>
       </TransactionComment>
     </>
