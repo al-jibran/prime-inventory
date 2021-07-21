@@ -17,21 +17,28 @@ const ProductItemStyle = styled(ShadowBox)`
 
 const Stock = styled.Pressable`
   ${AlignBySide}
-  width: 75px;
   background-color: ${(props) => props.bgColor || Theme.color.danger};
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+
+  flex-grow: ${(props) => props.adjust};
+  flex-basis: 0px;
 `;
 
-const ProductItem = ({ item }) => {
+const ProductItem = ({ item, largestValue }) => {
   const navigation = useNavigation();
 
   let color = Theme.color.danger;
+  let adjust = 1.4;
 
-  if (item.stock >= 5 && item.stock < 10) {
+  if (item.stock >= 10 && item.stock < 20) {
     color = Theme.color.warning;
-  } else if (item.stock >= 10) {
+  } else if (item.stock >= 20) {
     color = Theme.color.success;
+  }
+
+  if (("" + largestValue).length > 3) {
+    adjust = 1.7;
   }
 
   const handleStockPress = () => {
@@ -44,8 +51,8 @@ const ProductItem = ({ item }) => {
         <Text>{item.name}</Text>
         <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
       </View>
-      <Stock bgColor={color} onPress={handleStockPress}>
-        <Text fontSize="40" color="white">
+      <Stock bgColor={color} adjust={adjust} onPress={handleStockPress}>
+        <Text fontWeight={Theme.fontWeight.light} fontSize="40" color="white">
           {item.stock}
         </Text>
       </Stock>

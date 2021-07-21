@@ -23,7 +23,7 @@ export const TransactionHistoryInfo = ({ item }) => {
         </Detail>
         <Detail>
           <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <AdaptiveText fontWeight={Theme.fontWeight.light}>
+          <AdaptiveText>
             {changes.change > 0 && "+"}
             {changes.change}
           </AdaptiveText>
@@ -59,7 +59,7 @@ export const TransactionHistoryReveal = ({ item }) => {
           <TransactionProducts>
             <Detail>
               <Text fontWeight={Theme.fontWeight.light}>{item.name}</Text>
-              <AdaptiveText fontWeight={Theme.fontWeight.light}>
+              <AdaptiveText>
                 {item.change > 0 && "+"}
                 {item.change}
               </AdaptiveText>

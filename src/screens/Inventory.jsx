@@ -4,6 +4,7 @@ import React, { useState, useLayoutEffect } from "react";
 import { FlatList, Text, Pressable, Alert } from "react-native";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/core";
+import { maxBy } from "lodash";
 
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
@@ -14,7 +15,7 @@ import ListEmptyComponent from "../components/ListEmptyComponent";
 
 //Styles
 
-const RenderProduct = ({ item }) => {
+const RenderProduct = ({ item, largestValue }) => {
   const navigation = useNavigation();
 
   const [error, setError] = useState("");
@@ -50,7 +51,7 @@ const RenderProduct = ({ item }) => {
       onPress={() => navigation.navigate("Product", { id: item._id })}
       onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}
     >
-      <ProductItem item={item} />
+      <ProductItem item={item} largestValue={largestValue} />
       {error !== "" && <Text>{error}</Text>}
     </Pressable>
   );
@@ -77,6 +78,7 @@ const ProductListContainer = () => {
   const { products, loading, error, fetchMore, filter } = useProducts();
   const [searchQuery, setSearchQuery] = useState("");
   const [refereshing, setRefreshing] = useState(false);
+  const largestValue = maxBy(products, (obj) => obj.stock)?.stock;
 
   if (error) {
     return <Text>{error.message}</Text>;
@@ -97,7 +99,9 @@ const ProductListContainer = () => {
       }
       data={products}
       keyExtractor={(item) => item._id}
-      renderItem={({ item }) => <RenderProduct item={item} />}
+      renderItem={({ item }) => (
+        <RenderProduct item={item} largestValue={largestValue} />
+      )}
       contentContainerStyle={{ marginLeft: 20, marginRight: 20, flexGrow: 1 }}
       onEndReached={fetchMore}
       onEndReachedThreshold={0.1}
