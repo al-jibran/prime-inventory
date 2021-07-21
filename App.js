@@ -23,6 +23,7 @@ const cache = new InMemoryCache({
       fields: {
         inventory: relayStylePagination(),
         getProductHistory: relayStylePagination(),
+        transactions: relayStylePagination(),
       },
     },
   },

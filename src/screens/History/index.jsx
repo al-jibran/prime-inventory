@@ -9,14 +9,34 @@ import HistoryItemRender from "./HistoryItemRender";
 const History = () => {
   const tabValues = ["ALL", "BILL"];
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { data, loading, error, refetch } = useQuery(GET_TRANSACTIONS, {
-    variables: {
-      first: 9,
-    },
-    fetchPolicy: "cache-and-network",
-  });
+  const { data, loading, error, fetchMore, refetch } = useQuery(
+    GET_TRANSACTIONS,
+    {
+      variables: {
+        first: 9,
+      },
+      onCompleted: (data) => {
+        console.log(data.transactions.totalCount);
+      },
+      fetchPolicy: "cache-and-network",
+    }
+  );
 
   const history = data?.transactions.edges.map((edge) => edge.node);
+
+  const onEndReached = () => {
+    const canFetchMore = !loading && data?.transactions.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.transactions.pageInfo.endCursor,
+      },
+    });
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -39,10 +59,12 @@ const History = () => {
       </View>
       <FlatList
         data={history}
+        keyExtractor={(item) => item._id}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.2}
         renderItem={({ item }) => (
           <HistoryItemRender item={item} id={item._id} />
         )}
-        keyExtractor={(item) => item._id}
         ListEmptyComponent={
           <ListEmptyComponent
             loading={loading}
