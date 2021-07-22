@@ -51,11 +51,12 @@ const EditProduct = ({ id }) => {
     <FormHandler
       initialValue={initialValue}
       heading="Edit product"
-      FormView={ProductForm}
       onReset={onReset}
       onSubmit={onSubmit}
       validationSchema={productSchema}
-    />
+    >
+      <ProductForm />
+    </FormHandler>
   );
 };
 

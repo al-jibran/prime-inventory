@@ -40,11 +40,12 @@ const AddProduct = () => {
     <FormHandler
       initialValue={initialValue}
       heading="Add a product"
-      FormView={ProductForm}
       onReset={onReset}
       onSubmit={onSubmit}
       validationSchema={productSchema}
-    />
+    >
+      <ProductForm />
+    </FormHandler>
   );
 };
 

@@ -42,7 +42,10 @@ const ProductItem = ({ item, largestValue }) => {
   }
 
   const handleStockPress = () => {
-    navigation.navigate("EditProduct", { id: item._id });
+    navigation.navigate("DisplayModal", {
+      id: item._id,
+      action: "EditProduct",
+    });
   };
 
   return (

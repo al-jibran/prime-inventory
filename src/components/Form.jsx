@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components/native";
+import { Pressable, View } from "react-native";
 import { Formik } from "formik";
 
 import { Heading } from "./Text";
+import { FormActions } from "../styles/common";
 import Theme from "../theme";
+import { Text } from "./Text";
 
 const FormContainer = styled.View`
   background-color: white;
@@ -17,7 +20,7 @@ const FormContainer = styled.View`
 const FormHandler = ({
   initialValue,
   heading,
-  FormView,
+  children,
   onReset,
   onSubmit,
   validationSchema,
@@ -33,7 +36,17 @@ const FormHandler = ({
       >
         {({ handleReset, handleSubmit }) => {
           return (
-            <FormView handleReset={handleReset} handleSubmit={handleSubmit} />
+            <View>
+              {children}
+              <FormActions width="30">
+                <Pressable onPress={handleReset}>
+                  <Text>Cancel</Text>
+                </Pressable>
+                <Pressable onPress={handleSubmit}>
+                  <Text color={Theme.color.danger}>Save</Text>
+                </Pressable>
+              </FormActions>
+            </View>
           );
         }}
       </Formik>
