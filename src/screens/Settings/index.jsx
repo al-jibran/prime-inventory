@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Formik } from "formik";
 import { Alert, FlatList } from "react-native";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
 
 import { Text } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
-import { Container, FieldStyle } from "../../styles/common";
-import { TextInput } from "../../components/InputField";
 import Theme from "../../theme";
 
 const SettingItem = styled.Pressable`
@@ -53,25 +50,33 @@ export const Settings = ({ navigation }) => {
   );
 };
 
-export const SettingPage = ({ route }) => {
+export const SettingPage = ({ navigation, route }) => {
   const [setting, operation] = useSettings(route.params.name);
   const data = setting && Object.entries(setting);
 
+  console.log(data);
   return (
     <FlatList
       data={data}
       keyExtractor={(item) => item[0]}
       renderItem={({ item }) => {
         const key = capitalize(item[0]);
-        const value = capitalize(item[1]);
+        const value = item[1];
 
         return (
           <SettingItem
             onLongPress={() =>
               Alert.alert(`Delete ${key}?`, "", [
                 { text: "Cancel" },
-                { text: "Yes", onPress: null },
+                { text: "Yes", onPress: () => null },
               ])
+            }
+            onPress={() =>
+              navigation.navigate("DisplayModal", {
+                action: "EditSetting",
+                name: route.params.name,
+                setting: { key, value },
+              })
             }
           >
             <Text>{key}</Text>

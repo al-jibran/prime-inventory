@@ -17,6 +17,7 @@ import AddProduct from "./components/Inventory/AddProduct";
 import EditProduct from "./components/Inventory/EditProduct";
 import History from "./screens/History";
 import { Settings, SettingPage } from "./screens/Settings";
+import SettingModal from "./screens/Settings/SettingModal";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
@@ -159,13 +160,8 @@ const Main = () => {
         />
         <RootStack.Screen name="Product" component={Product} />
         <RootStack.Screen
-          name="AddProduct"
-          component={AddProductModal}
-          options={modalOptions}
-        />
-        <RootStack.Screen
-          name="EditProduct"
-          component={EditProductModal}
+          name="DisplayModal"
+          component={DisplayModal}
           options={modalOptions}
         />
       </RootStack.Navigator>
@@ -173,24 +169,32 @@ const Main = () => {
   );
 };
 
-const AddProductModal = () => {
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "position" : null}
-      style={styles.overlay}
-    >
-      <AddProduct />
-    </KeyboardAvoidingView>
-  );
-};
+const DisplayModal = ({ route }) => {
+  const RenderView = () => {
+    const routeName = route.params.action;
+    console.log(routeName);
+    if (routeName === "AddProduct") {
+      return <AddProduct />;
+    } else if (routeName === "EditProduct") {
+      return <EditProduct id={route.params.id} />;
+    } else if (routeName === "FilterProducts") {
+      return null;
+    } else if (routeName === "AddSetting") {
+      return null;
+    } else if (routeName === "EditSetting") {
+      return (
+        <SettingModal name={route.params.name} setting={route.params.setting} />
+      );
+    }
+    return null;
+  };
 
-const EditProductModal = ({ route }) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "position" : null}
       style={styles.overlay}
     >
-      <EditProduct id={route.params.id} />
+      <RenderView />
     </KeyboardAvoidingView>
   );
 };
