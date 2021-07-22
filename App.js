@@ -35,19 +35,8 @@ const apolloClient = new ApolloClient({
 });
 
 const deviceStorage = new DeviceStorage("setting");
-const unitStorage = new DeviceStorage("unit");
 
 const App = () => {
-  useEffect(() => {
-    const removeOldSettings = async () => {
-      await unitStorage.removeValueStored("pcs");
-      await unitStorage.removeValueStored("box");
-      await unitStorage.removeValueStored("peti");
-    };
-
-    removeOldSettings();
-  });
-
   return (
     <ApolloProvider client={apolloClient}>
       <DeviceStorageContext.Provider value={deviceStorage}>
