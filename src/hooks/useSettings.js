@@ -8,11 +8,16 @@ export const useSettings = (key) => {
   const deviceStorage = useContext(DeviceStorageContext);
 
   useEffect(() => {
-    getValue()
-      .then((value) => {
-        setSetting(value);
-      })
-      .catch((error) => console.log("error", error.message));
+    let isMounted = true;
+    if (isMounted) {
+      getValue()
+        .then((value) => {
+          setSetting(value);
+        })
+        .catch((error) => console.log("error", error.message));
+    }
+
+    return () => (isMounted = false);
   }, []);
 
   const getValue = async () => {

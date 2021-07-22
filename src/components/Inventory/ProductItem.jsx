@@ -5,6 +5,7 @@ import { Text, SubText } from "../Text";
 import Theme from "../../theme";
 import { ShadowBox, AlignBySide } from "../../styles/common";
 import { useNavigation } from "@react-navigation/native";
+import { useSettings } from "../../hooks/useSettings";
 
 const ProductItemStyle = styled(ShadowBox)`
   height: 75px;
@@ -27,13 +28,17 @@ const Stock = styled.Pressable`
 
 const ProductItem = ({ item, largestValue }) => {
   const navigation = useNavigation();
+  const [setting] = useSettings("color-range");
+
+  const low = setting ? setting.low : 10;
+  const warning = setting ? setting.warning : 20;
 
   let color = Theme.color.danger;
   let adjust = 1.4;
 
-  if (item.stock >= 10 && item.stock < 20) {
+  if (item.stock >= low && item.stock < warning) {
     color = Theme.color.warning;
-  } else if (item.stock >= 20) {
+  } else if (item.stock >= warning) {
     color = Theme.color.success;
   }
 

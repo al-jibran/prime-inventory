@@ -9,6 +9,7 @@ import { Text, SubText, AdaptiveText } from "../Text";
 import Autocomplete from "react-native-autocomplete-input";
 import { useDropDown } from "../../hooks/useDropDown";
 import { useProducts } from "../../hooks/useProducts";
+import { Stock } from "../Inventory/ProductItem";
 import Theme from "../../theme";
 
 const initialValues = {
@@ -40,7 +41,7 @@ const renderItem = (item, onPress) => {
           <Text>{item.name}</Text>
           <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
         </View>
-        <AdaptiveText>{item.stock}</AdaptiveText>
+        <AdaptiveText includeZero>{item.stock}</AdaptiveText>
       </Detail>
     </Pressable>
   );

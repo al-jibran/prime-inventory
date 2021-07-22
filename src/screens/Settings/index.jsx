@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Alert, FlatList } from "react-native";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
-import { useFocusEffect } from "@react-navigation/core";
 
 import { Text } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import Theme from "../../theme";
-import { useIsFocused } from "@react-navigation/native";
 
 const SettingItem = styled.Pressable`
   background-color: white;

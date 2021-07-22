@@ -25,11 +25,11 @@ export const SubHeading = styled(Heading)`
 `;
 
 export const AdaptiveText = styled(Text)`
-  color: ${({ children }) => {
+  color: ${({ includeZero, children }) => {
     const text = children[1] ? parseInt(children[1]) : children;
     if (text > 0) {
       return Theme.color.success;
-    } else if (text < 0) {
+    } else if (text < 0 || includeZero) {
       return Theme.color.danger;
     }
     return Theme.color.textPrimary;
