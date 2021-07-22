@@ -40,11 +40,11 @@ const EditProduct = ({ id }) => {
 
     editProduct({ variables: { id, change } });
 
-    navigation.navigate("Home");
+    navigation.goBack();
   };
 
   const onReset = () => {
-    navigation.navigate("Home");
+    navigation.goBack();
   };
 
   return (

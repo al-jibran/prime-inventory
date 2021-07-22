@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import DeviceStorageContext from "../contexts/DeviceStorageContext";
 import { capitalize } from "lodash";
-import { useFocusEffect } from "@react-navigation/core";
 
 export const useSettings = (key) => {
   const [setting, setSetting] = useState(null);

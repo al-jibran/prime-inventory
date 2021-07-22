@@ -29,11 +29,11 @@ const AddProduct = () => {
     const product = { name, brand, stock, comment };
 
     createProduct({ variables: { product } });
-    navigation.navigate("Home");
+    navigation.goBack();
   };
 
   const onReset = () => {
-    navigation.navigate("Home");
+    navigation.goBack();
   };
 
   return (

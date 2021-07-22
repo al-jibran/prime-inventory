@@ -9,7 +9,6 @@ import { Text, SubText, AdaptiveText } from "../Text";
 import Autocomplete from "react-native-autocomplete-input";
 import { useDropDown } from "../../hooks/useDropDown";
 import { useProducts } from "../../hooks/useProducts";
-import { Stock } from "../Inventory/ProductItem";
 import Theme from "../../theme";
 
 const initialValues = {

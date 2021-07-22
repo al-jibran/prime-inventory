@@ -6,6 +6,7 @@ import {
   NavigationContainer,
   getFocusedRouteNameFromRoute,
 } from "@react-navigation/native";
+import { capitalize } from "lodash";
 import { KeyboardAvoidingView, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -21,6 +22,8 @@ import SettingModal from "./screens/Settings/SettingModal";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
+  console.log(getFocusedRouteNameFromRoute(route));
+
   return routeName;
 };
 
@@ -64,7 +67,11 @@ const SettingsStackScreen = () => {
       screenOptions={{ cardStyle: { backgroundColor: "white" } }}
     >
       <SettingsStack.Screen name="Settings" component={Settings} />
-      <SettingsStack.Screen name="SettingPage" component={SettingPage} />
+      <SettingsStack.Screen
+        name="SettingPage"
+        options={({ route }) => ({ title: capitalize(route.params.name) })}
+        component={SettingPage}
+      />
     </SettingsStack.Navigator>
   );
 };
@@ -172,7 +179,6 @@ const Main = () => {
 const DisplayModal = ({ route }) => {
   const RenderView = () => {
     const routeName = route.params.action;
-    console.log(routeName);
     if (routeName === "AddProduct") {
       return <AddProduct />;
     } else if (routeName === "EditProduct") {
