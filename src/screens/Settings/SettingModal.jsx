@@ -12,7 +12,6 @@ import { Alert } from "react-native";
 const SettingModal = ({ name, property }) => {
   const [, operations] = useSettings(name);
   const isNumber = typeof property.value === "number";
-  console.log("received", typeof property.value);
 
   const value = isNumber ? property.value.toString() : property.value;
   const initialValue = { setting: value };
@@ -42,13 +41,17 @@ const SettingModal = ({ name, property }) => {
     } else if (receivedNumber) {
       setting = receivedNumber;
     }
-
     if (typeof dataInStorage === "object") {
       const key = property.key;
-      const res = {};
+      let res = {};
       res[key] = setting;
-      console.log("writing", typeof res[key]);
-      await operations.setValue({ ...dataInStorage, ...res });
+      res = { ...dataInStorage, ...res };
+      if (name === "color-range" && res.warning <= res.low) {
+        console.log(res);
+        Alert.alert("Warning must be greater than Low");
+        return;
+      }
+      await operations.setValue(res);
     }
     navigation.goBack();
   };

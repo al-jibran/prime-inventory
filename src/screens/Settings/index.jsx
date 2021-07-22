@@ -55,7 +55,6 @@ export const Settings = ({ navigation }) => {
 export const SettingPage = ({ navigation, route }) => {
   const [, operation] = useSettings(route.params.name);
   let [data, setData] = useState([]);
-  console.log("remounted?");
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
@@ -63,7 +62,7 @@ export const SettingPage = ({ navigation, route }) => {
       setData(Object.entries(setting));
     });
 
-    () => unsubscribe;
+    return () => unsubscribe;
   }, [navigation]);
 
   return (
