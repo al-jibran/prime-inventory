@@ -14,7 +14,7 @@ import {
 import { relayStylePagination } from "@apollo/client/utilities";
 
 const httpLink = new HttpLink({
-  uri: "http://192.168.0.122:4000",
+  uri: "http://192.168.0.120:4000",
 });
 
 const cache = new InMemoryCache({

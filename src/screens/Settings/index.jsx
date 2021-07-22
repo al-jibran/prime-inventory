@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Alert, FlatList } from "react-native";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
+import { useFocusEffect } from "@react-navigation/core";
 
 import { Text } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import Theme from "../../theme";
+import { useIsFocused } from "@react-navigation/native";
 
 const SettingItem = styled.Pressable`
   background-color: white;
@@ -51,16 +53,25 @@ export const Settings = ({ navigation }) => {
 };
 
 export const SettingPage = ({ navigation, route }) => {
-  const [setting, operation] = useSettings(route.params.name);
-  const data = setting && Object.entries(setting);
+  const [, operation] = useSettings(route.params.name);
+  let [data, setData] = useState([]);
+  console.log("remounted?");
 
-  console.log(data);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      const setting = await operation.getValue();
+      setData(Object.entries(setting));
+    });
+
+    () => unsubscribe;
+  }, [navigation]);
+
   return (
     <FlatList
       data={data}
       keyExtractor={(item) => item[0]}
       renderItem={({ item }) => {
-        const key = capitalize(item[0]);
+        const key = item[0];
         const value = item[1];
 
         return (
@@ -75,11 +86,11 @@ export const SettingPage = ({ navigation, route }) => {
               navigation.navigate("DisplayModal", {
                 action: "EditSetting",
                 name: route.params.name,
-                setting: { key, value },
+                property: { key, value },
               })
             }
           >
-            <Text>{key}</Text>
+            <Text>{capitalize(key)}</Text>
             <Text>{value}</Text>
           </SettingItem>
         );

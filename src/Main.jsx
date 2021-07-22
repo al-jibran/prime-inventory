@@ -183,7 +183,10 @@ const DisplayModal = ({ route }) => {
       return null;
     } else if (routeName === "EditSetting") {
       return (
-        <SettingModal name={route.params.name} setting={route.params.setting} />
+        <SettingModal
+          name={route.params.name}
+          property={route.params.property}
+        />
       );
     }
     return null;

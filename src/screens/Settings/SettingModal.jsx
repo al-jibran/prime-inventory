@@ -9,40 +9,59 @@ import { Text } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import { Alert } from "react-native";
 
-const SettingModal = ({ name, setting }) => {
-  const value =
-    typeof setting.value === "number"
-      ? setting.value.toString()
-      : setting.value;
+const SettingModal = ({ name, property }) => {
+  const [, operations] = useSettings(name);
+  const isNumber = typeof property.value === "number";
+  console.log("received", typeof property.value);
+
+  const value = isNumber ? property.value.toString() : property.value;
   const initialValue = { setting: value };
   const navigation = useNavigation();
 
   const validationSchema = yup.object().shape({
-    setting: yup[typeof setting.value]()
+    setting: yup[typeof property.value]()
       .required("Cannot submit an empty field")
-      .typeError(`The value must be a ${typeof setting.value}`),
+      .typeError(`The value must be a ${typeof property.value}`),
   });
 
   const onCancel = () => {
     navigation.navigate("SettingPage");
   };
 
-  const onSubmit = ({ setting }) => {
-    if (typeof parseInt(setting) === "number" && setting < 1) {
-      Alert.alert("Invalid change", "The value must be a positive integer.");
+  const onSubmit = async ({ setting }) => {
+    const receivedNumber = parseInt(setting);
+    const dataInStorage = await operations.getValue();
+
+    /* 
+    checks if the original setting is a number and if the value received from form is negative.
+    Note: NaN will result in false.
+    */
+    if (isNumber && receivedNumber < 1) {
+      Alert.alert("Invalid change", "The value must be a positive number.");
       return;
+    } else if (receivedNumber) {
+      setting = receivedNumber;
     }
+
+    if (typeof dataInStorage === "object") {
+      const key = property.key;
+      const res = {};
+      res[key] = setting;
+      console.log("writing", typeof res[key]);
+      await operations.setValue({ ...dataInStorage, ...res });
+    }
+    navigation.goBack();
   };
 
   return (
     <FormHandler
-      heading={name}
+      heading={capitalize(name)}
       initialValue={initialValue}
       validationSchema={validationSchema}
       onReset={onCancel}
       onSubmit={onSubmit}
     >
-      <FormView setting={setting.key} />
+      <FormView setting={property.key} />
     </FormHandler>
   );
 };
