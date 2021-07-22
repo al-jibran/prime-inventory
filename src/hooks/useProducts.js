@@ -19,7 +19,6 @@ export const useProducts = (
       },
       onCompleted: (data) => {
         console.log(data.inventory.totalCount);
-        console.log(networkStatus);
         setRefreshing(false);
       },
       onError: (error) => {

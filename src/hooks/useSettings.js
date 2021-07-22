@@ -3,7 +3,7 @@ import DeviceStorageContext from "../contexts/DeviceStorageContext";
 import { capitalize } from "lodash";
 
 export const useSettings = (key) => {
-  const [setting, setSetting] = useState("");
+  const [setting, setSetting] = useState(null);
   const deviceStorage = useContext(DeviceStorageContext);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export const useSettings = (key) => {
   const getValue = async () => {
     try {
       const value = await deviceStorage.getValueStored(key);
-      return value;
+      return JSON.parse(value);
     } catch (error) {
       throw `Error getting value for setting: ${error.message}`;
     }
@@ -36,7 +36,7 @@ export const useSettings = (key) => {
   const removeValue = async () => {
     try {
       await deviceStorage.removeValueStored(key);
-      getValue().then((value) => setSetting(value));
+      getValue().then((value) => setSetting(JSON.parse(value)));
     } catch (error) {
       throw `Error removing value for setting: ${error.message}`;
     }
