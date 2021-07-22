@@ -1,10 +1,11 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 
-import FormHandler from "./Form";
+import FormHandler from "../Form";
 import { useDropDown } from "../../hooks/useDropDown";
 import { CREATE_PRODUCT, GET_INVENTORY } from "../../graphql/queries";
 import { useNavigation } from "@react-navigation/native";
+import ProductForm, { productSchema } from "./ProductForm";
 
 const initialValue = {
   name: "",
@@ -38,9 +39,11 @@ const AddProduct = () => {
   return (
     <FormHandler
       initialValue={initialValue}
-      onSubmit={onSubmit}
-      onReset={onReset}
       heading="Add a product"
+      FormView={ProductForm}
+      onReset={onReset}
+      onSubmit={onSubmit}
+      validationSchema={productSchema}
     />
   );
 };

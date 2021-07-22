@@ -1,10 +1,11 @@
 import React from "react";
 import { useApolloClient, useMutation, gql } from "@apollo/client";
 
-import FormHandler from "./Form";
+import FormHandler from "../Form";
 import { UPDATE_PRODUCT } from "../../graphql/queries";
 import { useDropDown } from "../../hooks/useDropDown";
 import { useNavigation } from "@react-navigation/native";
+import ProductForm, { productSchema } from "./ProductForm";
 
 const EditProduct = ({ id }) => {
   const navigation = useNavigation();
@@ -49,9 +50,11 @@ const EditProduct = ({ id }) => {
   return (
     <FormHandler
       initialValue={initialValue}
-      onSubmit={onSubmit}
-      onReset={onReset}
       heading="Edit product"
+      FormView={ProductForm}
+      onReset={onReset}
+      onSubmit={onSubmit}
+      validationSchema={productSchema}
     />
   );
 };
