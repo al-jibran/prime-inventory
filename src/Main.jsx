@@ -132,10 +132,15 @@ const Main = () => {
 
   useEffect(() => {
     const initSettings = async () => {
-      await unitConig.setValue({ pcs: 1, box: 20, peti: 10 });
-      await rangeConfig.setValue({ low: 10, warning: 20 });
-      const key = await allKeys();
-      console.log(key);
+      const keys = await allKeys();
+      if (!keys.includes("Units")) {
+        console.log("Adding units to the device...");
+        await unitConig.setValue({ pcs: 1, box: 20, peti: 10 });
+      }
+      if (!keys.includes("Color-range")) {
+        console.log("Adding color range to the device...");
+        await rangeConfig.setValue({ low: 10, warning: 20 });
+      }
     };
     initSettings();
   }, []);

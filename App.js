@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Main from "./src/Main";
 
 import DeviceStorageContext from "./src/contexts/DeviceStorageContext";

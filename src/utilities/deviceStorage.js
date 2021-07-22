@@ -9,15 +9,20 @@ class DeviceStorage {
 
   async getValueStored(key) {
     try {
-    const valueStored = await AsyncStorage.getItem(`${this.namespace}:${key}`);
-    return valueStored ? valueStored : "";
+      const valueStored = await AsyncStorage.getItem(
+        `${this.namespace}:${key}`
+      );
+      return valueStored ? JSON.parse(valueStored) : null;
     } catch (error) {
       console.log("Error in getValueStored", error.message);
     }
   }
 
   async setValueStored(key, value) {
-    await AsyncStorage.setItem(`${this.namespace}:${key}`, JSON.stringify(value));
+    await AsyncStorage.setItem(
+      `${this.namespace}:${key}`,
+      JSON.stringify(value)
+    );
   }
 
   async removeValueStored(key) {

@@ -17,7 +17,7 @@ export const useSettings = (key) => {
   const getValue = async () => {
     try {
       const value = await deviceStorage.getValueStored(key);
-      return JSON.parse(value);
+      return value;
     } catch (error) {
       throw `Error getting value for setting: ${error.message}`;
     }
