@@ -32,7 +32,7 @@ const ButtonContainer = styled.Pressable`
   padding-bottom: ${(props) => props.padBottom || 8}px;
   padding-left: ${(props) => props.padLeft || 5}px;
   padding-right: ${(props) => props.padRight || 5}px;
-  width: ${(props) => props.width || "100"}px;
+  width: ${(props) => props.width || "25"}%;
   ${({ rounded, borderColor }) =>
     rounded &&
     css`
@@ -47,11 +47,21 @@ const ButtonContainer = styled.Pressable`
 `;
 
 const ButtonText = styled.Text`
-  text-align: center;
+  ${(props) =>
+    props.alignText
+      ? css`
+          text-align: ${props.alignText};
+          padding-left: 10px;
+          padding-right: 10px;
+        `
+      : css`
+          text-align: center;
+        `};
   color: ${(props) =>
     props.color || props.bgColor === "white"
       ? Theme.color.textPrimary
       : "white"};
+  font-weight: ${(props) => props.fontWeight || Theme.fontWeight.normal};
 `;
 
 const Button = ({ text, onPress, ...props }) => {

@@ -34,13 +34,15 @@ const styles =
 
 const renderItem = (item, onPress) => {
   return (
-    <Detail style={{ padding: 20 }}>
-      <Pressable onPress={() => onPress(item)}>
-        <Text>{item.name}</Text>
-        <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
-      </Pressable>
-      <AdaptiveText>{item.stock}</AdaptiveText>
-    </Detail>
+    <Pressable onPress={() => onPress(item)}>
+      <Detail style={{ padding: 20 }}>
+        <View>
+          <Text>{item.name}</Text>
+          <SubText color={Theme.color.textSecondary}>{item.brand}</SubText>
+        </View>
+        <AdaptiveText>{item.stock}</AdaptiveText>
+      </Detail>
+    </Pressable>
   );
 };
 

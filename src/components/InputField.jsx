@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useField } from 'formik';
-import { View, Pressable, Keyboard } from 'react-native';
-import styled from 'styled-components/native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import React, { useState } from "react";
+import { useField } from "formik";
+import { View, Pressable, Keyboard } from "react-native";
+import styled from "styled-components/native";
+import DropDownPicker from "react-native-dropdown-picker";
 
-import { Text, SubText } from './Text';
+import { Text, SubText } from "./Text";
 
 // Check styled documentation
 
 const TextInputStyle = styled.View`
-  width: ${props => props.width || '100%'}; 
+  width: ${(props) => props.width || "100%"};
 `;
 
 const TextFieldStyle = styled.TextInput`
@@ -18,7 +18,7 @@ const TextFieldStyle = styled.TextInput`
 `;
 
 const NumberFieldStyle = styled(TextFieldStyle)`
-  text-align: center; 
+  text-align: center;
   width: 30%;
 `;
 
@@ -37,14 +37,18 @@ export const TextInput = ({ name, width, ...props }) => {
     <TextInputStyle width={width}>
       <TextFieldStyle
         value={field.value}
-        onChangeText={text => fieldHelpers.setValue(text)}
+        onChangeText={(text) => fieldHelpers.setValue(text)}
         onBlur={() => fieldHelpers.setTouched(true)}
-        {...props} />
-      {showError && <SubText color="red" style={({ flexDirection: 'column' })}>{fieldMeta.error}</SubText>}
+        {...props}
+      />
+      {showError && (
+        <SubText color="red" style={{ flexDirection: "column" }}>
+          {fieldMeta.error}
+        </SubText>
+      )}
     </TextInputStyle>
   );
 };
-
 
 export const NumberInput = ({ name, min, max, ...props }) => {
   const [field, fieldMeta, fieldHelpers] = useField(name);
@@ -73,26 +77,23 @@ export const NumberInput = ({ name, min, max, ...props }) => {
           <Text>-</Text>
         </Pressable>
 
-
         <NumberFieldStyle
           value={field.value}
-          onChangeText={text => fieldHelpers.setValue(text)}
+          onChangeText={(text) => fieldHelpers.setValue(text)}
           onBlur={() => fieldHelpers.setTouched(true)}
           clearTextOnFocus
-          {...props} />
+          {...props}
+        />
 
         <Pressable onPress={increment}>
           <Text>+</Text>
         </Pressable>
-
       </NumberInputStyle>
 
       {showError && <SubText color="red">{fieldMeta.error}</SubText>}
-
     </View>
   );
 };
-
 
 export const DropDownInput = ({ name, items, setItems, direction }) => {
   const [field, , fieldHelpers] = useField(name);
@@ -117,12 +118,12 @@ export const DropDownInput = ({ name, items, setItems, direction }) => {
       setValue={setValue}
       setOpen={setOpen}
       itemSeparator={true}
-      selectedItemLabelStyle={{ fontWeight: 'bold' }}
+      selectedItemLabelStyle={{ fontWeight: "bold" }}
       dropDownDirection={direction}
       onPress={Keyboard.dismiss}
-      style={({ height: 25 })}
-      containerStyle={({ width: 80 })}
-      textStyle={({ fontSize: 11 })}
+      style={{ height: 25 }}
+      containerStyle={{ width: 80 }}
+      textStyle={{ fontSize: 11 }}
     />
   );
 };
