@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useEffect } from "react";
-import { Platform } from "react-native";
+import { Platform, Settings } from "react-native";
 import Inventory from "./screens/Inventory";
 import {
   NavigationContainer,
@@ -16,6 +16,7 @@ import Product from "./screens/Product";
 import AddProduct from "./components/Inventory/AddProduct";
 import EditProduct from "./components/Inventory/EditProduct";
 import History from "./screens/History";
+import Setting from "./screens/Settings";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
@@ -23,12 +24,7 @@ export const getRouteName = (route) => {
   return routeName;
 };
 
-const Tab = createBottomTabNavigator();
-const RootStack = createStackNavigator();
 const InventoryStack = createStackNavigator();
-const BillsStack = createStackNavigator();
-const HistoryStack = createStackNavigator();
-
 const InventoryStackScreen = () => {
   return (
     <InventoryStack.Navigator
@@ -39,6 +35,7 @@ const InventoryStackScreen = () => {
   );
 };
 
+const BillsStack = createStackNavigator();
 const BillsStackScreen = () => {
   return (
     <BillsStack.Navigator
@@ -49,6 +46,7 @@ const BillsStackScreen = () => {
   );
 };
 
+const HistoryStack = createStackNavigator();
 const HistoryStackScreen = () => {
   return (
     <HistoryStack.Navigator
@@ -59,6 +57,17 @@ const HistoryStackScreen = () => {
   );
 };
 
+const SettingsStack = createStackNavigator();
+const SettingsStackScreen = () => {
+  return (
+    <SettingsStack.Navigator
+      screenOptions={{ cardStyle: { backgroundColor: "white" } }}
+    >
+      <SettingsStack.Screen name="Settings" component={Setting} />
+    </SettingsStack.Navigator>
+  );
+};
+const Tab = createBottomTabNavigator();
 const Home = () => {
   return (
     <Tab.Navigator
@@ -71,9 +80,11 @@ const Home = () => {
               ? "ios-information-circle"
               : "ios-information-circle-outline";
           } else if (route.name === "Bills") {
-            iconName = focused ? `document-text` : `document-text-outline`;
+            iconName = focused ? "document-text" : "document-text-outline";
           } else if (route.name === "History") {
-            iconName = focused ? "time" : `time-outline`;
+            iconName = focused ? "time" : "time-outline";
+          } else if (route.name === "Settings") {
+            iconName = focused ? "settings" : "settings-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -88,6 +99,7 @@ const Home = () => {
       />
       <Tab.Screen name="Bills" component={BillsStackScreen} />
       <Tab.Screen name="History" component={HistoryStackScreen} />
+      <Tab.Screen name="Settings" component={SettingsStackScreen} />
     </Tab.Navigator>
   );
 };
@@ -113,6 +125,7 @@ const modalOptions = {
   }),
 };
 
+const RootStack = createStackNavigator();
 const Main = () => {
   const [units, operations, allKeys] = useSettings("units");
 

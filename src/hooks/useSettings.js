@@ -6,8 +6,11 @@ export const useSettings = (key) => {
   const deviceStorage = useContext(DeviceStorageContext);
 
   useEffect(() => {
-    getValue().then(value => { setSetting(value); })
-    .catch(error => console.log('error', error.message));
+    getValue()
+      .then((value) => {
+        setSetting(value);
+      })
+      .catch((error) => console.log("error", error.message));
   }, []);
 
   const getValue = async () => {
@@ -15,7 +18,7 @@ export const useSettings = (key) => {
       const value = await deviceStorage.getValueStored(key);
       return value;
     } catch (error) {
-      throw `Error in getValue: error.message`;
+      throw `Error getting value for setting: ${error.message}`;
     }
   };
 
@@ -25,16 +28,16 @@ export const useSettings = (key) => {
       const result = await getValue();
       setSetting(result);
     } catch (error) {
-      console.log("Error in setValue:", error.message);
+      throw `Error setting value for setting: ${error.message}`;
     }
   };
 
   const removeValue = async () => {
     try {
       await deviceStorage.removeValueStored(key);
-      getValue().then(value => setSetting(value));
+      getValue().then((value) => setSetting(value));
     } catch (error) {
-      console.log("Error in removeValue:", error.message);
+      throw `Error removing value for setting: ${error.message}`;
     }
   };
 
@@ -43,7 +46,7 @@ export const useSettings = (key) => {
       const keys = await deviceStorage.getAllKeys();
       return keys;
     } catch (error) {
-      console.log("Error in getAllSettings:", error.message);
+      throw `Error getting settings: ${error.message}`;
     }
   };
 
@@ -54,6 +57,6 @@ export const useSettings = (key) => {
       setValue,
       removeValue,
     },
-    getAllSettings
+    getAllSettings,
   ];
 };
