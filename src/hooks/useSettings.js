@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import DeviceStorageContext from "../contexts/DeviceStorageContext";
+import { capitalize } from "lodash";
 
 export const useSettings = (key) => {
   const [setting, setSetting] = useState("");
@@ -44,7 +45,11 @@ export const useSettings = (key) => {
   const getAllSettings = async () => {
     try {
       const keys = await deviceStorage.getAllKeys();
-      return keys;
+      const settingNames = keys.map((setting) => {
+        const settingName = setting.split(":")[1];
+        return capitalize(settingName);
+      });
+      return settingNames;
     } catch (error) {
       throw `Error getting settings: ${error.message}`;
     }

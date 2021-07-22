@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useEffect } from "react";
-import { Platform, Settings } from "react-native";
+import { Platform } from "react-native";
 import Inventory from "./screens/Inventory";
 import {
   NavigationContainer,
@@ -90,7 +90,7 @@ const Home = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
-      initialRouteName="Inventory"
+      initialRouteName="Settings"
     >
       <Tab.Screen
         name="Inventory"
