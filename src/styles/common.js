@@ -5,6 +5,7 @@ export const Container = styled.View`
   flex: 1;
   margin-left: ${(props) => (props.mLeft ? props.mLeft : "20")}px;
   margin-right: ${(props) => (props.mRight ? props.mRight : "20")}px;
+  border: ${(props) => props.border || "none"};
 `;
 
 export const FieldStyle = styled.View`
@@ -13,13 +14,6 @@ export const FieldStyle = styled.View`
   justify-content: space-between;
   margin-top: 10px;
   margin-bottom: 10px;
-`;
-
-export const SearchInput = styled.TextInput`
-  border: 1px solid black;
-  width: 100%;
-  border-radius: 30px;
-  padding: 6px;
 `;
 
 export const FormActions = styled.View`

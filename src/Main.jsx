@@ -16,11 +16,10 @@ import Product from "./screens/Product";
 import AddProduct from "./components/Inventory/AddProduct";
 import EditProduct from "./components/Inventory/EditProduct";
 import History from "./screens/History";
-import Setting from "./screens/Settings";
+import { Settings, SettingPage } from "./screens/Settings";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
-
   return routeName;
 };
 
@@ -63,7 +62,8 @@ const SettingsStackScreen = () => {
     <SettingsStack.Navigator
       screenOptions={{ cardStyle: { backgroundColor: "white" } }}
     >
-      <SettingsStack.Screen name="Settings" component={Setting} />
+      <SettingsStack.Screen name="Settings" component={Settings} />
+      <SettingsStack.Screen name="SettingPage" component={SettingPage} />
     </SettingsStack.Navigator>
   );
 };
@@ -127,16 +127,13 @@ const modalOptions = {
 
 const RootStack = createStackNavigator();
 const Main = () => {
-  const [units, operations, allKeys] = useSettings("units");
+  const [, unitConig, allKeys] = useSettings("units");
+  const [, rangeConfig] = useSettings("color-range");
 
   useEffect(() => {
     const initSettings = async () => {
-      if ((await allKeys()).length) {
-        console.log("Removing ", units);
-        await operations.removeValue();
-      }
-
-      await operations.setValue({ pcs: 1, box: 20, peti: 10 });
+      await unitConig.setValue({ pcs: 1, box: 20, peti: 10 });
+      await rangeConfig.setValue({ low: 10, warning: 20 });
       const key = await allKeys();
       console.log(key);
     };
