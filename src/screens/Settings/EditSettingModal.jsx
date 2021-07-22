@@ -9,7 +9,7 @@ import { Text } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import { Alert } from "react-native";
 
-const SettingModal = ({ name, property }) => {
+const EditSettingModal = ({ name, property }) => {
   const [, operations] = useSettings(name);
   const isNumber = typeof property.value === "number";
 
@@ -79,4 +79,4 @@ const FormView = ({ setting }) => {
   );
 };
 
-export default SettingModal;
+export default EditSettingModal;

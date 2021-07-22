@@ -1,11 +1,13 @@
+/* eslint-disable react/display-name */
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList } from "react-native";
+import { Alert, FlatList, Pressable } from "react-native";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
 
 import { Text } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import Theme from "../../theme";
+import { useLayoutEffect } from "react";
 
 const SettingItem = styled.Pressable`
   background-color: white;
@@ -60,7 +62,14 @@ export const SettingPage = ({ navigation, route }) => {
       setData(Object.entries(setting));
     });
 
-    return () => unsubscribe;
+    return unsubscribe;
+  }, [navigation]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <AddSettingButton navigation={navigation} />,
+      headerRightContainerStyle: { paddingRight: 20 },
+    });
   }, [navigation]);
 
   return (
@@ -93,5 +102,17 @@ export const SettingPage = ({ navigation, route }) => {
         );
       }}
     />
+  );
+};
+
+const AddSettingButton = ({ navigation }) => {
+  const onPressAdd = () => {
+    navigation.navigate("DisplayModal", { action: "AddSetting" });
+  };
+
+  return (
+    <Pressable onPress={onPressAdd}>
+      <Text>Add</Text>
+    </Pressable>
   );
 };

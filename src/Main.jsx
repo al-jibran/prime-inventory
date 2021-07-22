@@ -18,7 +18,7 @@ import AddProduct from "./components/Inventory/AddProduct";
 import EditProduct from "./components/Inventory/EditProduct";
 import History from "./screens/History";
 import { Settings, SettingPage } from "./screens/Settings";
-import SettingModal from "./screens/Settings/SettingModal";
+import EditSettingModal from "./screens/Settings/EditSettingModal";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
@@ -189,7 +189,7 @@ const DisplayModal = ({ route }) => {
       return null;
     } else if (routeName === "EditSetting") {
       return (
-        <SettingModal
+        <EditSettingModal
           name={route.params.name}
           property={route.params.property}
         />
