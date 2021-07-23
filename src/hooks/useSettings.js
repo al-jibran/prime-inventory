@@ -9,7 +9,7 @@ export const useSettings = (key) => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      getValue()
+      getValue(key)
         .then((value) => {
           setSetting(value);
         })
@@ -19,7 +19,7 @@ export const useSettings = (key) => {
     return () => (isMounted = false);
   }, []);
 
-  const getValue = async () => {
+  const getValue = async (key) => {
     try {
       const value = await deviceStorage.getValueStored(key);
       return value;
@@ -30,7 +30,7 @@ export const useSettings = (key) => {
 
   const getValueOfProperty = async (property) => {
     try {
-      const settingObject = setting || (await getValue());
+      const settingObject = setting || (await getValue(key));
       return settingObject[property];
     } catch (error) {
       throw `Error getting value for property: ${property}`;
@@ -40,7 +40,7 @@ export const useSettings = (key) => {
   const setValue = async (value) => {
     try {
       await deviceStorage.setValueStored(key, value);
-      const result = await getValue();
+      const result = await getValue(key);
       setSetting(result);
     } catch (error) {
       throw `Error setting value for setting: ${error.message}`;
@@ -50,7 +50,7 @@ export const useSettings = (key) => {
   const removeValue = async () => {
     try {
       await deviceStorage.removeValueStored(key);
-      getValue().then((value) => setSetting(JSON.parse(value)));
+      getValue(key).then((value) => setSetting(JSON.parse(value)));
     } catch (error) {
       throw `Error removing value for setting: ${error.message}`;
     }

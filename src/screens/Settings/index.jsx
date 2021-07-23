@@ -58,7 +58,7 @@ export const SettingPage = ({ navigation, route }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
-      const setting = await operation.getValue();
+      const setting = await operation.getValue(route.params.name);
       const data = Object.entries(setting);
       navigation.setOptions({
         headerRight: () => (
