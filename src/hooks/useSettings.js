@@ -28,15 +28,6 @@ export const useSettings = (key) => {
     }
   };
 
-  const getValueOfProperty = async (property) => {
-    try {
-      const settingObject = setting || (await getValue(key));
-      return settingObject[property];
-    } catch (error) {
-      throw `Error getting value for property: ${property}`;
-    }
-  };
-
   const setValue = async (value) => {
     try {
       await deviceStorage.setValueStored(key, value);
@@ -75,7 +66,6 @@ export const useSettings = (key) => {
       getValue,
       setValue,
       removeValue,
-      getValueOfProperty,
     },
     getAllSettings,
   ];

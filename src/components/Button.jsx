@@ -28,10 +28,22 @@ const ButtonContainer = styled.Pressable`
       border: 1px solid #ccc;
     `}
 
-  padding-top: ${(props) => props.padTop || 8}px;
-  padding-bottom: ${(props) => props.padBottom || 8}px;
-  padding-left: ${(props) => props.padLeft || 5}px;
-  padding-right: ${(props) => props.padRight || 5}px;
+  ${({ padding }) => {
+    if (padding) {
+      return css`
+        padding: ${(props) => props.padding || 0}px;
+      `;
+    }
+
+    return css`
+      padding-top: ${(props) => props.padTop || 8}px;
+      padding-bottom: ${(props) => props.padBottom || 8}px;
+      padding-left: ${(props) => props.padLeft || 5}px;
+      padding-right: ${(props) => props.padRight || 5}px;
+    `;
+  }}
+  
+  
   width: ${(props) => props.width || "25"}%;
   ${({ rounded, borderColor }) =>
     rounded &&

@@ -24,7 +24,7 @@ const EditSettingModal = ({ name, property }) => {
   });
 
   const onCancel = () => {
-    navigation.navigate("SettingPage");
+    navigation.goBack();
   };
 
   const onSubmit = async ({ setting }) => {

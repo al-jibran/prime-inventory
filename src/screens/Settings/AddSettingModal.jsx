@@ -15,9 +15,7 @@ const initialValue = {
 
 const AddSettingModal = ({ typeOfValues, settingName }) => {
   const navigation = useNavigation(settingName);
-  console.log(settingName);
   const [dataInStorage, { setValue }] = useSettings(settingName);
-  console.log(typeOfValues);
 
   const validationSchema = yup.object().shape({
     name: yup.string().required("The name of the setting is required"),

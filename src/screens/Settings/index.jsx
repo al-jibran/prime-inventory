@@ -1,13 +1,15 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, Pressable } from "react-native";
+import { Alert, SectionList } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
 
-import { Text } from "../../components/Text";
+import { Text, SubText } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
+import { Detail } from "../../styles/common";
+import Button from "../../components/Button";
 import Theme from "../../theme";
-import { useLayoutEffect } from "react";
 
 const SettingItem = styled.Pressable`
   background-color: white;
@@ -19,108 +21,118 @@ const SettingItem = styled.Pressable`
 `;
 
 export const Settings = ({ navigation }) => {
-  const [, , getAllSettings] = useSettings();
-  const [settings, setSettings] = useState([]);
+  const [settings, { getValue, setValue }, getAllSettings] = useSettings();
+  const [sectionData, setSectionData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
     const initSettings = async () => {
       const settings = await getAllSettings();
-      if (isMounted) setSettings(settings);
+      const sectionData = [];
+
+      for (let setting of settings) {
+        const values = await getValue(setting.toLowerCase());
+        const entries = values && Object.entries(values);
+
+        sectionData.push({
+          title: setting,
+          data: entries ? entries : [],
+        });
+      }
+
+      if (isMounted) {
+        setSectionData(sectionData);
+      }
     };
 
+    const unsubscribe = navigation.addListener("focus", async () => {
+      console.log("triggered");
+      await initSettings();
+    });
+
     initSettings();
-    return () => (isMounted = false);
-  }, []);
+    return () => ((isMounted = false), unsubscribe);
+  }, [refresh]);
+
+  const refreshScreen = () => {
+    setRefresh(!refresh);
+  };
 
   return (
-    <FlatList
+    <SectionList
+      sections={sectionData}
       style={{ flex: 1 }}
       contentContainerStyle={{ flex: 1 }}
-      data={settings}
-      keyExtractor={(item) => item}
-      renderItem={({ item }) => (
-        <SettingItem
-          onPress={() => {
-            navigation.navigate("SettingPage", { name: item.toLowerCase() });
-          }}
-        >
-          <Text fontWeight={Theme.fontWeight.bold}>{item}</Text>
-        </SettingItem>
+      stickySectionHeadersEnabled={false}
+      keyExtractor={(_, i) => i.toString()}
+      renderSectionHeader={({ section: { title, data } }) => (
+        <Detail style={{ marginLeft: 10, marginRight: 10 }}>
+          <SubText fontWeight={Theme.fontWeight.bold}>{title}</SubText>
+          <Button
+            text="+"
+            rounded
+            paddingLeft={0}
+            paddingRight={0}
+            width={10}
+            onPress={() => {
+              navigation.navigate("DisplayModal", {
+                screen: "AddSetting",
+                settingName: title.toLowerCase(),
+                typeOfValues: typeof data[0][1],
+              });
+            }}
+          />
+        </Detail>
+      )}
+      renderItem={({ item, section }) => (
+        <RenderSectionItem
+          item={item}
+          section={section}
+          refreshScreen={refreshScreen}
+        />
       )}
     />
   );
 };
 
-export const SettingPage = ({ navigation, route }) => {
-  const [, operation] = useSettings(route.params.name);
-  let [data, setData] = useState([]);
+const RenderSectionItem = ({ item, section, refreshScreen }) => {
+  const navigation = useNavigation();
+  const [, { setValue }] = useSettings(section.title.toLowerCase());
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", async () => {
-      const setting = await operation.getValue(route.params.name);
-      const data = Object.entries(setting);
-      navigation.setOptions({
-        headerRight: () => (
-          <AddSettingButton
-            navigation={navigation}
-            typeOfValues={typeof data[0][1]}
-            settingName={route.params.name}
-          />
-        ),
-        headerRightContainerStyle: { paddingRight: 20 },
-      });
-      setData(data);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
+  const key = item[0];
+  const value = item[1];
 
   return (
-    <FlatList
-      data={data}
-      keyExtractor={(item) => item[0]}
-      renderItem={({ item }) => {
-        const key = item[0];
-        const value = item[1];
+    <SettingItem
+      onLongPress={() =>
+        Alert.alert(`Delete ${key}?`, "", [
+          { text: "Cancel" },
+          {
+            text: "Yes",
+            onPress: async () => {
+              const newData = section.data.filter((prop) => prop[0] !== key);
+              const obj = {};
 
-        return (
-          <SettingItem
-            onLongPress={() =>
-              Alert.alert(`Delete ${key}?`, "", [
-                { text: "Cancel" },
-                { text: "Yes", onPress: () => null },
-              ])
-            }
-            onPress={() =>
-              navigation.navigate("DisplayModal", {
-                action: "EditSetting",
-                name: route.params.name,
-                property: { key, value },
-              })
-            }
-          >
-            <Text>{capitalize(key)}</Text>
-            <Text>{value}</Text>
-          </SettingItem>
-        );
-      }}
-    />
-  );
-};
-
-const AddSettingButton = ({ navigation, typeOfValues, settingName }) => {
-  const onPressAdd = () => {
-    navigation.navigate("DisplayModal", {
-      action: "AddSetting",
-      typeOfValues,
-      settingName,
-    });
-  };
-
-  return (
-    <Pressable onPress={onPressAdd}>
-      <Text>Add</Text>
-    </Pressable>
+              for (let key of newData) {
+                obj[key[0]] = key[1];
+              }
+              await setValue(obj);
+              refreshScreen();
+            },
+          },
+        ])
+      }
+      onPress={() =>
+        navigation.navigate("DisplayModal", {
+          screen: "EditSetting",
+          name: section.title.toLowerCase(),
+          property: { key, value },
+        })
+      }
+    >
+      <Text>{capitalize(key)}</Text>
+      <Text>{value}</Text>
+    </SettingItem>
   );
 };
