@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 const Theme = {
   fontSize: {
     heading: 18,
@@ -9,7 +10,7 @@ const Theme = {
   fontWeight: {
     light: 200,
     normal: 400,
-    bold: 600,
+    bold: Platform.OS === "android" ? "bold" : 600,
   },
 
   color: {

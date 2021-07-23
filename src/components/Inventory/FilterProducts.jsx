@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useField } from "formik";
 import styled, { css } from "styled-components/native";
 import { useNavigation } from "@react-navigation/core";
@@ -69,48 +69,52 @@ const FormView = () => {
 
   return (
     <View>
-      <SubHeading>Order By</SubHeading>
-      <FieldStyle layout="horizontal">
-        <Text>Created</Text>
-        <RadioButton clicked={orderBy === "CREATED_AT"}>
-          <Button
-            onPress={() => {
-              orderFieldHelpers.setValue("CREATED_AT");
-            }}
-          />
-        </RadioButton>
-      </FieldStyle>
-      <FieldStyle layout="horizontal">
-        <Text>Name</Text>
-        <RadioButton clicked={orderBy === "NAME"}>
-          <Button
-            onPress={() => {
-              orderFieldHelpers.setValue("NAME");
-            }}
-          />
-        </RadioButton>
-      </FieldStyle>
-      <SubHeading>Order Direction</SubHeading>
-      <FieldStyle layout="horizontal">
-        <Text>Ascending</Text>
-        <RadioButton clicked={orderDirection === "ASC"}>
-          <Button
-            onPress={() => {
-              directionHelpers.setValue("ASC");
-            }}
-          />
-        </RadioButton>
-      </FieldStyle>
-      <FieldStyle layout="horizontal">
-        <Text>Descending</Text>
-        <RadioButton clicked={orderDirection === "DESC"}>
-          <Button
-            onPress={() => {
-              directionHelpers.setValue("DESC");
-            }}
-          />
-        </RadioButton>
-      </FieldStyle>
+      <View style={{ padding: 5, borderTopWidth: 1 }}>
+        <SubHeading>Order By</SubHeading>
+        <FieldStyle layout="horizontal">
+          <Text>Created</Text>
+          <RadioButton clicked={orderBy === "CREATED_AT"}>
+            <Button
+              onPress={() => {
+                orderFieldHelpers.setValue("CREATED_AT");
+              }}
+            />
+          </RadioButton>
+        </FieldStyle>
+        <FieldStyle layout="horizontal">
+          <Text>Name</Text>
+          <RadioButton clicked={orderBy === "NAME"}>
+            <Button
+              onPress={() => {
+                orderFieldHelpers.setValue("NAME");
+              }}
+            />
+          </RadioButton>
+        </FieldStyle>
+      </View>
+      <View style={{ padding: 5, borderTopWidth: 1 }}>
+        <SubHeading>Order Direction</SubHeading>
+        <FieldStyle layout="horizontal">
+          <Text>Ascending</Text>
+          <RadioButton clicked={orderDirection === "ASC"}>
+            <Button
+              onPress={() => {
+                directionHelpers.setValue("ASC");
+              }}
+            />
+          </RadioButton>
+        </FieldStyle>
+        <FieldStyle layout="horizontal">
+          <Text>Descending</Text>
+          <RadioButton clicked={orderDirection === "DESC"}>
+            <Button
+              onPress={() => {
+                directionHelpers.setValue("DESC");
+              }}
+            />
+          </RadioButton>
+        </FieldStyle>
+      </View>
     </View>
   );
 };
