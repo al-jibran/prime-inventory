@@ -5,6 +5,7 @@ import { FlatList, Pressable, Alert } from "react-native";
 import { useMutation, NetworkStatus } from "@apollo/client";
 import { useNavigation } from "@react-navigation/core";
 import { maxBy } from "lodash";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Custom Imports
 import ProductItem from "../components/Inventory/ProductItem";
@@ -159,7 +160,7 @@ const AddProductButton = () => {
 
   return (
     <Pressable onPress={onPressAdd}>
-      <Text>Add</Text>
+      <Ionicons name="add-circle-outline" size={24} />
     </Pressable>
   );
 };
@@ -173,7 +174,7 @@ const FilterProductsButton = () => {
         navigation.navigate("DisplayModal", { screen: "FilterProducts" });
       }}
     >
-      <Text>Filter</Text>
+      <Ionicons name="filter-outline" size={24} />
     </Pressable>
   );
 };
