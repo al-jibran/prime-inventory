@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useField } from "formik";
-import { View, Pressable, Keyboard } from "react-native";
+import { Pressable, Keyboard, View } from "react-native";
 import styled from "styled-components/native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import { SubText } from "./Text";
-import { NumberDropDown } from "../styles/common";
 import Theme from "../theme";
 
 // Check styled documentation
@@ -29,8 +28,6 @@ const NumberFieldStyle = styled(TextFieldStyle)`
 
 const NumberInputStyle = styled.View`
   flex-direction: row;
-  flex-grow: 1;
-  flex-basis: 0;
 `;
 
 export const TextInput = ({ name, width, ...props }) => {
@@ -75,31 +72,36 @@ export const NumberInput = ({ name, min, max, ...props }) => {
   };
 
   return (
-    <NumberInputStyle>
-      <Pressable onPress={decrement}>
-        <Ionicons
-          name="remove-circle-outline"
-          size={28}
-          color={Theme.color.danger}
-        />
-      </Pressable>
+    <View style={{ flexGrow: 1, flexBasis: 0 }}>
+      <NumberInputStyle>
+        <Pressable onPress={decrement}>
+          <Ionicons
+            name="remove-circle-outline"
+            size={28}
+            color={Theme.color.danger}
+          />
+        </Pressable>
 
-      <NumberFieldStyle
-        value={field.value}
-        onChangeText={(text) => fieldHelpers.setValue(text)}
-        onBlur={() => fieldHelpers.setTouched(true)}
-        clearTextOnFocus
-        {...props}
-      />
-
-      <Pressable onPress={increment}>
-        <Ionicons
-          name="add-circle-outline"
-          size={28}
-          color={Theme.color.danger}
+        <NumberFieldStyle
+          value={field.value}
+          onChangeText={(text) => fieldHelpers.setValue(text)}
+          onBlur={() => fieldHelpers.setTouched(true)}
+          clearTextOnFocus
+          {...props}
         />
-      </Pressable>
-    </NumberInputStyle>
+
+        <Pressable onPress={increment}>
+          <Ionicons
+            name="add-circle-outline"
+            size={28}
+            color={Theme.color.danger}
+          />
+        </Pressable>
+      </NumberInputStyle>
+      {showError && (
+        <SubText color={Theme.color.danger}>{fieldMeta.error}</SubText>
+      )}
+    </View>
   );
 };
 
