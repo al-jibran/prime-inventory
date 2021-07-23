@@ -10,9 +10,10 @@ import {
   TransactionHistoryInfo,
   TransactionHistoryReveal,
 } from "./TransactionHistory";
+import DateHistory from "./DateHistroy";
 
 const History = () => {
-  const tabValues = ["ALL", "BILL"];
+  const tabValues = ["ALL", "BILL", "DATE"];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const { data, loading, error, fetchMore, refetch, networkStatus } = useQuery(
@@ -59,7 +60,11 @@ const History = () => {
           values={tabValues}
           selectedIndex={selectedIndex}
           onTabPress={(index) => {
-            refetch({ filterBy: tabValues[index] });
+            const tabPressed = tabValues[index];
+            if (tabPressed !== "DATE") {
+              refetch({ filterBy: tabPressed });
+              console.log("refetching");
+            }
             setSelectedIndex(index);
           }}
         />
@@ -72,6 +77,10 @@ const History = () => {
         onRefresh={() => {
           setRefreshing(true);
           refetch({ first: 7 });
+        }}
+        ListHeaderComponent={() => {
+          if (tabValues[selectedIndex] === "DATE") return <DateHistory />;
+          return null;
         }}
         listEmptyText={"There are currently no transactions to show."}
         onEndReached={onEndReached}
