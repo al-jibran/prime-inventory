@@ -69,20 +69,22 @@ export const Settings = ({ navigation }) => {
       renderSectionHeader={({ section: { title, data } }) => (
         <Detail style={{ marginLeft: 10, marginRight: 10 }}>
           <SubText fontWeight={Theme.fontWeight.bold}>{title}</SubText>
-          <Button
-            text="+"
-            rounded
-            paddingLeft={0}
-            paddingRight={0}
-            width={10}
-            onPress={() => {
-              navigation.navigate("DisplayModal", {
-                screen: "AddSetting",
-                settingName: title.toLowerCase(),
-                typeOfValues: typeof data[0][1],
-              });
-            }}
-          />
+          {title !== "Color-range" && (
+            <Button
+              text="+"
+              rounded
+              paddingLeft={0}
+              paddingRight={0}
+              width={10}
+              onPress={() => {
+                navigation.navigate("DisplayModal", {
+                  screen: "AddSetting",
+                  settingName: title.toLowerCase(),
+                  typeOfValues: typeof data[0][1],
+                });
+              }}
+            />
+          )}
         </Detail>
       )}
       renderItem={({ item, section }) => (
@@ -111,6 +113,10 @@ const RenderSectionItem = ({ item, section, refreshScreen }) => {
           {
             text: "Yes",
             onPress: async () => {
+              if (section.title === "Color-range") {
+                Alert.alert("Cannot delete values from Color-range");
+                return;
+              }
               const newData = section.data.filter((prop) => prop[0] !== key);
               const obj = {};
 
