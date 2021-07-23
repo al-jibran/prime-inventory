@@ -25,7 +25,10 @@ const AddEntry = ({ entries, setEntries }) => {
     if (stockLeft < 0) {
       const alertButtons = [
         { text: "No", onPress: () => null },
-        { text: "Yes", onPress: () => setEntriesAndReset({ resetForm }) },
+        {
+          text: "Yes",
+          onPress: () => setEntriesAndReset(-selectedItem.stock, { resetForm }),
+        },
       ];
       Alert.alert(
         "Stock",
@@ -34,15 +37,15 @@ const AddEntry = ({ entries, setEntries }) => {
       );
       return;
     }
-    setEntriesAndReset({ resetForm });
+    setEntriesAndReset(stock, { resetForm });
   };
 
-  const setEntriesAndReset = ({ resetForm }) => {
+  const setEntriesAndReset = (stock, { resetForm }) => {
     setEntries(
       entries.concat({
         _id: selectedItem._id,
         name: selectedItem.name,
-        stock: -selectedItem.stock,
+        stock,
       })
     );
     resetForm();
