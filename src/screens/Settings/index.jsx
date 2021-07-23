@@ -6,18 +6,22 @@ import { capitalize } from "lodash";
 import styled from "styled-components/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { Text, Heading } from "../../components/Text";
+import { Text, Heading, SubHeading } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import { Detail } from "../../styles/common";
 import Theme from "../../theme";
 
 const SettingItem = styled.Pressable`
   background-color: white;
-  padding: 25px 20px;
+  padding: 15px 20px;
   border: 1px solid #eee;
   flex-grow: 1;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const SectionSeparatorComponent = styled.View`
+  border: 0.5px solid ${Theme.color.textSecondary};
 `;
 
 export const Settings = ({ navigation }) => {
@@ -64,11 +68,12 @@ export const Settings = ({ navigation }) => {
       sections={sectionData}
       style={{ flex: 1 }}
       contentContainerStyle={{ flex: 1 }}
+      SectionSeparatorComponent={SectionSeparatorComponent}
       stickySectionHeadersEnabled={false}
       keyExtractor={(_, i) => i.toString()}
       renderSectionHeader={({ section: { title, data } }) => (
-        <Detail style={{ marginHorizontal: 20 }}>
-          <Heading fontWeight={Theme.fontWeight.bold}>{title}</Heading>
+        <Detail style={{ marginHorizontal: 20, marginTop: 22 }}>
+          <SubHeading fontWeight={Theme.fontWeight.bold}>{title}</SubHeading>
           {title !== "Color-range" && (
             <Pressable
               onPress={() => {
