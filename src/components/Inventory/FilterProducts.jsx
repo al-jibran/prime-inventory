@@ -92,7 +92,7 @@ const FormView = () => {
           </RadioButton>
         </FieldStyle>
       </View>
-      <View style={{ padding: 5, borderTopWidth: 1 }}>
+      <View style={{ borderTopWidth: 1 }}>
         <SubHeading>Order Direction</SubHeading>
         <FieldStyle layout="horizontal">
           <Text>Ascending</Text>
