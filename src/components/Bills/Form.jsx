@@ -3,9 +3,14 @@ import { Formik, useField } from "formik";
 import { View, Pressable, StyleSheet, Platform } from "react-native";
 
 import { NumberInput, DropDownInput } from "../InputField";
-import { Detail, FieldStyle, FormActions } from "../../styles/common";
+import {
+  Detail,
+  FieldStyle,
+  FormActions,
+  NumberDropDown,
+} from "../../styles/common";
 import Button from "../Button";
-import { Text, SubText, AdaptiveText } from "../Text";
+import { Text, SubText, AdaptiveText, FieldTitle } from "../Text";
 import Autocomplete from "react-native-autocomplete-input";
 import { useDropDown } from "../../hooks/useDropDown";
 import { useProducts } from "../../hooks/useProducts";
@@ -64,14 +69,16 @@ const Form = ({ onSubmit }) => {
         {({ handleSubmit, handleReset }) => (
           <View style={{ marginTop: 10 }}>
             <FieldStyle layout="horizontal" style={{ zIndex: 202020 }}>
-              <Text>Quantity</Text>
-              <NumberInput name="stock" />
-              <DropDownInput
-                name="unit"
-                items={items}
-                setItems={setItems}
-                direction="BOTTOM"
-              />
+              <FieldTitle>Quantity</FieldTitle>
+              <NumberDropDown>
+                <NumberInput name="stock" />
+                <DropDownInput
+                  name="unit"
+                  items={items}
+                  setItems={setItems}
+                  direction="BOTTOM"
+                />
+              </NumberDropDown>
             </FieldStyle>
             <FieldStyle style={{ ...styles.autocompleteContainer }}>
               <AutoCompleteField setDisabled={setDisabled} />

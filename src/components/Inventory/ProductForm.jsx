@@ -1,9 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import { View } from "react-native";
 import * as yup from "yup";
 
-import { Text } from "../Text";
+import { FieldTitle } from "../Text";
 import { useDropDown } from "../../hooks/useDropDown";
 import { TextInput, NumberInput, DropDownInput } from "../InputField";
 import { FieldStyle, NumberDropDown } from "../../styles/common";
@@ -33,11 +32,6 @@ export const productSchema = yup.object().shape({
 
   comment: yup.string().required("Comment is required"),
 });
-
-const FieldTitle = styled(Text)`
-  flex-grow: 1;
-  flex-basis: 0;
-`;
 
 const ProductForm = () => {
   const { items, setItems } = useDropDown("units");

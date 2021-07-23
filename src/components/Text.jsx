@@ -35,3 +35,8 @@ export const AdaptiveText = styled(Text)`
     return Theme.color.textPrimary;
   }};
 `;
+
+export const FieldTitle = styled(Text)`
+  flex-grow: 1;
+  flex-basis: 0;
+`;
