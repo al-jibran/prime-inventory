@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formik, useField } from "formik";
 import { View, Pressable, StyleSheet, Platform } from "react-native";
+import { selectedProduct } from "../../../Cache";
 
 import { NumberInput, DropDownInput } from "../InputField";
 import {
@@ -18,8 +19,6 @@ import Theme from "../../theme";
 
 const initialValues = {
   stock: "0",
-  name: "",
-  _id: "",
   query: "",
   unit: "pcs",
 };
@@ -106,8 +105,6 @@ const Form = ({ onSubmit }) => {
 };
 
 const AutoCompleteField = ({ setDisabled }) => {
-  const [, , idFieldHelpers] = useField("_id");
-  const [, , nameFieldHelpers] = useField("name");
   const [query, , queryHelpers] = useField("query");
   const [hide, setHide] = useState(true);
   const [products, , { refetchWith }] = useProducts(5);
@@ -117,8 +114,7 @@ const AutoCompleteField = ({ setDisabled }) => {
 
   const handleOnPress = (item) => {
     queryHelpers.setValue(item.name);
-    idFieldHelpers.setValue(item._id);
-    nameFieldHelpers.setValue(item.name);
+    selectedProduct(item);
     setDisabled(false);
     hideResults();
   };

@@ -1,9 +1,12 @@
 import React from "react";
+import { useReactiveVar } from "@apollo/client";
+import styled from "styled-components/native";
+import { Alert } from "react-native";
 
 import Form from "./Form";
 import { useDropDown } from "../../hooks/useDropDown";
 import { Heading } from "../Text";
-import styled from "styled-components/native";
+import { selectedProduct } from "../../../Cache";
 
 const AddEntryContainer = styled.View`
   margin-top: 10px;
@@ -12,12 +15,36 @@ const AddEntryContainer = styled.View`
 
 const AddEntry = ({ entries, setEntries }) => {
   const { getValueForItem } = useDropDown("units");
+  const selectedItem = useReactiveVar(selectedProduct);
 
-  const onSaveEntry = ({ stock, name, _id, unit }, { resetForm }) => {
+  const onSaveEntry = ({ stock, unit }, { resetForm }) => {
     const changeBy = getValueForItem(unit);
     stock *= changeBy;
+    const stockLeft = selectedItem.stock + stock;
 
-    setEntries(entries.concat({ _id, name, stock }));
+    if (stockLeft < 0) {
+      const alertButtons = [
+        { text: "No", onPress: () => null },
+        { text: "Yes", onPress: () => setEntriesAndReset({ resetForm }) },
+      ];
+      Alert.alert(
+        "Stock",
+        `Reducing the stock by ${stock} will reduce it below zero.\n\nReduce it to 0 instead?`,
+        alertButtons
+      );
+      return;
+    }
+    setEntriesAndReset({ resetForm });
+  };
+
+  const setEntriesAndReset = ({ resetForm }) => {
+    setEntries(
+      entries.concat({
+        _id: selectedItem._id,
+        name: selectedItem.name,
+        stock: -selectedItem.stock,
+      })
+    );
     resetForm();
   };
 

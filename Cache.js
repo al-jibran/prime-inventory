@@ -6,6 +6,8 @@ export const productsOrder = makeVar({
   orderBy: "CREATED_AT",
 });
 
+export const selectedProduct = makeVar(null);
+
 export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
@@ -16,6 +18,11 @@ export const cache = new InMemoryCache({
         productOrder: {
           read() {
             return productsOrder();
+          },
+        },
+        selectedProduct: {
+          read() {
+            return selectedProduct();
           },
         },
       },
