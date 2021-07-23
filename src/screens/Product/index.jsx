@@ -9,6 +9,7 @@ import HistoryItemRender from "../History/HistoryItemRender";
 import { Detail, TopContainerStyle } from "../../styles/common";
 import SectionListByDate from "../../components/SectionListByDate";
 import FetchMoreFooter from "../../components/FetchMoreFooter";
+import { ProductHistoryInfo, ProductHistoryReveal } from "./ProductHistory";
 
 const DetailsContainer = styled.View`
   ${TopContainerStyle}
@@ -108,10 +109,15 @@ const Product = ({ route }) => {
       listEmptyText={"There is currently no history to show."}
       refetch={refetch}
       onEndReached={onEndReached}
-      onEndReachedThreshold={0}
+      onEndReachedThreshold={0.1}
       ListHeaderComponent={<ListHeaderComponent id={id} />}
       renderItem={({ item }) => (
-        <HistoryItemRender item={item} id={id} historyOf="product" />
+        <HistoryItemRender
+          item={item}
+          id={id}
+          AdditionalInfo={<ProductHistoryInfo item={item} id={id} />}
+          RevealInfo={<ProductHistoryReveal item={item} />}
+        />
       )}
       ListFooterComponent={<FetchMoreFooter networkStatus={networkStatus} />}
       ListFooterComponentStyle={{ marginTop: 15 }}

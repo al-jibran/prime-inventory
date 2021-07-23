@@ -13,25 +13,22 @@ const TransactionProducts = styled(ShadowBox)`
 `;
 
 export const TransactionHistoryInfo = ({ item }) => {
-  if (item.type === "PRODUCT") {
-    const changes = item.changes[0];
-    return (
-      <>
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Product Name</SubHeading>
-          <Text>{changes.name}</Text>
-        </Detail>
-        <Detail>
-          <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-          <AdaptiveText>
-            {changes.change > 0 && "+"}
-            {changes.change}
-          </AdaptiveText>
-        </Detail>
-      </>
-    );
-  }
-  return null;
+  const changes = item.changes[0];
+  return (
+    <>
+      <Detail>
+        <SubHeading fontSize={Theme.fontSize.body}>Product Name</SubHeading>
+        <Text>{changes.name}</Text>
+      </Detail>
+      <Detail>
+        <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
+        <AdaptiveText>
+          {changes.change > 0 && "+"}
+          {changes.change}
+        </AdaptiveText>
+      </Detail>
+    </>
+  );
 };
 
 export const TransactionHistoryReveal = ({ item }) => {
@@ -55,17 +52,19 @@ export const TransactionHistoryReveal = ({ item }) => {
         style={{ margin: 0 }}
         data={item.changes}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => (
-          <TransactionProducts>
-            <Detail>
-              <Text fontWeight={Theme.fontWeight.light}>{item.name}</Text>
-              <AdaptiveText>
-                {item.change > 0 && "+"}
-                {item.change}
-              </AdaptiveText>
-            </Detail>
-          </TransactionProducts>
-        )}
+        renderItem={({ item }) => {
+          return (
+            <TransactionProducts>
+              <Detail>
+                <Text fontWeight={Theme.fontWeight.light}>{item.name}</Text>
+                <AdaptiveText>
+                  {item.change > 0 && "+"}
+                  {item.change}
+                </AdaptiveText>
+              </Detail>
+            </TransactionProducts>
+          );
+        }}
       />
     </>
   );

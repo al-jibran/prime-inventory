@@ -8,13 +8,13 @@ export const useSettings = (key) => {
 
   useEffect(() => {
     let isMounted = true;
-    if (isMounted) {
-      getValue(key)
-        .then((value) => {
+    getValue(key)
+      .then((value) => {
+        if (isMounted) {
           setSetting(value);
-        })
-        .catch((error) => console.log("error", error.message));
-    }
+        }
+      })
+      .catch((error) => console.log("error", error.message));
 
     return () => (isMounted = false);
   }, []);

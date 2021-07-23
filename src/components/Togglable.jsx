@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { View, Pressable } from "react-native";
-
-const Toggle = styled.View`
-  display: ${(props) => (props.visible ? "flex" : "none")}};
-`;
 
 const Togglable = ({ children }) => {
   const [visible, setVisible] = useState(false);
@@ -14,9 +9,7 @@ const Togglable = ({ children }) => {
       <Pressable onPress={() => setVisible(!visible)} style={{ flex: 1 }}>
         {children[0]}
       </Pressable>
-      <Toggle visible={visible} style={{ flex: 1 }}>
-        {children[1]}
-      </Toggle>
+      {visible && <View style={{ flex: 1 }}>{children[1]}</View>}
     </View>
   );
 };

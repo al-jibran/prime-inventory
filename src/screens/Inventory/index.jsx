@@ -57,7 +57,7 @@ const RenderProduct = ({ item, largestValue }) => {
       onLongPress={() => Alert.alert(deleteTitle, deleteMessage, buttons)}
     >
       <ProductItem item={item} largestValue={largestValue} />
-      {error !== "" && <Text>{error}</Text>}
+      {error !== "" && Alert.alert(error)}
     </Pressable>
   );
 };
@@ -101,7 +101,7 @@ const ProductListContainer = () => {
           margin={10}
           rounded
           bgColor="primary"
-          onPress={() => execute.refetch()}
+          onPress={() => execute.refetch({ first: 8 })}
         />
       </HorizontalAndVerticalCenter>
     );

@@ -6,6 +6,10 @@ import { GET_TRANSACTIONS } from "../../graphql/queries";
 import HistoryItemRender from "./HistoryItemRender";
 import SectionListByDate from "../../components/SectionListByDate";
 import FetchMoreFooter from "../../components/FetchMoreFooter";
+import {
+  TransactionHistoryInfo,
+  TransactionHistoryReveal,
+} from "./TransactionHistory";
 
 const History = () => {
   const tabValues = ["ALL", "BILL"];
@@ -67,14 +71,31 @@ const History = () => {
         refreshing={refreshing}
         onRefresh={() => {
           setRefreshing(true);
-          refetch();
+          refetch({ first: 7 });
         }}
         listEmptyText={"There are currently no transactions to show."}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.2}
-        renderItem={({ item }) => (
-          <HistoryItemRender item={item} id={item._id} />
-        )}
+        onEndReachedThreshold={0.1}
+        renderItem={({ item }) => {
+          const time = new Date(item.created).toLocaleTimeString("en-us", {
+            hour12: true,
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+          return (
+            <HistoryItemRender
+              item={item}
+              id={item._id}
+              time={time}
+              AdditionalInfo={
+                item.type === "PRODUCT" && (
+                  <TransactionHistoryInfo item={item} />
+                )
+              }
+              RevealInfo={<TransactionHistoryReveal item={item} />}
+            />
+          );
+        }}
         ListFooterComponent={<FetchMoreFooter networkStatus={networkStatus} />}
         ListFooterComponentStyle={{ marginTop: 15 }}
       />

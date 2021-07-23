@@ -6,7 +6,7 @@ import { capitalize } from "lodash";
 import styled from "styled-components/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { Text, Heading, SubHeading } from "../../components/Text";
+import { Text, SubHeading } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import { Detail } from "../../styles/common";
 import Theme from "../../theme";

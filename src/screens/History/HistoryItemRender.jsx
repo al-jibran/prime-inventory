@@ -12,47 +12,15 @@ import {
   AlignBySide,
   ShadowBox,
 } from "../../styles/common";
-import {
-  ProductHistoryInfo,
-  ProductHistoryReveal,
-} from "../Product/ProductHistory";
-import {
-  TransactionHistoryInfo,
-  TransactionHistoryReveal,
-} from "./TransactionHistory";
 
 const TransactionDetails = styled(ShadowBox)`
   ${AlignBySide}
-  margin-top: 15px;
+  margin-top: 10px;
   margin-bottom: 0;
   flex-basis: 0;
 `;
 
-const HistoryItemRender = ({ item, id, historyOf }) => {
-  if (!item) {
-    return null;
-  }
-
-  const time = new Date(item.created).toLocaleTimeString("en-us", {
-    hour12: true,
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
-  const AdditionalInfo = () => {
-    if (historyOf === "product") {
-      return <ProductHistoryInfo item={item} id={id} />;
-    }
-    return <TransactionHistoryInfo item={item} />;
-  };
-
-  const RevealInfo = () => {
-    if (historyOf === "product") {
-      return <ProductHistoryReveal item={item} />;
-    }
-    return <TransactionHistoryReveal item={item} />;
-  };
-
+const HistoryItemRender = ({ item, time, AdditionalInfo, RevealInfo }) => {
   return (
     <Togglable>
       <TransactionDetails>
@@ -85,10 +53,10 @@ const HistoryItemRender = ({ item, id, historyOf }) => {
               <Text>PTB-{item.bill_no}</Text>
             </Detail>
           )}
-          <AdditionalInfo />
+          {AdditionalInfo}
         </View>
       </TransactionDetails>
-      <RevealInfo />
+      {RevealInfo}
     </Togglable>
   );
 };

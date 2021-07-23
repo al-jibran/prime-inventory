@@ -47,6 +47,7 @@ const SectionListByDate = ({
       keyExtractor={(item) => item._id}
       stickySectionHeadersEnabled={false}
       style={{ marginTop: 20 }}
+      initialNumToRender={7}
       renderSectionHeader={({ section: { title } }) => (
         <View style={{ marginTop: 15 }}>
           <Heading>{title}</Heading>
