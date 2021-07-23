@@ -20,7 +20,6 @@ export const FieldStyle = styled.View`
         flex-direction: row;
         justify-content: space-between;
         align-items: baseline;
-        align-self: stretch;
       `;
     }
   }}
@@ -28,9 +27,10 @@ export const FieldStyle = styled.View`
 
 export const NumberDropDown = styled(FieldStyle)`
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 2;
   flex-basis: 0;
-  flex-grow: 1;
 `;
 
 export const FormActions = styled.View`

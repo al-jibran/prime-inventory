@@ -69,7 +69,7 @@ const FormView = () => {
 
   return (
     <View>
-      <View style={{ padding: 5, borderTopWidth: 1 }}>
+      <View style={{ borderTopWidth: 1 }}>
         <SubHeading>Order By</SubHeading>
         <FieldStyle layout="horizontal">
           <Text>Created</Text>

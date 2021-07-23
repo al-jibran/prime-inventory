@@ -6,12 +6,15 @@ import styled from "styled-components/native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import { SubText } from "./Text";
+import { NumberDropDown } from "../styles/common";
 import Theme from "../theme";
 
 // Check styled documentation
 
 const TextInputStyle = styled.View`
   width: ${(props) => props.width || "100%"};
+  flex-grow: 2;
+  flex-basis: 0;
 `;
 
 const TextFieldStyle = styled.TextInput`
@@ -21,11 +24,13 @@ const TextFieldStyle = styled.TextInput`
 
 const NumberFieldStyle = styled(TextFieldStyle)`
   text-align: center;
-  width: 35%;
+  width: 50%;
 `;
 
 const NumberInputStyle = styled.View`
   flex-direction: row;
+  flex-grow: 1;
+  flex-basis: 0;
 `;
 
 export const TextInput = ({ name, width, ...props }) => {
@@ -70,35 +75,31 @@ export const NumberInput = ({ name, min, max, ...props }) => {
   };
 
   return (
-    <View>
-      <NumberInputStyle>
-        <Pressable onPress={decrement}>
-          <Ionicons
-            name="remove-circle-outline"
-            size={22}
-            color={Theme.color.danger}
-          />
-        </Pressable>
-
-        <NumberFieldStyle
-          value={field.value}
-          onChangeText={(text) => fieldHelpers.setValue(text)}
-          onBlur={() => fieldHelpers.setTouched(true)}
-          clearTextOnFocus
-          {...props}
+    <NumberInputStyle>
+      <Pressable onPress={decrement}>
+        <Ionicons
+          name="remove-circle-outline"
+          size={28}
+          color={Theme.color.danger}
         />
+      </Pressable>
 
-        <Pressable onPress={increment}>
-          <Ionicons
-            name="add-circle-outline"
-            size={22}
-            color={Theme.color.danger}
-          />
-        </Pressable>
-      </NumberInputStyle>
+      <NumberFieldStyle
+        value={field.value}
+        onChangeText={(text) => fieldHelpers.setValue(text)}
+        onBlur={() => fieldHelpers.setTouched(true)}
+        clearTextOnFocus
+        {...props}
+      />
 
-      {showError && <SubText color="red">{fieldMeta.error}</SubText>}
-    </View>
+      <Pressable onPress={increment}>
+        <Ionicons
+          name="add-circle-outline"
+          size={28}
+          color={Theme.color.danger}
+        />
+      </Pressable>
+    </NumberInputStyle>
   );
 };
 
@@ -128,8 +129,8 @@ export const DropDownInput = ({ name, items, setItems, direction }) => {
       selectedItemLabelStyle={{ fontWeight: "bold" }}
       dropDownDirection={direction}
       onPress={Keyboard.dismiss}
-      style={{ height: 25 }}
-      containerStyle={{ width: 80 }}
+      style={{ flexGrow: 1, flexBasis: 0 }}
+      containerStyle={{ width: 80, height: 30 }}
       textStyle={{ fontSize: 11 }}
     />
   );
