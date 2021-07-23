@@ -1,33 +1,24 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  SectionList,
-  FlatList,
-  Pressable,
-  View,
-  Heading,
-} from "react-native";
+import { Alert, SectionList, FlatList, Pressable, View } from "react-native";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
 
-import { Text } from "../../components/Text";
+import { Text, Heading } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 
 const SettingItem = styled.Pressable`
   background-color: white;
   padding: 15px;
   border: 1px solid #eee;
-  flex-grow: 1;
   flex-direction: row;
   justify-content: space-between;
+  flex-grow: 1;
 `;
 
-export const Settings = () => {
+export const Settings = ({ navigation }) => {
   const [, { getValue }, getAllSettings] = useSettings();
   const [sectionData, setSectionData] = useState([]);
-
-  console.log(sectionData);
 
   useEffect(() => {
     let isMounted = true;
@@ -42,7 +33,7 @@ export const Settings = () => {
 
         return {
           title: setting,
-          data: [values],
+          data: [Object.entries(values)],
         };
       });
       if (isMounted) {
@@ -66,12 +57,33 @@ export const Settings = () => {
           <Heading>{title}</Heading>
         </View>
       )}
-      renderItem={() => (
-        <View>
-          <Text>Value 1</Text>
-          <Text>Value 2</Text>
-        </View>
-      )}
+      renderItem={({ item, section }) => {
+        const key = item[0];
+        const value = item[1];
+
+        return (
+          <View>
+            <SettingItem
+              onLongPress={() =>
+                Alert.alert(`Delete ${key}?`, "", [
+                  { text: "Cancel" },
+                  { text: "Yes", onPress: () => null },
+                ])
+              }
+              onPress={() =>
+                navigation.navigate("DisplayModal", {
+                  action: "EditSetting",
+                  name: section.title,
+                  property: { key, value },
+                })
+              }
+            >
+              <Text>{capitalize(key)}</Text>
+              <Text>{value}</Text>
+            </SettingItem>
+          </View>
+        );
+      }}
     />
   );
 };
