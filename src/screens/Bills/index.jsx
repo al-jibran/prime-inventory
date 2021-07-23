@@ -29,6 +29,10 @@ const Bills = () => {
   };
 
   const submitEntries = () => {
+    if (!comment) {
+      Alert.alert("Empty Comment", "Cannot submit without a comment");
+      return;
+    }
     bulkUpdateProducts({ variables: { bill: { comment, entries } } });
   };
 
