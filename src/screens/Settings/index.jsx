@@ -4,16 +4,16 @@ import { Alert, SectionList, FlatList, Pressable, View } from "react-native";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
 
-import { Text, Heading } from "../../components/Text";
+import { Text, SubHeading } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 
 const SettingItem = styled.Pressable`
   background-color: white;
   padding: 15px;
   border: 1px solid #eee;
+  flex-grow: 1;
   flex-direction: row;
   justify-content: space-between;
-  flex-grow: 1;
 `;
 
 export const Settings = ({ navigation }) => {
@@ -33,7 +33,7 @@ export const Settings = ({ navigation }) => {
 
         return {
           title: setting,
-          data: [Object.entries(values)],
+          data: Object.entries(values),
         };
       });
       if (isMounted) {
@@ -51,15 +51,17 @@ export const Settings = ({ navigation }) => {
       sections={sectionData}
       style={{ flex: 1 }}
       contentContainerStyle={{ flex: 1 }}
-      keyExtractor={(item) => item.title}
+      stickySectionHeadersEnabled={false}
+      keyExtractor={(item, i) => i.toString()}
       renderSectionHeader={({ section: { title } }) => (
         <View style={{ marginTop: 15 }}>
-          <Heading>{title}</Heading>
+          <SubHeading>{title}</SubHeading>
         </View>
       )}
-      renderItem={({ item, section }) => {
+      renderItem={({ item }) => {
         const key = item[0];
         const value = item[1];
+        console.log(item);
 
         return (
           <View>
