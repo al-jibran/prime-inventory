@@ -1,14 +1,12 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { useDebouncedCallback } from "use-debounce/lib";
 import { GET_INVENTORY } from "../graphql/queries";
 import { useState } from "react";
+import { productsOrder } from "../../Cache";
 
-export const useProducts = (
-  first = 8,
-  orderBy = "CREATED_AT",
-  orderDirection = "DESC"
-) => {
+export const useProducts = (first = 8) => {
   const [refreshing, setRefreshing] = useState(false);
+  const { orderDirection, orderBy } = useReactiveVar(productsOrder);
   const { data, loading, error, fetchMore, refetch, networkStatus } = useQuery(
     GET_INVENTORY,
     {

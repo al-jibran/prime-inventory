@@ -3,30 +3,12 @@ import Main from "./src/Main";
 
 import DeviceStorageContext from "./src/contexts/DeviceStorageContext";
 import DeviceStorage from "./src/utilities/deviceStorage";
+import { cache } from "./Cache";
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-  ApolloProvider,
-} from "@apollo/client";
-
-import { relayStylePagination } from "@apollo/client/utilities";
+import { ApolloClient, HttpLink, ApolloProvider } from "@apollo/client";
 
 const httpLink = new HttpLink({
   uri: "http://192.168.0.120:4000",
-});
-
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        inventory: relayStylePagination(),
-        getProductHistory: relayStylePagination(),
-        transactions: relayStylePagination(),
-      },
-    },
-  },
 });
 
 const apolloClient = new ApolloClient({
