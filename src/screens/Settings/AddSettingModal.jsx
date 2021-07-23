@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Alert } from "react-native";
-import { capitalize } from "lodash";
 import { Text } from "../../components/Text";
 import FormHandler from "../../components/Form";
 import { TextInput } from "../../components/InputField";
