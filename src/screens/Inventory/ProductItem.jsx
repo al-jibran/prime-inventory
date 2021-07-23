@@ -1,10 +1,11 @@
 import React from "react";
 import { View } from "react-native";
 import styled from "styled-components/native";
-import { Text, SubText } from "../Text";
+import { useNavigation } from "@react-navigation/native";
+
+import { Text, SubText } from "../../components/Text";
 import Theme from "../../theme";
 import { ShadowBox, AlignBySide } from "../../styles/common";
-import { useNavigation } from "@react-navigation/native";
 import { useSettings } from "../../hooks/useSettings";
 
 const ProductItemStyle = styled(ShadowBox)`

@@ -2,9 +2,13 @@ import React from "react";
 import { View } from "react-native";
 import * as yup from "yup";
 
-import { FieldTitle } from "../Text";
+import { FieldTitle } from "../../components/Text";
 import { useDropDown } from "../../hooks/useDropDown";
-import { TextInput, NumberInput, DropDownInput } from "../InputField";
+import {
+  TextInput,
+  NumberInput,
+  DropDownInput,
+} from "../../components/InputField";
 import { FieldStyle, NumberDropDown } from "../../styles/common";
 
 export const productSchema = yup.object().shape({

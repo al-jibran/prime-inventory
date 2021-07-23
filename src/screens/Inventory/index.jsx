@@ -8,17 +8,17 @@ import { maxBy } from "lodash";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Custom Imports
-import ProductItem from "../components/Inventory/ProductItem";
-import Searchbar from "../components/Searchbar";
-import { useProducts } from "../hooks/useProducts";
-import { DELETE_PRODUCT } from "../graphql/queries";
-import ListEmptyComponent from "../components/ListEmptyComponent";
-import { HorizontalAndVerticalCenter } from "../styles/common";
-import { Text } from "../components/Text";
-import Button from "../components/Button";
+import ProductItem from "./ProductItem";
+import Searchbar from "../../components/Searchbar";
+import { useProducts } from "../../hooks/useProducts";
+import { DELETE_PRODUCT } from "../../graphql/queries";
+import ListEmptyComponent from "../../components/ListEmptyComponent";
+import { HorizontalAndVerticalCenter } from "../../styles/common";
+import { Text } from "../../components/Text";
+import Button from "../../components/Button";
 
-import Theme from "../theme";
-import FetchMoreFooter from "../components/FetchMoreFooter";
+import Theme from "../../theme";
+import FetchMoreFooter from "../../components/FetchMoreFooter";
 
 const RenderProduct = ({ item, largestValue }) => {
   const navigation = useNavigation();

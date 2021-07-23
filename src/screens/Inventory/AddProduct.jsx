@@ -1,10 +1,10 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
+import { useNavigation } from "@react-navigation/native";
 
-import FormHandler from "../Form";
+import FormHandler from "../../components/Form";
 import { useDropDown } from "../../hooks/useDropDown";
 import { CREATE_PRODUCT, GET_INVENTORY } from "../../graphql/queries";
-import { useNavigation } from "@react-navigation/native";
 import ProductForm, { productSchema } from "./ProductForm";
 
 const initialValue = {

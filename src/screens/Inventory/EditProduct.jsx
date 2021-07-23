@@ -1,12 +1,12 @@
 import React from "react";
+import { Alert } from "react-native";
 import { useApolloClient, useMutation, gql } from "@apollo/client";
+import { useNavigation } from "@react-navigation/native";
 
-import FormHandler from "../Form";
+import FormHandler from "../../components/Form";
 import { UPDATE_PRODUCT } from "../../graphql/queries";
 import { useDropDown } from "../../hooks/useDropDown";
-import { useNavigation } from "@react-navigation/native";
 import ProductForm, { productSchema } from "./ProductForm";
-import { Alert } from "react-native";
 
 const EditProduct = ({ id }) => {
   const navigation = useNavigation();

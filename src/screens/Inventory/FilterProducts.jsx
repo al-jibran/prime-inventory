@@ -3,11 +3,12 @@ import { useField } from "formik";
 import styled, { css } from "styled-components/native";
 import { useNavigation } from "@react-navigation/core";
 import { View } from "react-native";
-import FormHandler from "../Form";
-import { SubHeading, Text } from "../Text";
+import { useReactiveVar } from "@apollo/client";
+
+import FormHandler from "../../components/Form";
+import { SubHeading, Text } from "../../components/Text";
 import Theme from "../../theme";
 import { FieldStyle } from "../../styles/common";
-import { useReactiveVar } from "@apollo/client";
 import { productsOrder } from "../../../Cache";
 
 const Button = styled.Pressable`

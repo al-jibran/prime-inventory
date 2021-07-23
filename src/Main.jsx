@@ -13,13 +13,13 @@ import Bills from "./screens/Bills";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSettings } from "./hooks/useSettings";
 import Product from "./screens/Product";
-import AddProduct from "./components/Inventory/AddProduct";
-import EditProduct from "./components/Inventory/EditProduct";
+import AddProduct from "./screens/Inventory/AddProduct";
+import EditProduct from "./screens/Inventory/EditProduct";
 import History from "./screens/History";
 import { Settings } from "./screens/Settings";
 import EditSettingModal from "./screens/Settings/EditSettingModal";
 import AddSettingModal from "./screens/Settings/AddSettingModal";
-import FilterProducts from "./components/Inventory/FilterProducts";
+import FilterProducts from "./screens/Inventory/FilterProducts";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
