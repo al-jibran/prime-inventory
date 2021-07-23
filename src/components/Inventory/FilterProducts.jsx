@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useField } from "formik";
 import styled, { css } from "styled-components/native";
 import { useNavigation } from "@react-navigation/core";
 import { View } from "react-native";
@@ -6,6 +7,8 @@ import FormHandler from "../Form";
 import { SubHeading, Text } from "../Text";
 import Theme from "../../theme";
 import { FieldStyle } from "../../styles/common";
+import { useReactiveVar } from "@apollo/client";
+import { productsOrder } from "../../../Cache";
 
 const Button = styled.Pressable`
   width: 15px;
@@ -34,40 +37,55 @@ const RadioButton = styled.View`
 
 const FilterProducts = () => {
   const navigation = useNavigation();
+  const initialValue = useReactiveVar(productsOrder);
 
   const onCancel = () => {
     navigation.goBack();
   };
 
+  const onSubmit = ({ orderBy, orderDirection }) => {
+    productsOrder({ orderBy, orderDirection });
+    navigation.goBack();
+  };
+
   return (
-    <FormHandler onReset={onCancel} heading="Filters">
+    <FormHandler
+      onReset={onCancel}
+      heading="Filters"
+      initialValue={initialValue}
+      onSubmit={onSubmit}
+    >
       <FormView />
     </FormHandler>
   );
 };
 
 const FormView = () => {
-  const [clicked, setClicked] = useState(false);
+  const [orderField, , orderFieldHelpers] = useField("orderBy");
+  const [directionField, , directionHelpers] = useField("orderDirection");
+
+  const orderBy = orderField.value;
+  const orderDirection = directionField.value;
 
   return (
     <View>
       <SubHeading>Order By</SubHeading>
       <FieldStyle layout="horizontal">
         <Text>Created</Text>
-        <RadioButton clicked={!clicked}>
+        <RadioButton clicked={orderBy === "CREATED_AT"}>
           <Button
             onPress={() => {
-              setClicked(!clicked);
+              orderFieldHelpers.setValue("CREATED_AT");
             }}
           />
         </RadioButton>
       </FieldStyle>
       <FieldStyle layout="horizontal">
         <Text>Name</Text>
-        <RadioButton clicked={clicked}>
+        <RadioButton clicked={orderBy === "NAME"}>
           <Button
             onPress={() => {
-              setClicked(!clicked);
+              orderFieldHelpers.setValue("NAME");
             }}
           />
         </RadioButton>
@@ -75,20 +93,20 @@ const FormView = () => {
       <SubHeading>Order Direction</SubHeading>
       <FieldStyle layout="horizontal">
         <Text>Ascending</Text>
-        <RadioButton clicked={clicked}>
+        <RadioButton clicked={orderDirection === "ASC"}>
           <Button
             onPress={() => {
-              setClicked(!clicked);
+              directionHelpers.setValue("ASC");
             }}
           />
         </RadioButton>
       </FieldStyle>
       <FieldStyle layout="horizontal">
         <Text>Descending</Text>
-        <RadioButton clicked={!clicked}>
+        <RadioButton clicked={orderDirection === "DESC"}>
           <Button
             onPress={() => {
-              setClicked(!clicked);
+              directionHelpers.setValue("DESC");
             }}
           />
         </RadioButton>
