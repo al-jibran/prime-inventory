@@ -1,19 +1,19 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from "react";
-import { Alert, SectionList } from "react-native";
+import { Alert, SectionList, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { Text, Heading } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import { Detail } from "../../styles/common";
-import Button from "../../components/Button";
 import Theme from "../../theme";
 
 const SettingItem = styled.Pressable`
   background-color: white;
-  padding: 15px;
+  padding: 25px 20px;
   border: 1px solid #eee;
   flex-grow: 1;
   flex-direction: row;
@@ -67,15 +67,10 @@ export const Settings = ({ navigation }) => {
       stickySectionHeadersEnabled={false}
       keyExtractor={(_, i) => i.toString()}
       renderSectionHeader={({ section: { title, data } }) => (
-        <Detail style={{ marginLeft: 10, marginRight: 10 }}>
+        <Detail style={{ marginHorizontal: 20 }}>
           <Heading fontWeight={Theme.fontWeight.bold}>{title}</Heading>
           {title !== "Color-range" && (
-            <Button
-              text="+"
-              rounded
-              paddingLeft={0}
-              paddingRight={0}
-              width={10}
+            <Pressable
               onPress={() => {
                 navigation.navigate("DisplayModal", {
                   screen: "AddSetting",
@@ -83,7 +78,9 @@ export const Settings = ({ navigation }) => {
                   typeOfValues: typeof data[0][1],
                 });
               }}
-            />
+            >
+              <Ionicons name="add-circle-outline" size={24} />
+            </Pressable>
           )}
         </Detail>
       )}
