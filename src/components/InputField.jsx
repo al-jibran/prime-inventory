@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { useField } from "formik";
 import { View, Pressable, Keyboard } from "react-native";
 import styled from "styled-components/native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-import { Text, SubText } from "./Text";
+import { SubText } from "./Text";
+import Theme from "../theme";
 
 // Check styled documentation
 
@@ -19,14 +21,12 @@ const TextFieldStyle = styled.TextInput`
 
 const NumberFieldStyle = styled(TextFieldStyle)`
   text-align: center;
-  width: 30%;
+  width: 35%;
 `;
 
 const NumberInputStyle = styled.View`
   flex-direction: row;
-  justify-content: space-between;
-  margin-left: 10px;
-  margin-right: 10px;
+  justify-content: flex-end;
 `;
 
 export const TextInput = ({ name, width, ...props }) => {
@@ -74,19 +74,27 @@ export const NumberInput = ({ name, min, max, ...props }) => {
     <View>
       <NumberInputStyle>
         <Pressable onPress={decrement}>
-          <Text>-</Text>
+          <Ionicons
+            name="remove-circle-outline"
+            size={22}
+            color={Theme.color.danger}
+          />
         </Pressable>
 
         <NumberFieldStyle
           value={field.value}
           onChangeText={(text) => fieldHelpers.setValue(text)}
           onBlur={() => fieldHelpers.setTouched(true)}
-          clearTextOnFocus
+          clearTextOnFocus={true}
           {...props}
         />
 
         <Pressable onPress={increment}>
-          <Text>+</Text>
+          <Ionicons
+            name="add-circle-outline"
+            size={22}
+            color={Theme.color.danger}
+          />
         </Pressable>
       </NumberInputStyle>
 
