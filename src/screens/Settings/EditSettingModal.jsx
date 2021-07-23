@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/core";
 import { FieldStyle } from "../../styles/common";
 import { TextInput } from "../../components/InputField";
 import FormHandler from "../../components/Form";
-import { Text } from "../../components/Text";
+import { FieldTitle } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import { Alert } from "react-native";
 
@@ -71,7 +71,7 @@ const FormView = ({ setting }) => {
   const title = capitalize(setting);
   return (
     <FieldStyle layout="horizontal">
-      <Text>{title}</Text>
+      <FieldTitle>{title}</FieldTitle>
       <TextInput name={`setting`} autoCapitalize="words" width="50%" />
     </FieldStyle>
   );

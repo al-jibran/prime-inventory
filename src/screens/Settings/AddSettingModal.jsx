@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Alert } from "react-native";
-import { Text } from "../../components/Text";
+import { FieldTitle } from "../../components/Text";
 import FormHandler from "../../components/Form";
 import { TextInput } from "../../components/InputField";
 import { FieldStyle } from "../../styles/common";
@@ -68,11 +68,11 @@ const FormView = () => {
   return (
     <View>
       <FieldStyle layout="horizontal">
-        <Text>Name</Text>
+        <FieldTitle>Name</FieldTitle>
         <TextInput name="name" width="50%" />
       </FieldStyle>
       <FieldStyle layout="horizontal">
-        <Text>Value</Text>
+        <FieldTitle>Value</FieldTitle>
         <TextInput name="value" width="50%" />
       </FieldStyle>
     </View>
