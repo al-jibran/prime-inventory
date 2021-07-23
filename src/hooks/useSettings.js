@@ -9,7 +9,7 @@ export const useSettings = (key) => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      getValue()
+      getValue(key)
         .then((value) => {
           setSetting(value);
         })
@@ -19,21 +19,12 @@ export const useSettings = (key) => {
     return () => (isMounted = false);
   }, []);
 
-  const getValue = async () => {
+  const getValue = async (key) => {
     try {
       const value = await deviceStorage.getValueStored(key);
       return value;
     } catch (error) {
       throw `Error getting value for setting: ${error.message}`;
-    }
-  };
-
-  const getValueOfProperty = async (property) => {
-    try {
-      const settingObject = setting || (await getValue());
-      return settingObject[property];
-    } catch (error) {
-      throw `Error getting value for property: ${property}`;
     }
   };
 
@@ -75,7 +66,6 @@ export const useSettings = (key) => {
       getValue,
       setValue,
       removeValue,
-      getValueOfProperty,
     },
     getAllSettings,
   ];

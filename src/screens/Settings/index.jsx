@@ -1,13 +1,18 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, Pressable } from "react-native";
+import {
+  Alert,
+  SectionList,
+  FlatList,
+  Pressable,
+  View,
+  Heading,
+} from "react-native";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
 
 import { Text } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
-import Theme from "../../theme";
-import { useLayoutEffect } from "react";
 
 const SettingItem = styled.Pressable`
   background-color: white;
@@ -18,15 +23,32 @@ const SettingItem = styled.Pressable`
   justify-content: space-between;
 `;
 
-export const Settings = ({ navigation }) => {
-  const [, , getAllSettings] = useSettings();
-  const [settings, setSettings] = useState([]);
+export const Settings = () => {
+  const [, { getValue }, getAllSettings] = useSettings();
+  const [sectionData, setSectionData] = useState([]);
+
+  console.log(sectionData);
 
   useEffect(() => {
     let isMounted = true;
+
+    // Modify this method to change setting titles and their content.
+    // Works for object.
+    // see If a change is required to display array and other data types later.
     const initSettings = async () => {
       const settings = await getAllSettings();
-      if (isMounted) setSettings(settings);
+      const sectionDataPromise = settings.map(async (setting) => {
+        const values = await getValue(setting.toLowerCase());
+
+        return {
+          title: setting,
+          data: [values],
+        };
+      });
+      if (isMounted) {
+        const sectionData = await Promise.all(sectionDataPromise);
+        setSectionData(sectionData);
+      }
     };
 
     initSettings();
@@ -34,19 +56,21 @@ export const Settings = ({ navigation }) => {
   }, []);
 
   return (
-    <FlatList
+    <SectionList
+      sections={sectionData}
       style={{ flex: 1 }}
       contentContainerStyle={{ flex: 1 }}
-      data={settings}
-      keyExtractor={(item) => item}
-      renderItem={({ item }) => (
-        <SettingItem
-          onPress={() => {
-            navigation.navigate("SettingPage", { name: item.toLowerCase() });
-          }}
-        >
-          <Text fontWeight={Theme.fontWeight.bold}>{item}</Text>
-        </SettingItem>
+      keyExtractor={(item) => item.title}
+      renderSectionHeader={({ section: { title } }) => (
+        <View style={{ marginTop: 15 }}>
+          <Heading>{title}</Heading>
+        </View>
+      )}
+      renderItem={() => (
+        <View>
+          <Text>Value 1</Text>
+          <Text>Value 2</Text>
+        </View>
       )}
     />
   );
