@@ -9,11 +9,28 @@ export const Container = styled.View`
 `;
 
 export const FieldStyle = styled.View`
-  flex-direction: ${(props) =>
-    props.layout === "horizontal" ? "row" : "column"};
+  flex-direction: column;
   justify-content: space-between;
   margin-top: 10px;
   margin-bottom: 10px;
+
+  ${(props) => {
+    if (props.layout === "horizontal") {
+      return css`
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+        align-self: stretch;
+      `;
+    }
+  }}
+`;
+
+export const NumberDropDown = styled(FieldStyle)`
+  flex-direction: row;
+  justify-content: center;
+  flex-basis: 0;
+  flex-grow: 1;
 `;
 
 export const FormActions = styled.View`

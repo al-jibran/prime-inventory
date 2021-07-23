@@ -26,7 +26,6 @@ const NumberFieldStyle = styled(TextFieldStyle)`
 
 const NumberInputStyle = styled.View`
   flex-direction: row;
-  justify-content: flex-end;
 `;
 
 export const TextInput = ({ name, width, ...props }) => {
@@ -85,7 +84,7 @@ export const NumberInput = ({ name, min, max, ...props }) => {
           value={field.value}
           onChangeText={(text) => fieldHelpers.setValue(text)}
           onBlur={() => fieldHelpers.setTouched(true)}
-          clearTextOnFocus={true}
+          clearTextOnFocus
           {...props}
         />
 

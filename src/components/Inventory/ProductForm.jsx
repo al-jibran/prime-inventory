@@ -1,11 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 import { View } from "react-native";
 import * as yup from "yup";
 
 import { Text } from "../Text";
 import { useDropDown } from "../../hooks/useDropDown";
 import { TextInput, NumberInput, DropDownInput } from "../InputField";
-import { FieldStyle } from "../../styles/common";
+import { FieldStyle, NumberDropDown } from "../../styles/common";
 
 export const productSchema = yup.object().shape({
   name: yup
@@ -33,19 +34,24 @@ export const productSchema = yup.object().shape({
   comment: yup.string().required("Comment is required"),
 });
 
+const FieldTitle = styled(Text)`
+  flex-grow: 1;
+  flex-basis: 0;
+`;
+
 const ProductForm = () => {
   const { items, setItems } = useDropDown("units");
 
   return (
     <View>
       <FieldStyle layout="horizontal">
-        <Text>Name</Text>
+        <FieldTitle>Name</FieldTitle>
         <TextInput name="name" autoCapitalize="words" width="50%" />
       </FieldStyle>
 
       <FieldStyle layout="horizontal">
-        <Text>Stock</Text>
-        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+        <FieldTitle>Stock</FieldTitle>
+        <NumberDropDown>
           <NumberInput name="stock" />
           <DropDownInput
             name="unit"
@@ -53,16 +59,16 @@ const ProductForm = () => {
             setItems={setItems}
             direction="TOP"
           />
-        </View>
+        </NumberDropDown>
       </FieldStyle>
 
       <FieldStyle layout="horizontal">
-        <Text>Brand</Text>
+        <FieldTitle>Brand</FieldTitle>
         <TextInput name="brand" autoCapitalize="words" width="50%" />
       </FieldStyle>
 
       <FieldStyle layout="horizontal">
-        <Text>Comment</Text>
+        <FieldTitle>Comment</FieldTitle>
         <TextInput name="comment" width="50%" />
       </FieldStyle>
     </View>
