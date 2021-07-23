@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Alert, TextInput, View } from "react-native";
 import { useMutation } from "@apollo/client";
 
-import { Heading } from "../components/Text";
-import { Container, FieldStyle } from "../styles/common";
-import AddEntry from "../components/Bills/AddEntry";
-import Entries from "../components/Bills/Entries";
-import { BULK_UPDATE_PRODUCTS } from "../graphql/queries";
+import { Heading } from "../../components/Text";
+import { Container, FieldStyle } from "../../styles/common";
+import AddEntry from "./AddEntry";
+import Entries from "./Entries";
+import { BULK_UPDATE_PRODUCTS } from "../../graphql/queries";
 
 const Bills = () => {
   const [bulkUpdateProducts] = useMutation(BULK_UPDATE_PRODUCTS, {

@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { Formik, useField } from "formik";
 import { View, Pressable, StyleSheet, Platform } from "react-native";
-import { selectedProduct } from "../../../Cache";
+import Autocomplete from "react-native-autocomplete-input";
 
-import { NumberInput, DropDownInput } from "../InputField";
+import { NumberInput, DropDownInput } from "../../components/InputField";
 import {
   Detail,
   FieldStyle,
   FormActions,
   NumberDropDown,
 } from "../../styles/common";
-import Button from "../Button";
-import { Text, SubText, AdaptiveText, FieldTitle } from "../Text";
-import Autocomplete from "react-native-autocomplete-input";
+import Button from "../../components/Button";
+import { Text, SubText, AdaptiveText, FieldTitle } from "../../components/Text";
 import { useDropDown } from "../../hooks/useDropDown";
 import { useProducts } from "../../hooks/useProducts";
 import Theme from "../../theme";
+import { selectedProduct } from "../../../Cache";
 
 const initialValues = {
   stock: "0",

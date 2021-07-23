@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 
 import Form from "./Form";
 import { useDropDown } from "../../hooks/useDropDown";
-import { Heading } from "../Text";
+import { Heading } from "../../components/Text";
 import { selectedProduct } from "../../../Cache";
 
 const AddEntryContainer = styled.View`

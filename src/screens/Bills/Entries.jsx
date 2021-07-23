@@ -1,10 +1,10 @@
 import React from "react";
 import { FlatList, Pressable, Alert } from "react-native";
 
-import { Text, AdaptiveText } from "../Text";
+import { Text, AdaptiveText } from "../../components/Text";
 import { FieldStyle } from "../../styles/common";
-import Button from "../Button";
-import ListEmptyComponent from "../ListEmptyComponent";
+import Button from "../../components/Button";
+import ListEmptyComponent from "../../components/ListEmptyComponent";
 
 const ListFooterComponent = ({ onPressedClear, onPressedSave }) => {
   return (
