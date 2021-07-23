@@ -99,7 +99,7 @@ const Home = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
-      initialRouteName="Inventory"
+      initialRouteName="Settings"
     >
       <Tab.Screen
         name="Inventory"
@@ -187,7 +187,12 @@ const DisplayModal = ({ route }) => {
     } else if (routeName === "FilterProducts") {
       return null;
     } else if (routeName === "AddSetting") {
-      return <AddSettingModal name={"Name"} />;
+      return (
+        <AddSettingModal
+          typeOfValues={route.params.typeOfValues}
+          settingName={route.params.settingName}
+        />
+      );
     } else if (routeName === "EditSetting") {
       return (
         <EditSettingModal

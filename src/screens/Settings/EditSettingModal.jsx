@@ -10,7 +10,7 @@ import { useSettings } from "../../hooks/useSettings";
 import { Alert } from "react-native";
 
 const EditSettingModal = ({ name, property }) => {
-  const [, operations] = useSettings(name);
+  const [dataInStorage, operations] = useSettings(name);
   const isNumber = typeof property.value === "number";
 
   const value = isNumber ? property.value.toString() : property.value;
@@ -29,11 +29,10 @@ const EditSettingModal = ({ name, property }) => {
 
   const onSubmit = async ({ setting }) => {
     const receivedNumber = parseInt(setting);
-    const dataInStorage = await operations.getValue();
 
     /* 
-    checks if the original setting is a number and if the value received from form is negative.
-    Note: NaN will result in false.
+      checks if the original setting is a number and if the value received from form is negative.
+      Note: NaN will result in false.
     */
     if (isNumber && receivedNumber < 1) {
       Alert.alert("Invalid change", "The value must be a positive number.");
@@ -47,7 +46,6 @@ const EditSettingModal = ({ name, property }) => {
       res[key] = setting;
       res = { ...dataInStorage, ...res };
       if (name === "color-range" && res.warning <= res.low) {
-        console.log(res);
         Alert.alert("Warning must be greater than Low");
         return;
       }

@@ -59,17 +59,21 @@ export const SettingPage = ({ navigation, route }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
       const setting = await operation.getValue();
-      setData(Object.entries(setting));
+      const data = Object.entries(setting);
+      navigation.setOptions({
+        headerRight: () => (
+          <AddSettingButton
+            navigation={navigation}
+            typeOfValues={typeof data[0][1]}
+            settingName={route.params.name}
+          />
+        ),
+        headerRightContainerStyle: { paddingRight: 20 },
+      });
+      setData(data);
     });
 
     return unsubscribe;
-  }, [navigation]);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <AddSettingButton navigation={navigation} />,
-      headerRightContainerStyle: { paddingRight: 20 },
-    });
   }, [navigation]);
 
   return (
@@ -105,9 +109,13 @@ export const SettingPage = ({ navigation, route }) => {
   );
 };
 
-const AddSettingButton = ({ navigation }) => {
+const AddSettingButton = ({ navigation, typeOfValues, settingName }) => {
   const onPressAdd = () => {
-    navigation.navigate("DisplayModal", { action: "AddSetting" });
+    navigation.navigate("DisplayModal", {
+      action: "AddSetting",
+      typeOfValues,
+      settingName,
+    });
   };
 
   return (
