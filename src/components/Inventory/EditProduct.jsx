@@ -6,6 +6,7 @@ import { UPDATE_PRODUCT } from "../../graphql/queries";
 import { useDropDown } from "../../hooks/useDropDown";
 import { useNavigation } from "@react-navigation/native";
 import ProductForm, { productSchema } from "./ProductForm";
+import { Alert } from "react-native";
 
 const EditProduct = ({ id }) => {
   const navigation = useNavigation();
@@ -13,12 +14,17 @@ const EditProduct = ({ id }) => {
   const { getValueForItem } = useDropDown("units");
   const client = useApolloClient();
 
-  const { name, brand } = client.readFragment({
+  const {
+    name,
+    brand,
+    stock: currentStock,
+  } = client.readFragment({
     id: `Product:${id}`,
     fragment: gql`
       fragment EditFragment on Product {
         name
         brand
+        stock
       }
     `,
   });
@@ -35,6 +41,13 @@ const EditProduct = ({ id }) => {
     const unitValue = getValueForItem(unit);
     const changeBy = parseInt(stock);
     stock = changeBy * unitValue;
+    console.log(currentStock);
+    console.log(currentStock + stock);
+
+    if (currentStock + stock < 0) {
+      Alert.alert("Stock", `The stock cannot be reduced below zero.`);
+      return;
+    }
 
     const change = { name, brand, stock, comment };
 
