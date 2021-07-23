@@ -17,7 +17,7 @@ import Product from "./screens/Product";
 import AddProduct from "./components/Inventory/AddProduct";
 import EditProduct from "./components/Inventory/EditProduct";
 import History from "./screens/History";
-import { Settings, SettingPage } from "./screens/Settings";
+import { Settings } from "./screens/Settings";
 import EditSettingModal from "./screens/Settings/EditSettingModal";
 import AddSettingModal from "./screens/Settings/AddSettingModal";
 
@@ -68,11 +68,6 @@ const SettingsStackScreen = () => {
       screenOptions={{ cardStyle: { backgroundColor: "white" } }}
     >
       <SettingsStack.Screen name="Settings" component={Settings} />
-      <SettingsStack.Screen
-        name="SettingPage"
-        options={({ route }) => ({ title: capitalize(route.params.name) })}
-        component={SettingPage}
-      />
     </SettingsStack.Navigator>
   );
 };
@@ -138,18 +133,20 @@ const RootStack = createStackNavigator();
 const Main = () => {
   const [, unitConig, allKeys] = useSettings("units");
   const [, rangeConfig] = useSettings("color-range");
+  const [, undefConfig] = useSettings("undefined");
 
   useEffect(() => {
     const initSettings = async () => {
       const keys = await allKeys();
-      if (!keys.includes("Units")) {
+      if (keys.length === 0 || !keys.includes("Units")) {
         console.log("Adding units to the device...");
         await unitConig.setValue({ pcs: 1, box: 20, peti: 10 });
       }
-      if (!keys.includes("Color-range")) {
+      if (keys.length === 0 || !keys.includes("Color-range")) {
         console.log("Adding color range to the device...");
         await rangeConfig.setValue({ low: 10, warning: 20 });
       }
+      console.log("Settings in storage 2", keys);
     };
     initSettings();
   }, []);
@@ -179,7 +176,7 @@ const Main = () => {
 
 const DisplayModal = ({ route }) => {
   const RenderView = () => {
-    const routeName = route.params.action;
+    const routeName = route.params.screen;
     if (routeName === "AddProduct") {
       return <AddProduct />;
     } else if (routeName === "EditProduct") {

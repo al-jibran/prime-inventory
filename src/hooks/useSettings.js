@@ -31,7 +31,7 @@ export const useSettings = (key) => {
   const setValue = async (value) => {
     try {
       await deviceStorage.setValueStored(key, value);
-      const result = await getValue();
+      const result = await getValue(key);
       setSetting(result);
     } catch (error) {
       throw `Error setting value for setting: ${error.message}`;
@@ -41,7 +41,7 @@ export const useSettings = (key) => {
   const removeValue = async () => {
     try {
       await deviceStorage.removeValueStored(key);
-      getValue().then((value) => setSetting(JSON.parse(value)));
+      getValue(key).then((value) => setSetting(JSON.parse(value)));
     } catch (error) {
       throw `Error removing value for setting: ${error.message}`;
     }

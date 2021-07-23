@@ -154,7 +154,7 @@ const AddProductButton = () => {
   const navigation = useNavigation();
 
   const onPressAdd = () => {
-    navigation.navigate("DisplayModal", { action: "AddProduct" });
+    navigation.navigate("DisplayModal", { screen: "AddProduct" });
   };
 
   return (
