@@ -51,12 +51,12 @@ const ListHeaderComponent = ({ id }) => {
           <Heading>History</Heading>
           <Button
             onPress={null}
-            text="Recent"
+            text="This month"
             rounded
             bgColor="white"
             padTop="3"
             padBottom="3"
-            width=""
+            width="40"
           />
         </Detail>
       </History>

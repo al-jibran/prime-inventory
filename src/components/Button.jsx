@@ -56,6 +56,9 @@ const ButtonContainer = styled.Pressable`
     css`
       opacity: 0.5;
     `};
+
+  flex-shrink: 0;
+  flex-wrap: nowrap;
 `;
 
 const ButtonText = styled.Text`
@@ -69,10 +72,11 @@ const ButtonText = styled.Text`
       : css`
           text-align: center;
         `};
-  color: ${(props) =>
-    props.color || props.bgColor === "white"
-      ? Theme.color.textPrimary
-      : "white"};
+  color: ${(props) => {
+    if (props.bgColor === "white") return Theme.color.textPrimary;
+    if (props.color === "secondary") Theme.color.textSecondary;
+    return props.color || "white";
+  }};
   font-weight: ${(props) => props.fontWeight || Theme.fontWeight.normal};
 `;
 

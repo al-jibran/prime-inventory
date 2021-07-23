@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/core";
 import { capitalize } from "lodash";
 import styled from "styled-components/native";
 
-import { Text, SubText } from "../../components/Text";
+import { Text, Heading } from "../../components/Text";
 import { useSettings } from "../../hooks/useSettings";
 import { Detail } from "../../styles/common";
 import Button from "../../components/Button";
@@ -21,7 +21,7 @@ const SettingItem = styled.Pressable`
 `;
 
 export const Settings = ({ navigation }) => {
-  const [settings, { getValue, setValue }, getAllSettings] = useSettings();
+  const [, { getValue }, getAllSettings] = useSettings();
   const [sectionData, setSectionData] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
@@ -68,7 +68,7 @@ export const Settings = ({ navigation }) => {
       keyExtractor={(_, i) => i.toString()}
       renderSectionHeader={({ section: { title, data } }) => (
         <Detail style={{ marginLeft: 10, marginRight: 10 }}>
-          <SubText fontWeight={Theme.fontWeight.bold}>{title}</SubText>
+          <Heading fontWeight={Theme.fontWeight.bold}>{title}</Heading>
           {title !== "Color-range" && (
             <Button
               text="+"
