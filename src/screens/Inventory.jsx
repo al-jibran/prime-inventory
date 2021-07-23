@@ -2,7 +2,7 @@
 // Native Imports
 import React, { useState, useLayoutEffect } from "react";
 import { FlatList, Pressable, Alert } from "react-native";
-import { useMutation, NetworkStatus } from "@apollo/client";
+import { useMutation, NetworkStatus, makeVar } from "@apollo/client";
 import { useNavigation } from "@react-navigation/core";
 import { maxBy } from "lodash";
 
