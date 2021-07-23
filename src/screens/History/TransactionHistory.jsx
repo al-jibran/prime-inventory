@@ -20,13 +20,6 @@ export const TransactionHistoryInfo = ({ item }) => {
         <SubHeading fontSize={Theme.fontSize.body}>Product Name</SubHeading>
         <Text>{changes.name}</Text>
       </Detail>
-      <Detail>
-        <SubHeading fontSize={Theme.fontSize.body}>Change</SubHeading>
-        <AdaptiveText>
-          {changes.change > 0 && "+"}
-          {changes.change}
-        </AdaptiveText>
-      </Detail>
     </>
   );
 };
