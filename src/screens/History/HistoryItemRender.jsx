@@ -20,7 +20,13 @@ const TransactionDetails = styled(ShadowBox)`
   flex-basis: 0;
 `;
 
-const HistoryItemRender = ({ item, time, AdditionalInfo, RevealInfo }) => {
+const HistoryItemRender = ({ item, AdditionalInfo, RevealInfo }) => {
+  const time = new Date(item.created).toLocaleTimeString("en-us", {
+    hour12: true,
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
     <Togglable>
       <TransactionDetails>

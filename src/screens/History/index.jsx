@@ -19,7 +19,7 @@ const History = () => {
     GET_TRANSACTIONS,
     {
       variables: {
-        first: 7,
+        first: 9,
       },
       onCompleted: () => {
         setRefreshing(false);
@@ -77,16 +77,10 @@ const History = () => {
         onEndReached={onEndReached}
         onEndReachedThreshold={0.1}
         renderItem={({ item }) => {
-          const time = new Date(item.created).toLocaleTimeString("en-us", {
-            hour12: true,
-            hour: "2-digit",
-            minute: "2-digit",
-          });
           return (
             <HistoryItemRender
               item={item}
               id={item._id}
-              time={time}
               AdditionalInfo={
                 item.type === "PRODUCT" && (
                   <TransactionHistoryInfo item={item} />
