@@ -20,6 +20,7 @@ import History from "./screens/History";
 import { Settings } from "./screens/Settings";
 import EditSettingModal from "./screens/Settings/EditSettingModal";
 import AddSettingModal from "./screens/Settings/AddSettingModal";
+import FilterProducts from "./components/Inventory/FilterProducts";
 
 export const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Inventory";
@@ -94,7 +95,7 @@ const Home = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
-      initialRouteName="Settings"
+      initialRouteName="Inventory"
     >
       <Tab.Screen
         name="Inventory"
@@ -133,7 +134,6 @@ const RootStack = createStackNavigator();
 const Main = () => {
   const [, unitConig, allKeys] = useSettings("units");
   const [, rangeConfig] = useSettings("color-range");
-  const [, undefConfig] = useSettings("undefined");
 
   useEffect(() => {
     const initSettings = async () => {
@@ -182,7 +182,7 @@ const DisplayModal = ({ route }) => {
     } else if (routeName === "EditProduct") {
       return <EditProduct id={route.params.id} />;
     } else if (routeName === "FilterProducts") {
-      return null;
+      return <FilterProducts />;
     } else if (routeName === "AddSetting") {
       return (
         <AddSettingModal

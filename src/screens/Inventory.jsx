@@ -165,8 +165,14 @@ const AddProductButton = () => {
 };
 
 const FilterProductsButton = () => {
+  const navigation = useNavigation();
+
   return (
-    <Pressable onPress={null}>
+    <Pressable
+      onPress={() => {
+        navigation.navigate("DisplayModal", { screen: "FilterProducts" });
+      }}
+    >
       <Text>Filter</Text>
     </Pressable>
   );
