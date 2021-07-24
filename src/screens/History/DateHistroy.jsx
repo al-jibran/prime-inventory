@@ -1,44 +1,97 @@
 import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
+import { View, FlatList, ToastAndroid } from "react-native";
 import { useLazyQuery, useQuery } from "@apollo/client";
-
-import { GET_DATES_FOR_MONTH } from "../../graphql/queries";
-import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
-import { range } from "lodash";
+import format from "date-fns/format";
+const yearMonthDate = "yyyy-MM-dd";
+
+import {
+  GET_DATES_FOR_MONTH,
+  GET_TRANSACTIONS_ON_DATE,
+} from "../../graphql/queries";
+import HistoryItemRender from "./HistoryItemRender";
+import {
+  TransactionHistoryInfo,
+  TransactionHistoryReveal,
+} from "./TransactionHistory";
+import ListEmptyComponent from "../../components/ListEmptyComponent";
 
 const DateHistory = () => {
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toLocaleDateString("en-CA")
+  const [getHistory, { data, loading, error }] = useLazyQuery(
+    GET_TRANSACTIONS_ON_DATE
   );
+
+  return (
+    <FlatList
+      contentContainerStyle={{ flexGrow: 1 }}
+      data={data?.transactionsOnDate}
+      ListHeaderComponent={
+        <CalendarComponent getHistory={getHistory} loadingData={loading} />
+      }
+      keyExtractor={(item) => item._id}
+      renderItem={({ item }) => (
+        <View style={{ marginHorizontal: 15 }}>
+          <HistoryItemRender
+            item={item}
+            id={item._id}
+            AdditionalInfo={
+              item.type === "PRODUCT" && <TransactionHistoryInfo item={item} />
+            }
+            RevealInfo={<TransactionHistoryReveal item={item} />}
+          ></HistoryItemRender>
+        </View>
+      )}
+      ListEmptyComponent={
+        <ListEmptyComponent text={["No transactions to show here."]} />
+      }
+    />
+  );
+};
+
+const CalendarComponent = ({ getHistory, loadingData }) => {
   const [markedDates, setMarkedDates] = useState({});
-  const currentDate = new Date();
-
-  const currentMonth = currentDate.getMonth() + 1;
-  const currentYear = currentDate.getFullYear();
-
-  const { data, loading, error, refetch } = useQuery(GET_DATES_FOR_MONTH, {
+  const { loading, refetch } = useQuery(GET_DATES_FOR_MONTH, {
     variables: {
-      month: currentMonth,
-      year: currentYear,
+      date: format(new Date(), yearMonthDate),
+    },
+    notifyOnNetworkStatusChange: true,
+    onCompleted: ({ transactionsDate }) => {
+      setMarked(transactionsDate);
     },
   });
 
-  const debounced = useDebouncedCallback((date) => {
-    refetch({ month: date.month, year: date.year });
-  }, 500);
-
-  const dates = data ? data.transactionsDate : [];
-
-  useEffect(() => {
+  const setMarked = (dates) => {
     const markedDates = dates.reduce((acc, current) => {
-      acc[new Date(current).toLocaleDateString("en-CA")] = {
+      acc[format(new Date(current), yearMonthDate)] = {
         marked: true,
       };
       return acc;
     }, {});
+
     setMarkedDates(markedDates);
-  }, [data?.transactionsDate]);
+  };
+
+  console.log(markedDates);
+  return (
+    <CalendarContainer
+      markedDates={markedDates}
+      refetch={refetch}
+      getHistory={getHistory}
+      loading
+    />
+  );
+};
+
+const CalendarContainer = ({ markedDates, refetch, getHistory, loading }) => {
+  const [selectedDate, setSelectedDate] = useState(
+    format(new Date(), yearMonthDate)
+  );
+  console.log(selectedDate);
+
+  const debounced = useDebouncedCallback((date) => {
+    refetch({ date });
+  }, 500);
 
   return (
     <Calendar
@@ -48,10 +101,18 @@ const DateHistory = () => {
         [selectedDate]: { selected: true, disableTouchEvent: true },
       }}
       onMonthChange={(date) => {
-        debounced(date);
+        debounced(new Date(date.dateString));
       }}
       onDayPress={(date) => {
         setSelectedDate(date.dateString);
+        if (!markedDates[date.dateString]) {
+          console.log("nothing to show here.");
+          return;
+        }
+        console.log("Fetching...");
+        getHistory({
+          variables: { date: date.day, month: date.month, year: date.year },
+        });
       }}
     />
   );

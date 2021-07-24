@@ -147,7 +147,16 @@ export const GET_TRANSACTIONS = gql`
 `;
 
 export const GET_DATES_FOR_MONTH = gql`
-  query GetDates($month: Int!, $year: Int!) {
-    transactionsDate(month: $month, year: $year)
+  query GetDates($date: String!) {
+    transactionsDate(date: $date)
   }
+`;
+
+export const GET_TRANSACTIONS_ON_DATE = gql`
+  query GetTransactionsOnDate($date: Int!, $month: Int!, $year: Int!) {
+    transactionsOnDate(date: $date, month: $month, year: $year) {
+      ...TransactionFields
+    }
+  }
+  ${TransactionFragment}
 `;
