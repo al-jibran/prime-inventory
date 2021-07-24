@@ -145,3 +145,9 @@ export const GET_TRANSACTIONS = gql`
   }
   ${TransactionFragment}
 `;
+
+export const GET_DATES_FOR_MONTH = gql`
+  query GetDates($month: Int!, $year: Int!) {
+    transactionsDate(month: $month, year: $year)
+  }
+`;
