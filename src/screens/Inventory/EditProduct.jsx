@@ -41,8 +41,6 @@ const EditProduct = ({ id }) => {
     const unitValue = getValueForItem(unit);
     const changeBy = parseInt(stock);
     stock = changeBy * unitValue;
-    console.log(currentStock);
-    console.log(currentStock + stock);
 
     if (currentStock + stock < 0) {
       Alert.alert("Stock", `The stock cannot be reduced below zero.`);

@@ -16,11 +16,9 @@ export const useProducts = (first = 8) => {
         orderBy,
       },
       onCompleted: (data) => {
-        console.log(data.inventory.totalCount);
         setRefreshing(false);
       },
       onError: (error) => {
-        console.log(networkStatus);
         console.log(error);
       },
       fetchPolicy: "cache-and-network",

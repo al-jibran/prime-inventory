@@ -51,7 +51,6 @@ export const Settings = ({ navigation }) => {
     };
 
     const unsubscribe = navigation.addListener("focus", async () => {
-      console.log("triggered");
       await initSettings();
     });
 

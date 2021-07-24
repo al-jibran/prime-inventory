@@ -8,14 +8,8 @@ class DeviceStorage {
   }
 
   async getValueStored(key) {
-    try {
-      const valueStored = await AsyncStorage.getItem(
-        `${this.namespace}:${key}`
-      );
-      return valueStored ? JSON.parse(valueStored) : null;
-    } catch (error) {
-      console.log("Error in getValueStored", error.message);
-    }
+    const valueStored = await AsyncStorage.getItem(`${this.namespace}:${key}`);
+    return valueStored ? JSON.parse(valueStored) : null;
   }
 
   async setValueStored(key, value) {

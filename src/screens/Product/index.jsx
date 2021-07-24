@@ -71,9 +71,6 @@ const Product = ({ route }) => {
     GET_PRODUCT_HISTORY,
     {
       variables: { id, first: 8 },
-      onCompleted: (data) => {
-        console.log(data.getProductHistory.totalCount);
-      },
       onError: (error) => {
         console.log(error.message);
       },

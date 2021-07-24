@@ -61,7 +61,6 @@ const AllTransactions = ({ filterBy }) => {
   );
 
   const history = data ? data.transactions.edges.map((edge) => edge.node) : [];
-  console.log("here");
 
   const onEndReached = () => {
     const canFetchMore = !loading && data?.transactions.pageInfo.hasNextPage;
