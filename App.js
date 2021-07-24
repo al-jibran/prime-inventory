@@ -1,14 +1,17 @@
 import React from "react";
 import Main from "./src/Main";
 
+import getEnvVars from "./environment";
 import DeviceStorageContext from "./src/contexts/DeviceStorageContext";
 import DeviceStorage from "./src/utilities/deviceStorage";
 import { cache } from "./Cache";
 
 import { ApolloClient, HttpLink, ApolloProvider } from "@apollo/client";
 
+const { apiUrl } = getEnvVars();
+
 const httpLink = new HttpLink({
-  uri: "http://192.168.0.120:4000",
+  uri: apiUrl,
 });
 
 const apolloClient = new ApolloClient({
