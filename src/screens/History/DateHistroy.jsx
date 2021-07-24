@@ -72,7 +72,6 @@ const CalendarComponent = ({ getHistory, loadingData }) => {
     setMarkedDates(markedDates);
   };
 
-  console.log(markedDates);
   return (
     <CalendarContainer
       markedDates={markedDates}
@@ -87,7 +86,6 @@ const CalendarContainer = ({ markedDates, refetch, getHistory, loading }) => {
   const [selectedDate, setSelectedDate] = useState(
     format(new Date(), yearMonthDate)
   );
-  console.log(selectedDate);
 
   const debounced = useDebouncedCallback((date) => {
     refetch({ date });
@@ -106,10 +104,8 @@ const CalendarContainer = ({ markedDates, refetch, getHistory, loading }) => {
       onDayPress={(date) => {
         setSelectedDate(date.dateString);
         if (!markedDates[date.dateString]) {
-          console.log("nothing to show here.");
           return;
         }
-        console.log("Fetching...");
         getHistory({
           variables: { date: date.day, month: date.month, year: date.year },
         });

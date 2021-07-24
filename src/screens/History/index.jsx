@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
-import { useQuery } from "@apollo/client";
+import { NetworkStatus, useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/queries";
 import HistoryItemRender from "./HistoryItemRender";
 import SectionListByDate from "../../components/SectionListByDate";
@@ -48,7 +48,6 @@ const History = () => {
 };
 
 const AllTransactions = ({ filterBy }) => {
-  const [refreshing, setRefreshing] = useState(false);
   const { data, loading, error, fetchMore, refetch, networkStatus } = useQuery(
     GET_TRANSACTIONS,
     {
@@ -56,15 +55,13 @@ const AllTransactions = ({ filterBy }) => {
         first: 9,
         filterBy,
       },
-      onCompleted: () => {
-        setRefreshing(false);
-      },
       fetchPolicy: "cache-and-network",
       notifyOnNetworkStatusChange: true,
     }
   );
 
   const history = data ? data.transactions.edges.map((edge) => edge.node) : [];
+  console.log("here");
 
   const onEndReached = () => {
     const canFetchMore = !loading && data?.transactions.pageInfo.hasNextPage;
@@ -80,16 +77,31 @@ const AllTransactions = ({ filterBy }) => {
     });
   };
 
-  console.log("here");
+  return (
+    <AllHistoryContainer
+      history={history}
+      onEndReached={onEndReached}
+      networkStatus={networkStatus}
+      error={error}
+      refetch={refetch}
+    />
+  );
+};
 
+const AllHistoryContainer = ({
+  history,
+  onEndReached,
+  networkStatus,
+  error,
+  refetch,
+}) => {
   return (
     <SectionListByDate
       data={history}
-      loading={loading}
+      loading={networkStatus === NetworkStatus.loading}
       error={error}
-      refreshing={refreshing}
+      refreshing={networkStatus === NetworkStatus.refetch}
       onRefresh={() => {
-        setRefreshing(true);
         refetch({ first: 9 });
       }}
       listEmptyText={"There are currently no transactions to show."}
