@@ -25,13 +25,15 @@ const TransactionComment = ({ item }) => {
         </Detail>
         <Text fontWeight={Theme.fontWeight.light}>{item.comment}</Text>
       </TransactionCommentStyle>
-      <TransactionCommentStyle>
-        <Text>Changes</Text>
-        <AdaptiveText>
-          {changes.change > 0 && "+"}
-          {changes.change}
-        </AdaptiveText>
-      </TransactionCommentStyle>
+      {item.type !== "BILL" && (
+        <TransactionCommentStyle>
+          <Text>Changes</Text>
+          <AdaptiveText>
+            {changes.change > 0 && "+"}
+            {changes.change}
+          </AdaptiveText>
+        </TransactionCommentStyle>
+      )}
     </>
   );
 };

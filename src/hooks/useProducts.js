@@ -15,7 +15,7 @@ export const useProducts = (first = 8) => {
         orderDirection,
         orderBy,
       },
-      onCompleted: (data) => {
+      onCompleted: () => {
         setRefreshing(false);
       },
       onError: (error) => {

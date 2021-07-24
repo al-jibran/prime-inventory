@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
-import { View, FlatList, ToastAndroid } from "react-native";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { View, FlatList } from "react-native";
+import { useQuery } from "@apollo/client";
 import { useDebouncedCallback } from "use-debounce/lib";
 import format from "date-fns/format";
 const yearMonthDate = "yyyy-MM-dd";
@@ -18,17 +18,22 @@ import {
 import ListEmptyComponent from "../../components/ListEmptyComponent";
 
 const DateHistory = () => {
-  const [getHistory, { data, loading, error }] = useLazyQuery(
-    GET_TRANSACTIONS_ON_DATE
-  );
+  const currentDate = new Date();
+
+  const { data, refetch } = useQuery(GET_TRANSACTIONS_ON_DATE, {
+    variables: {
+      date: currentDate.getDate(),
+      month: currentDate.getMonth() + 1,
+      year: currentDate.getFullYear(),
+    },
+    fetchPolicy: "cache-and-network",
+  });
 
   return (
     <FlatList
       contentContainerStyle={{ flexGrow: 1 }}
       data={data?.transactionsOnDate}
-      ListHeaderComponent={
-        <CalendarComponent getHistory={getHistory} loadingData={loading} />
-      }
+      ListHeaderComponent={<CalendarComponent dateHistoryRefetch={refetch} />}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
         <View style={{ marginHorizontal: 15 }}>
@@ -49,9 +54,9 @@ const DateHistory = () => {
   );
 };
 
-const CalendarComponent = ({ getHistory, loadingData }) => {
+const CalendarComponent = ({ dateHistoryRefetch }) => {
   const [markedDates, setMarkedDates] = useState({});
-  const { loading, refetch } = useQuery(GET_DATES_FOR_MONTH, {
+  const { refetch } = useQuery(GET_DATES_FOR_MONTH, {
     variables: {
       date: format(new Date(), yearMonthDate),
     },
@@ -76,13 +81,13 @@ const CalendarComponent = ({ getHistory, loadingData }) => {
     <CalendarContainer
       markedDates={markedDates}
       refetch={refetch}
-      getHistory={getHistory}
+      dateHistoryRefetch={dateHistoryRefetch}
       loading
     />
   );
 };
 
-const CalendarContainer = ({ markedDates, refetch, getHistory, loading }) => {
+const CalendarContainer = ({ markedDates, refetch, dateHistoryRefetch }) => {
   const [selectedDate, setSelectedDate] = useState(
     format(new Date(), yearMonthDate)
   );
@@ -106,8 +111,11 @@ const CalendarContainer = ({ markedDates, refetch, getHistory, loading }) => {
         if (!markedDates[date.dateString]) {
           return;
         }
-        getHistory({
-          variables: { date: date.day, month: date.month, year: date.year },
+        console.log("refetching...");
+        dateHistoryRefetch({
+          date: date.day,
+          month: date.month,
+          year: date.year,
         });
       }}
     />

@@ -145,7 +145,6 @@ const Main = () => {
         console.log("Adding color range to the device...");
         await rangeConfig.setValue({ low: 10, warning: 20 });
       }
-      console.log("Settings in storage 2", keys);
     };
     initSettings();
   }, []);
