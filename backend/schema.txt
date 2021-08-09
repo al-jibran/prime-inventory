@@ -1,0 +1,37 @@
+Inventory: {
+  id:
+  product:
+  stock:
+  brand:
+  history: {
+    data: [30 ObjectIDs]
+    hasMore: true/false
+    idForMore: ObjectId //of the oldest transaction
+  }
+}
+
+(Bills)
+Transaction: {
+  id: ObjectId("PIB-001")
+  comment: 
+  type: BILL
+  date: Date()
+  changes: [{
+    productId:
+    change:
+    before:
+  }]
+}
+
+(Single)
+Transaction: {
+  id: 
+  comment:
+  type: SINGLE
+  date:Date()
+  changes: {
+    productId: 
+    change:
+    before:
+  }
+}
