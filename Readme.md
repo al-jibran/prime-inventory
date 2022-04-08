@@ -36,11 +36,11 @@ An inventory app created in React Native (thus supports Android and iOS) that ha
 ### Screenshots
 
 <div>
-  <img src="/brand/homepage" alt="home page" />
-  <img src="/brand/add-product" alt="add product modal" />
-  <img src="/brand/filters" alt="filter modal" />
-  <img src="/brand/edit-product" alt="edit product modal " />
-  <img src="/brand/history" alt="history page" />
+  <img src="/brand/screenshots/homepage.png" alt="home page" />
+  <img src="/brand/screenshots/add-product.png" alt="add product modal" />
+  <img src="/brand/screenshots/filters.png" alt="filter modal" />
+  <img src="/brand/screenshots/edit-product.png" alt="edit product modal " />
+  <img src="/brand/screenshots/history.png" alt="history page" />
 </div>
 
 <!-- TechStack -->
