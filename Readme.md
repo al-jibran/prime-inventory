@@ -36,11 +36,11 @@ An inventory app created in React Native (thus supports Android and iOS) that ha
 ### Screenshots
 
 <div>
-  <img src="/brand/screenshots/homepage.png" alt="home page" />
-  <img src="/brand/screenshots/add-product.png" alt="add product modal" />
-  <img src="/brand/screenshots/filters.png" alt="filter modal" />
-  <img src="/brand/screenshots/edit-product.png" alt="edit product modal " />
-  <img src="/brand/screenshots/history.png" alt="history page" />
+  <img src="/brand/screenshots/homepage.png" alt="home page" width=100/>
+  <img src="/brand/screenshots/add-product.png" alt="add product modal" width=100 />
+  <img src="/brand/screenshots/filters.png" alt="filter modal" width=100/>
+  <img src="/brand/screenshots/edit-product.png" alt="edit product modal " width=100/>
+  <img src="/brand/screenshots/history.png" alt="history page" width=100/>
 </div>
 
 <!-- TechStack -->
@@ -88,7 +88,7 @@ An inventory app created in React Native (thus supports Android and iOS) that ha
 
 To run this project, you will need to add the following values to the environment.js file
 
-### Frotend
+### Frontend
 
 `prodUrl`: Url for the backend if you'll be building the app in production mode.
 `apiUrl`: Url for the backend if you'll be building the app development mode.
@@ -154,7 +154,7 @@ Start expo
 Install the backend with npm:
 
 ```bash
-	npm install
+  npm install
 ```
 
 Start the server
