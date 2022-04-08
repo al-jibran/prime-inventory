@@ -19,8 +19,6 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Run Locally](#run-locally)
-- [Usage](#usage)
 - [License](#license)
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
